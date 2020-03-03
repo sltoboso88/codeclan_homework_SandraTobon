@@ -1,0 +1,27 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1583246033372.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3061124331",
+    "id" : "486F7800",
+    "lastKnownWriteTime" : 1583255523,
+    "last_content_update" : 1583255523540,
+    "path" : "~/codeclan_homework_SandraTobon/week_01/day_2/HomeWorkDay2.Rmd",
+    "project_path" : "HomeWorkDay2.Rmd",
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "66,0",
+        "scrollLine" : "55",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

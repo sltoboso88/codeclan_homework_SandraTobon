@@ -1,0 +1,68 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+question 1
+```{r}
+stock_prices<- c(23,27,23,21, 34, 24, 25, 30, 37, 30)
+day_of_week<-rep(c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),times=2)
+
+```
+question 2
+```{r}
+day_of_week_factor<-factor(day_of_week)
+named_stock_prices<-stock_prices
+names(named_stock_prices)<-day_of_week
+
+```
+question3
+```{r}
+stock_data<-data.frame(day_of_week,stock_prices) 
+View(stock_data)
+```
+question 4
+```{r}
+stock_list<-list(stock_prices,day_of_week,stock_data)
+```
+
+PART 2
+
+question1
+```{r}
+stock_prices[4:6]
+stock_prices[stock_prices>30]
+```
+
+question2
+```{r}
+stock_data$day_of_week
+subset(stock_data,stock_prices<25)
+stock_data[,1]
+stock_data[3,]
+stock_data[3,1]
+```
+question 4
+```{r}
+stock_list[[3]]
+```
+
+
+Extension
+```{r}
+install.packages("tidyquant")
+```
+```{r}
+help(package="tidyquant")
+library(tidyquant)
+```
+```{r}
+myStock2020<-tq_get("FB",get=c("stock.prices"), from="2020-01-01", to="2020-03-03")
+View(myStock2020)
+myStock2020_1<-subset(myStock2020,select = c("date","close"))
+View(myStock2020_1)
+myStock2020_1_a<-subset(myStock2020_1, myStock2020_1$close> mean(myStock2020_1$close))
+View(myStock2020_1_a)
+mean(myStock2020_1$close)
+```
+

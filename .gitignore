@@ -1,2 +1,4 @@
 #Ignore file named "file_to_ignore.txt"
 file_to_ignore.txt
+.nb.html
+.Rproj
