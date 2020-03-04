@@ -24,6 +24,7 @@ View(stock_data)
 question 4
 ```{r}
 stock_list<-list(stock_prices,day_of_week,stock_data)
+names(stock_list)<-c("stock_prices", "day_of_week", "stock_data")
 ```
 
 PART 2
@@ -45,6 +46,7 @@ stock_data[3,1]
 question 4
 ```{r}
 stock_list[[3]]
+stock_list[["stock_data"]]
 ```
 
 
