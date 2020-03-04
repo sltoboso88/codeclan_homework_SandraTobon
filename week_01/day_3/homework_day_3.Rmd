@@ -1,0 +1,47 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+#Asing the different data to each variable
+beer_data_set <- CodeClanData::beer
+temp_matrix <- CodeClanData::temp
+game_of_thrones_list <- CodeClanData::game_of_thrones
+
+# this are the total number of different brewer in the beer_data_set
+length(unique(beer_data_set$brewer))
+#averages of calories in beer_data_set
+mean(as.integer(beer_data_set$calories))
+#averages of carbohydrates in beer_data_set
+mean(as.double(beer_data_set$carbohydrates))
+
+
+#averages of maximum temperature in Scotland per month in 106 years
+average_per_month <- colMeans(temp_matrix)
+#This are the months when the temperature in Scotland have been same of higher to the average
+subset(average_per_month, average_per_month >= mean(average_per_month))
+
+#name of the author of Game Of thrones
+game_of_thrones_list$authors[[1]]
+#numbers of pages of Game Of thrones
+game_of_thrones_list$numberOfPages[1]
+#all the details for one character
+game_of_thrones_list$characters[1]
+
+```
+2 Extension
+```{r}
+data.matrix(beer_data_set) 
+ggplot2::ggplot
+plot_temp_matrix <- ggplot2::ggplot(data = beer_data_set,
+                                   ggplot2::aes_(beer_data_set$carbohydrates))+
+                    ggplot2::geom_histogram(binwidth = 1)
+plot_temp_matrix
+
+```
+
+
+
+
+
