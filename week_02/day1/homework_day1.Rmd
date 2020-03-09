@@ -1,0 +1,62 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+1.1
+```{r}
+state_income_d <- readr::read_csv("data/state_income_data.csv")
+```
+1.2 with col_name function
+1.3 
+```{r}
+cars_data <- readr::read_csv("data/cars.csv", 
+                             col_types = cols("X1" = col_character(),
+                                              "mpg" = col_double(),
+                                              "cyl" = col_double(),
+                                              "disp" = col_double(),
+                                              "hp" = col_double(),
+                                              "vs" = col_logical()
+                                              ))
+```
+1.4 
+```{r}
+scotland_data <- readr::read_delim("data/scotland.txt", delim = ";", skip = 1)
+```
+1.5 with readr::read_lines()
+1.6
+```{r}
+steam_data <- readr::read_csv("data/steam-200k-sample.csv", 
+                              col_types = cols("customer id" = col_double(),
+                                               "game name" = col_character(),
+                                               "what" = col_character(),
+                                               "value" = col_double(),
+                                               "bought online" = col_logical()),
+                              skip = 4)
+```
+1.7
+```{r}
+historic_eu <- readr::read_tsv("data/historic_eu_payments.tsv")
+```
+1.8 read lines can accept multiples files with the direction of the path and in this way you can read lines of text into a multi-element text vector?
+1.9
+```{r}
+json_hw <- readr::read_file("http://makemeanalyst.com/wp-content/uploads/2017/06/sample_json.txt")
+```
+
+```{r}
+json_hw1 <- jsonlite::parse_json(json_hw)
+```
+```{r}
+json_hw2 <- jsonlite::fromJSON(json_hw)
+```
+
+EXTENSION
+```{r}
+sheet_names <- readxl::excel_sheets("data/green_bindle_consulting.xlsx")
+```
+```{r}
+for(i in 1:length(sheet_names)){
+assign(sheet_names[i],readxl::read_excel("data/green_bindle_consulting.xlsx", sheet = sheet_names[i]))
+}
+```
+
