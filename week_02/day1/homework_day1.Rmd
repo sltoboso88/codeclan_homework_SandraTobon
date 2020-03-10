@@ -22,7 +22,7 @@ cars_data <- readr::read_csv("data/cars.csv",
 ```{r}
 scotland_data <- readr::read_delim("data/scotland.txt", delim = ";", skip = 1)
 ```
-1.5 with readr::read_lines()
+1.5 with readr::read_files()
 1.6
 ```{r}
 steam_data <- readr::read_csv("data/steam-200k-sample.csv", 
@@ -37,7 +37,7 @@ steam_data <- readr::read_csv("data/steam-200k-sample.csv",
 ```{r}
 historic_eu <- readr::read_tsv("data/historic_eu_payments.tsv")
 ```
-1.8 read lines can accept multiples files with the direction of the path and in this way you can read lines of text into a multi-element text vector?
+1.8 read_lines can accept multiples files with the direction of the path and in this way you can read lines of text into a multi-element text vector?
 1.9
 ```{r}
 json_hw <- readr::read_file("http://makemeanalyst.com/wp-content/uploads/2017/06/sample_json.txt")

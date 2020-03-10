@@ -1,0 +1,121 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+keyring_unlock(keyring = "local")
+```
+Create a connection
+```{r}
+username <- key_get(service = "postgresql_username", keyring = "local")
+password <- key_get(service = "postgresql_password", keyring = "local")
+keyring_lock(keyring = "local")
+```
+
+```{r}
+my_db_connection <- dbConnect(drv = PostgreSQL(max.con = 2), user = username, password = password, dbname='wrestling', host='localhost')
+```
+```{r}
+dbListFields(conn = my_db_connection, name = "wrestlers")
+```
+id is a unique number,
+born is a varchar
+name is a varchar
+gender is a varchar (only 2 values)
+win_percent is a real
+total_matches is a int
+```{r}
+dbGetQuery(conn = my_db_connection,
+           statement = "SELECT * 
+           FROM wrestlers")
+```
+disconnect
+```{r}
+dbDisconnect(my_db_connection)
+```
+REMOTE CONECTION
+```{r}
+keyring_unlock(keyring = "remote")
+```
+
+```{r}
+username <- key_get(service = "omni_postgresql_username", keyring = "remote")
+password <- key_get(service = "omni_postgresql_password", keyring = "remote")
+keyring_lock(keyring = "remote")
+```
+```{r}
+my_db_connection <- dbConnect(drv = PostgreSQL(max.con = 2), user = username, password = password, dbname='mvhbdgdk', host='34.245.37.126')
+```
+```{r}
+dbListTables(conn = my_db_connection)
+```
+QUERY
+```{r}
+dbGetQuery(conn = my_db_connection,
+           statement = 
+             "SELECT *
+              FROM wrestlers")
+```
+EXTENSION
+```{r}
+dbListFields(conn = my_db_connection, name = 'wrestlers')
+```
+
+ALL THE wrestlers FROM UK
+```{r}
+dbGetQuery(conn = my_db_connection,
+           statement = 
+             "SELECT *
+              FROM wrestlers
+              WHERE born = 'United Kingdom'")
+```
+
+Names of all Japanese wrestlers who have appeared in 40 or more matches.
+```{r}
+dbGetQuery(conn = my_db_connection,
+           statement = 
+             "SELECT name
+              FROM wrestlers
+              WHERE born = 'Japan' AND total_matches >= 40")
+```
+Find the wrestlers who have won between 50% and 60% of their matches.
+```{r}
+dbGetQuery(conn = my_db_connection,
+           statement = 
+             "SELECT *
+              FROM wrestlers
+              WHERE win_percent BETWEEN 50 AND 60
+              ORDER BY win_percent ASC")
+```
+
+Find all the wrestlers with names beginning with ‘X’.
+```{r}
+dbGetQuery(conn = my_db_connection,
+           statement = 
+             "SELECT *
+              FROM wrestlers
+              WHERE name LIKE 'X%'")
+```
+Find all the wrestlers who were born in countries beginning with the letter ‘I’. Try this using IN (there are 9 countries) and using a wildcard comparison.
+```{r}
+dbGetQuery(conn = my_db_connection,
+           statement = 
+             "SELECT * 
+              FROM wrestlers 
+              WHERE born IN (SELECT born
+              FROM wrestlers
+              WHERE born LIKE 'I%'
+              GROUP BY born)")
+```
+Find all the wrestlers who were not born in countries beginning with the letter ‘I’
+```{r}
+dbGetQuery(conn = my_db_connection,
+           statement = 
+             "SELECT * 
+              FROM wrestlers 
+              WHERE born NOT IN (SELECT born
+              FROM wrestlers
+              WHERE born LIKE 'I%'
+              GROUP BY born)")
+```
+
