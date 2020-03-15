@@ -1,0 +1,200 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+ACME EMPLOYEES
+
+The database have three tables:
+  *employees: this have 5 columns
+    *id -> integer and PK
+    *first_name -> varchar
+    *last_name -> varchar 
+    *email -> varchar
+    *team -> id FK from teams table
+  *teams: this have 3 columns 
+    *id -> integer PK
+    *name -> varchar
+    *charge_cost -> integer
+  *feed_back:this have 3 columns
+    *id -> integer PK
+    *id_employee -> integer FK from employees
+    *message -> varchar
+    *date -> date
+The relation ship between tables are
+
+employees Many<---->One teams
+employee One<---->Many feedbacks
+
+```{r}
+#libraries that I will use
+library(keyring)
+library(RPostgreSQL)
+```
+```{r}
+#Making my connection with keychain 
+keyring_unlock(keyring = "local")
+username <- key_get(service = "postgresql_username", keyring = "local")
+password <- key_get(service = "postgresql_password", keyring = "local")
+keyring_lock(keyring = "local")
+```
+```{r}
+#coneccting with my da
+my_db_connection <- dbConnect(drv = PostgreSQL(max.con = 1), user = username, password = password, dbname='acme_employees', host='localhost')
+```
+Data Frame of employees 200 rows 5 columns
+```{r}
+employees_acme <- data.frame(
+                  dbGetQuery(conn = my_db_connection,
+                             statement = 
+                               "SELECT *
+                                FROM employees;")
+)
+```
+All employees with full name
+```{r}
+dbGetQuery(conn = my_db_connection, 
+           statement = 
+             "SELECT id, concat(first_name, ' ' ,last_name) as full_name, email, team_id
+              FROM employees;")
+```
+All employees with the name of the team that they work
+```{r}
+dbGetQuery(conn = my_db_connection,
+           statement = 
+             'SELECT employees.id, employees.first_name, employees.last_name, employees.email, 
+              teams.name AS team_name
+              FROM employees
+              INNER JOIN teams
+              ON employees.team_id = teams.id;')
+```
+All the employees per team with desc order and team even teams without employees
+```{r}
+dbGetQuery(conn = my_db_connection, 
+           statement = 
+             "SELECT teams.name AS team_name, count(employees.id)AS num_employees
+              FROM employees
+              RIGHT JOIN teams
+              ON employees.team_id = teams.id
+              GROUP BY teams.id
+              ORDER BY num_employees DESC NULLS LAST;")
+```
+Employees without email or not valid email
+```{r}
+dbGetQuery(conn = my_db_connection,
+           statement = 
+             "SELECT count(id) as employees_without_email_or_valid_email
+              FROM employees
+              WHERE email NOT LIKE '%@%' OR email = '';")
+```
+Employees with the last feedback
+```{r}
+dbGetQuery(conn = my_db_connection,
+           statement = 
+             "SELECT employee_id, concat(employees.first_name, ' ', employees.last_name) AS   
+              full_name, feedbacks.date AS feed_back_date, feedbacks.message AS feed_back_message
+              FROM employees
+              INNER JOIN feedbacks
+              ON employees.id = feedbacks.employee_id
+              ORDER BY feedbacks.date DESC
+              LIMIT 1;")
+```
+Employees with only initial letter as fist_name
+```{r}
+dbGetQuery(conn = my_db_connection,
+           statement = 
+             "SELECT teams.name AS team_name, count(employees.id) 
+              AS employees_with_only_initial_letter_first_name
+              FROM employees
+              INNER JOIN teams
+              ON employees.team_id = teams.id
+              WHERE employees.first_name LIKE '_'
+              GROUP BY teams.id
+              ORDER BY count(employees.id) DESC
+              LIMIT 1;")
+```
+Sentimental analyst
+```{r}
+data_feedback <- data.frame(dbGetQuery(conn = my_db_connection,
+                statement = 
+                "SELECT employees.id, 
+                concat(employees.first_name, ' ', employees.last_name) AS full_name_employee, 
+                feedbacks.message, feedbacks.date AS feedback_date
+                FROM employees
+                INNER JOIN feedbacks
+                ON employees.id = feedbacks.employee_id;"))
+```
+take out the puntuation adn convert to low case
+```{r}
+message <- gsub("[[:punct:]]", " ", data_feedback$message)
+message_lower <- tolower(message)
+message_lower
+```
+create positive and negative vector
+```{r}
+positive_words <- c("great", "good", "happy", "content", "fulfilled", "fulfilled", "positive", "positives", "cheerful", "nice", "ambition", "ambitions", "ambitious", "friendly", "progress", "joy", "fast", "achieve", "achieving", "achievements", "best", "better",  "unlimited", "pros", "competitive", "opportunity", "advancement", "friendly", "smart", "interesting", "challenging", "grow", "caring", "balance", "helpful")
+
+negative_words <- c("worse", "worsening", "worst", "slow", "sluggish", "impatient", "unfulfilled", "unfulfilling", "negative", "bad", "limited", "limit", "limitations", "cons", "frustrated", "frustrating", "frustration", "dull", "boring", "politics", "political", "ignore", "ignored", "ignoring", "sad", "depressed", "depressing", "nasty", "stress", "stresses", "stressed", "horrid", "horrible", "terrible", "deadline", "deadlines", "uncaring", "remote")
+```
+
+```{r}
+#x vector to try, x_evaluation vector with the parameters, i indicate if it is postive of negative
+puntuation <- function(x_vector, x_evaluation, i){
+  x_vector_return <-0
+  for(j in 1:length(x_vector)){
+    x_vector_return[j] <- 0
+    for(h in 1:length(x_evaluation)){
+      x_vector_return[j] <- stringr::str_count(x_vector[j], x_evaluation[h]) + x_vector_return[j]
+    }
+  }
+  return(x_vector_return * i)
+}
+puntuation_positive <- puntuation(message_lower, positive_words, 1)
+puntuation_positive
+puntuation_negative <- puntuation(message_lower, negative_words, -1)
+puntuation_negative 
+total_puntuation <- puntuation_positive + puntuation_negative
+total_puntuation
+```
+
+```{r}
+data_feedback <- cbind(data_feedback, total_puntuation)
+```
+```{r}
+data_feedback_team <- RPostgreSQL::dbGetQuery(conn = my_db_connection,
+                        statement = 
+                          "SELECT e_f.*, teams.name AS team_name
+                            FROM teams
+                            INNER JOIN (SELECT employees.id, employees.team_id,
+                            concat(employees.first_name, ' ', employees.last_name) AS   
+                            full_name_employee, 
+                            feedbacks.message, feedbacks.date AS feedback_date
+                            FROM employees
+                            INNER JOIN feedbacks
+                            ON employees.id = feedbacks.employee_id) AS e_f
+                            ON teams.id = e_f.team_id;")
+data_feedback_team <- cbind(data_feedback_team, total_puntuation)
+```
+```{r}
+data_feedback_team[order(-data_feedback_team$total_puntuation),]
+for(i in 1:length(data_feedback_team$total_puntuation)){
+  if(data_feedback_team$total_puntuation[i] == max(data_feedback_team$total_puntuation)){
+  print(data_feedback_team[i, ])
+  }
+}
+for(i in 1:length(data_feedback_team$total_puntuation)){
+  if(data_feedback_team$total_puntuation[i] == min(data_feedback_team$total_puntuation)){
+  print(data_feedback_team[i, ])
+  }
+}
+```
+
+
+
+
+
+```{r}
+#disconect
+dbDisconnect(my_db_connection)
+```
+
