@@ -65,7 +65,7 @@ dbGetQuery(conn = my_db_connection,
              'SELECT employees.id, employees.first_name, employees.last_name, employees.email, 
               teams.name AS team_name
               FROM employees
-              INNER JOIN teams
+              LEFT JOIN teams
               ON employees.team_id = teams.id;')
 ```
 All the employees per team with desc order and team even teams without employees
@@ -85,7 +85,7 @@ dbGetQuery(conn = my_db_connection,
            statement = 
              "SELECT count(id) as employees_without_email_or_valid_email
               FROM employees
-              WHERE email NOT LIKE '%@%' OR email = '';")
+              WHERE email NOT LIKE '%@%' OR email IS NULL;")
 ```
 Employees with the last feedback
 ```{r}
