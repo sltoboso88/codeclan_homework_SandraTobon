@@ -1,0 +1,126 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Load in the dataset and call it drinks_content, eyeball it by printing it out (first 5 rows, last 5 rows, and then all of the data) and find out the dimensions (number of rows/columns) and variable names. 
+```{r}
+library(tidyverse)
+library(nycflights13)
+```
+```{r}
+drinks_content <- read_csv("data/starbucks_drinkMenu_expanded.csv")
+head(drinks_content, 5)
+tail(drinks_content, 5)
+dim(drinks_content)
+names(drinks_content)
+```
+
+Calculate some quick summary statistics to check the mean and the variance of the Calories variable. Also create a histogram of the Calories variable. Write a quick summary of your initial impressions of the data.
+```{r}
+#Most of the drinks have around 150 calories, few drinks have more than 400 calories, the variance is high but it is because a extreme values on the right.
+drinks_content %>%
+  summarise(mean_calories = mean(Calories), variance_calories = (sd(Calories)^2))
+hist(drinks_content$Calories)
+```
+
+Check if you have any outliers in the Calories variable by creating a boxplot. Then get the actual values of any outliers you have. Finally, decide what you want to do here. Do you want to remove the outliers? Do you want to keep them? Justify your decision either way. As you work through your outlier identification and removal process, write a summary of what you find (i.e. do you find any outliers), what you decide to do (why you are removing them or not, what criteria you might use), and how you removed them if you did (e.g. did you remove all or not). 
+```{r}
+boxplot(drinks_content$Calories)
+outliers <- boxplot(drinks_content$Calories, plot = FALSE)$out
+drinks_content[which(drinks_content$Calories %in% outliers),]
+#I will keep the data, because make sense that the drink has that much calories, the drink that is without fat milk have 450 calories, this drink that has normal milk is logical that has more calories. 
+```
+Select the variables beverage_category, beverage, beverage prep and calories from your data. Since we are interested in the calorie content, check if there are any NA values in the data, and drop them if there are.
+```{r}
+drinks_content %>% 
+  drop_na() %>%
+  select(Beverage_category, Beverage, Beverage_prep, Calories)
+```
+Filter the data so we only take “classic espresso drinks”. 
+```{r}
+drinks_content %>%
+  filter(Beverage_category %in% "Classic Espresso Drinks")
+```
+
+Create a new tibble called drink_calories which contains a variable called calorie_diff. calorie_diff should store the difference between 135 calories (135 calories = 10 cubes of sugar!) and the calories in each drink. (hint: you’ll want to subtract the calories from 135 to see which drink have more or less than 10 cups of sugar). 
+```{r}
+drink_calories <- drinks_content %>%
+  select(Beverage, Calories) %>%
+  mutate(calorie_diff = ifelse(Calories >= 135, "More 10 cubes sugar", "Less 10 cubes sugar"))  
+```
+Create a new tibble called drinks_grouped where you group your data by the type of beverage prep. Then summarise the mean calories in each drink (by group) in a variable called mean_cal, and save it to drinks_summary. Finally arrange this summary data in descending order of mean calories. 
+```{r}
+drinks_grouped <- drinks_content %>%
+  group_by(Beverage_prep) %>%
+  summarise(mean_cal = mean(Calories)) %>%
+  arrange(desc(mean_cal)) %>%
+  inner_join(drinks_content, by = "Beverage_prep")
+```
+I will not do the question number 8 because I always use pipe for doing almost everything
+Use the drink_calories data to find the two drinks (Beverage) with least and most Calories
+```{r}
+drink_calories %>%
+  arrange(Calories) %>%
+  head(2) 
+
+drink_calories %>%
+  arrange(Calories) %>%
+  tail(2)
+```
+
+Group your data by the type of beverage prep. Find all drinks which more calories than the average calories for that group. Save this in a new tibble called above_average_calories.
+```{r}
+mean_beverage_prep <- drinks_content %>%
+  select(Beverage, Beverage_prep, Calories) %>%
+  group_by(Beverage_prep) %>%
+  summarise(mean_beverage_prep = mean(Calories))
+above_average_calories <- drinks_content %>%
+  select(Beverage, Beverage_prep, Calories) %>%
+  inner_join(mean_beverage_prep, by = "Beverage_prep") %>%
+  filter(Calories > mean_beverage_prep)
+```
+Add the location of the origin and destination (i.e. the lat and lon) to flights. Only keep those that have a location. 
+
+Using the drinks_grouped data, apply the cume_dist function to get the top 25% of Calorie drinks within each group. Save this in a new tibble called drinks_distribution.  
+```{r}
+drinks_distribution <- drinks_grouped %>%
+  select(Beverage, Beverage_prep, Calories) %>%
+  group_by(Beverage_prep) %>%
+  mutate(top_25 = cume_dist(Calories)) %>%
+  filter(top_25 >= 0.75) %>%
+  arrange(desc(top_25))
+```
+Add the weather to the flights data by city of origin
+```{r}
+flights %>% drop_na() %>% 
+inner_join(drop_na(weather), by = "origin")
+```
+
+Add the location of the origin and destination (i.e. the lat and lon) to flights. Only keep those that have a location. 
+
+```{r}
+origin_f <- airports %>% drop_na() %>%
+  select(faa, lat, lon) %>%
+  rename("origin" = "faa", "lat_origin" = "lat", "lon_origin" = "lon") %>%
+  inner_join(drop_na(flights), by =  "origin")
+
+ airports %>% drop_na() %>%
+  select(faa, lat, lon) %>%
+  rename("dest" = "faa", "lat_dest" = "lat", "lon_dest" = "lon") %>%
+  inner_join(drop_na(origin_f), by =  "dest")
+```
+
+```{r}
+flights %>%
+  select(dest) %>%
+  group_by(dest) %>%
+  summarise(total_flights = n()) %>%
+  mutate(popular_dest = min_rank(total_flights)) %>%
+  arrange(desc(popular_dest)) %>%
+  head(10) %>%
+  inner_join(drop_na(flights), by = "dest")
+  
+```
+
+
