@@ -1,0 +1,111 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+```
+load
+```{r}
+codeclan_tweets <- read_csv("data/code_clan_tweets.csv")
+#codecakn_tweets have 234 rows and 27 columns
+dim(codeclan_tweets)
+#variables names are meaningful and in writer in the right way
+names(codeclan_tweets)
+codeclan_info <- read_csv("data/code_clan_info.csv")
+```
+favorite_count
+```{r}
+#446 likes in 95 tweets
+codeclan_tweets %>%
+  summarise(sum(favorite_count))
+codeclan_tweets %>%
+  filter(favorite_count != 0) %>%
+  group_by(favorite_count) %>%
+  summarise(n= n()) %>%
+  mutate(total_tweets_like = sum(n))
+codeclan_tweets %>%
+  ggplot(aes("likes", favorite_count)) +
+  geom_boxplot() 
+#It looks that at least are 2 outliers
+codeclan_tweets %>%
+  filter(favorite_count != 0) %>%
+  ggplot(aes("likes", favorite_count)) +
+  geom_boxplot()
+# If you take out all the tweets without any like you could find that actually the outliers could be less
+```
+favorite tweets without quote
+```{r}
+codeclan_tweets %>%
+  filter(is_quote != TRUE & favorite_count != 0) %>%
+  summarise(total_likes_without_quote = sum(favorite_count))
+ #425 likes 
+codeclan_tweets %>%
+  filter(is_quote != TRUE & favorite_count != 0) %>%
+  group_by(favorite_count) %>%
+  summarise(total_likes_without_quote = n()) %>%
+  mutate(total_tweets_without_quote = sum(total_likes_without_quote))
+#89 tweets
+```
+retweets
+```{r}
+codeclan_tweets %>%
+  filter(is_quote != TRUE) %>%
+  group_by(source) %>%
+  summarise(median_retweet_without_quote = median(retweet_count))
+```
+likes
+```{r}
+codeclan_tweets %>%
+  mutate(media_type = replace(media_type, is.na(media_type), "text")) %>%
+  group_by(media_type) %>%
+  summarise(total_likes_per_media = sum(favorite_count)) %>%
+  arrange(desc(total_likes_per_media))
+#371 likes per photo and 75 per text
+```
+```{r}
+#188 character 
+codeclan_tweets %>%
+  mutate(lenght_text = str_count(text)) %>%
+  summarise(mean_text = mean(lenght_text))
+```
+codeclan info
+```{r}
+codeclan_info %>%
+  select(tweet_id, status_url) %>%
+  inner_join(codeclan_tweets, by = "tweet_id")
+```
+
+hastang
+```{r}
+codeclan_hashtags <- codeclan_tweets %>%
+  select(tweet_id, hashtags) %>%
+  filter(!is.na(hashtags)) %>%
+  mutate(hashtags = str_to_lower(hashtags))
+```
+extension
+```{r}
+#49
+pattern = "c\\("
+codeclan_hashtags$hashtags %>%
+  str_sub(1,2) %>%
+  str_detect(pattern) %>%
+  sum()
+```
+```{r}
+#33
+pattern = "Edinburgh"
+codeclan_tweets$text %>%
+  str_detect(pattern) %>%
+  sum()
+```
+```{r}
+pattern = "@[a-zA-Z0-9_]+"
+codeclan_tweets$text %>%
+  str_extract_all(pattern) %>%
+  flatten_chr()
+  
+```
+
+

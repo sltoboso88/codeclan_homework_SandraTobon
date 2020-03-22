@@ -1,0 +1,147 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(outliers)
+```
+
+```{r}
+deputies_info <- read_csv("data/deputies_info.csv")
+#2686 10
+dim(deputies_info)
+#All the columns have descriptive names and are writing right
+names(deputies_info)
+```
+missing values
+```{r}
+deputies_info %>%
+  filter(is.na(receipt_value))
+#It isn't any na 
+unique(deputies_info$receipt_value)
+```
+visualization outliers
+```{r}
+#It is a lot outliers
+ggplot(deputies_info, aes(x = "deputies_brazil", y = receipt_value )) +
+  geom_boxplot()
+ggplot(deputies_info, aes(receipt_description, receipt_value)) + 
+  geom_boxplot() +
+  coord_flip()
+deputies_info <- deputies_info %>%
+  mutate(zscore = scores(receipt_value)) %>%
+  mutate(receipt_outlier = zscore > 3 | zscore < -3) %>%
+  arrange(desc(zscore))
+deputies_info %>%
+  select(receipt_description, receipt_outlier) %>%
+  filter(receipt_outlier == TRUE) %>%
+  group_by(receipt_description) %>%
+  summarise(outliers_v = n()) %>%
+  arrange(desc(outliers_v))
+#the outliers are in 3 receipt descriptions Consultancies, Researches and Technical Works, Airline tickets, Postal Services. 
+consultancies <- deputies_info %>% 
+  filter(receipt_description == "Consultancies, Researches and Technical Works.")
+consultancies %>%
+  mutate(zscore = scores(receipt_value)) %>%
+  mutate(receipt_outlier = zscore > 3 | zscore < -3) %>%
+  arrange(desc(zscore))
+#By separeting Consultancies, Researches and Technical Works, from the data, there are only 2 outliers, both of them are associate with the same deputie and pay to the same establishment, the different between the 2 payments is less that one moth 
+deputies_info %>% 
+  filter(receipt_description == "Airline tickets") %>%
+  ggplot(aes("airline", receipt_value)) +
+  geom_boxplot()
+airline <- deputies_info %>% 
+  filter(receipt_description == "Airline tickets")
+#By separeting Airlines Ticket, from the data, there are 5 outliers, 4 of them are associate with the same deputie Genecias Noronha from SP, she was the one that generate the other 2 outliers in the Consultancie group. The 4 payments were in the same month to 3 different taxi companies. The other outlier, is related with the diputie Eduardo Azeredo but he is from other party than Genecias Noronha
+  airline %>%
+  mutate(zscore = scores(receipt_value)) %>%
+  mutate(receipt_outlier = zscore > 3 | zscore < -3) %>%
+  arrange(desc(zscore))
+  
+  
+deputies_info %>% 
+  filter(receipt_description == "Postal Services") %>%
+  ggplot(aes("postal", receipt_value)) +
+  geom_boxplot()
+postal <- deputies_info %>% 
+  filter(receipt_description == "Postal Services")
+postal %>%
+  mutate(zscore = scores(receipt_value)) %>%
+  mutate(receipt_outlier = zscore > 3 | zscore < -3) %>%
+  arrange(desc(zscore))
+#By separeting Postal Service, from the data, there are 13 outliers, 9 of them are associate with the same deputie, Lael Varella from DEM. The 2 extreme values are paying to the same company CORREIOS - IMPRESSO ESPECIAL with less than one month of different between them. They are 4 different companies in this outliers, and the diputies are from 3 different patys. Genecias Noronha and Lael Varella are in different political partys.
+outliers_d <- deputies_info %>% 
+  filter(receipt_description == "Consultancies, Researches and Technical Works." | 
+           receipt_description == "Airline tickets" | receipt_description == "Postal Services")
+outliers_d %>%
+  ggplot(aes("outliers_descriptions", receipt_value)) +
+  geom_boxplot()
+outliers_d %>%
+  mutate(zscore = scores(receipt_value)) %>%
+  mutate(receipt_outlier = zscore > 3 | zscore < -3) %>%
+  arrange(desc(zscore))
+#By study all the groups that have outliers together, we have 21 outliers and if we study separate we have only 20 outliers, the reason of this is that when we study separate, all the values in some way could be closer together, e.i. the consultancies vales that are the higers.
+deuties_info_no_otliers <- deputies_info %>%
+  anti_join(outliers_d, by = "receipt_description")
+unique(deuties_info_no_otliers$receipt_description)
+```
+```{r}
+outlier_deputies <- deputies_info %>%
+  filter(receipt_outlier == TRUE)
+outlier_deputies %>%
+  ggplot(aes("outlier_deputies", receipt_value)) +
+  geom_boxplot()
+#in the boxplot, it looks that only are 2 real outliers inside the outliers, and when you separte by desprition it looks like 2 more of the outliers are inside consultancie service
+outlier_deputies %>%
+  ggplot(aes(receipt_description, receipt_value)) +
+  geom_boxplot()
+outlier_deputies <- outlier_deputies %>%
+  mutate(zscore = scores(receipt_value)) %>%
+  mutate(receipt_outlier = zscore > 3 | zscore < -3) %>%
+  arrange(desc(zscore))
+#Inside the outliers is only one real outlier
+outlier_deputies %>%
+  ggplot(aes(receipt_description, receipt_value)) +
+  geom_boxplot() +
+  facet_wrap("receipt_outlier") 
+
+# I will keep the outliers because in some ways I believe they show a reallyti.
+
+outlier_deputies %>%
+  group_by(political_party) %>%
+  summarise(total_per_party = n()) %>%
+  arrange(desc(total_per_party))
+#The party with more outliers is SD with 19 
+outlier_deputies %>%
+  group_by(deputy_name) %>%
+  summarise(total_per_deputie = n()) %>%
+  arrange(desc(total_per_deputie))
+#Genecias Noronha from SD, is the deputie that generate more of the outliers, 18.
+deputies_info %>%
+  select(receipt_description, political_party, receipt_value) %>%
+  group_by(political_party) %>%
+  summarise(total_claims_per_party = n()) %>%
+  arrange(desc(total_claims_per_party))
+#The party with more reclaims is PT with 883 receipt and after sd with 836
+deputies_info %>%
+  select(receipt_description, political_party) %>%
+  filter(political_party == "PT") %>%
+  group_by(receipt_description) %>%
+  summarise(total_pt_per_desciption = n()) %>%
+  arrange(desc(total_pt_per_desciption))
+#They mostly reclaims petrol. 
+deputies_info %>%
+  group_by(political_party) %>%
+  summarise(total_deputy = n_distinct(deputy_name))
+#They are only 10 deputy in the list
+deputies_info %>%
+  select(receipt_description, political_party) %>%
+  filter(political_party == "SD") %>%
+  group_by(receipt_description) %>%
+  summarise(total_pt_per_desciption = n()) %>%
+  arrange(desc(total_pt_per_desciption))
+# SD reclaim mostrly postal services, and they generate the most of the real outliers in each of the description.
+```
+

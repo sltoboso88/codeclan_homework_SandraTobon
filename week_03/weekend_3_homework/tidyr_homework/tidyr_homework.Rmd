@@ -1,0 +1,170 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(outliers)
+```
+
+1. The first 4 rows of the csv file are the metadata, so I should skip it.
+264 rows and 63 columns
+```{r}
+women_in_gov <- read_csv("data/women_in_gov.csv", skip = 4)
+women_in_gov <- women_in_gov %>%
+  select(-X64)
+dim(women_in_gov)
+```
+
+2. Fix column names, some column names have capital letters and spaces between it.
+```{r}
+names(women_in_gov)
+women_in_gov <- clean_names(women_in_gov)
+```
+3. X64 I have already remove and now I will check that the too indicators have the same values.
+```{r}
+unique(women_in_gov$indicator_name)
+#[1] "Proportion of seats held by women in national parliaments (%)"
+unique(women_in_gov$indicator_code)
+#[1] "SG.GEN.PARL.ZS"
+#Because they only have one value they don't add anything to the data frame, so I will remove it
+women_in_gov <- women_in_gov %>%
+  select(-indicator_name, -indicator_code)
+```
+4. Transform the data between wide to long 
+```{r}
+women_in_gov <- women_in_gov %>%
+  pivot_longer(
+    cols = x1960:x2018,
+    names_to = "year",
+    values_to = "prop_women"
+  )
+```
+
+5. count missing values
+```{r}
+unique(women_in_gov$prop_women)
+women_in_gov$year <- women_in_gov$year %>%
+  str_replace_all("x", "")
+women_in_gov <- women_in_gov %>%
+  mutate_at("year", as.integer)
+women_in_gov %>%
+  filter(between(year, 1960, 1989), !is.na(prop_women))
+#The data doesn't contain any value between 1960, and 1989. It doesn't mean that at that point of the history weren't women in the parlament, because the first woman to be part of a parlament, it was in UK in 1919. So I will delete all this years. 
+women_in_gov <- women_in_gov %>%
+  filter(between(year, 1990, 2018))
+women_in_gov %>%
+  select(country_name, year, prop_women) %>%
+  filter(between(year, 1990,20018),is.na(prop_women)) %>%
+  group_by(country_name) %>%
+  summarise(total_na = n()) %>%
+  filter(total_na ==29)
+#The countries that don't have any data in the propportion of women in parlament are 23: Aruba, Bermuda, British Virgin Islands, Cayman Islands, Channel Islands, Curacao, Faroe Islands, French Polynesia, Gibraltar, Greenland, Guam, Hong Kong SAR, China, Kosovo, Macao SAR, China, New Caledonia, Northern Mariana Islands, Puerto Rico, Sint Maarten (Dutch part). They are islands or special concept of state, because they continue to be in some ways dependent of the country that they were coloni in the past. This is the reason that I will not take them for the future		
+na_women <- women_in_gov %>%
+  select(country_name, year, prop_women) %>%
+  filter(between(year, 1990,20018),is.na(prop_women)) %>%
+  group_by(country_name) %>%
+  summarise(total_na = n()) %>%
+  filter(total_na ==29) 
+women_in_gov <- women_in_gov %>%
+  anti_join(na_women, by = "country_name")
+#We have countries that don't have data in some years, e.i. Chile and Colombia, but according to the parlament web pages, they had women in that years in the congres, so in this case the data isn't there so I will put the median as data.   
+median_country<- women_in_gov %>%
+  select(country_name, year, prop_women) %>%
+  group_by(country_name) %>% 
+   summarise(median_prop = median(prop_women, na.rm = TRUE)) 
+ women_in_gov <- women_in_gov %>%
+  inner_join(median_country, by = "country_name")
+ women_in_gov <- women_in_gov%>% 
+   mutate(prop_women = replace(prop_women, 
+                                is.na(prop_women),
+                                median_prop)) %>%
+   select(country_name, country_code, year, prop_women)
+
+```
+6. Outlier in the proportion of women
+```{r}
+
+ggplot(women_in_gov, aes(x = "women_in_palament", y = prop_women)) +
+  geom_boxplot()
+women_in_gov %>%
+  mutate_at("year", as.character) %>%
+  ggplot(aes(x = year, y = prop_women)) +
+  geom_boxplot() + coord_flip()
+#Year it is a lot outliers in the proportion of the women in parlament most of them positive outliers
+```
+7. zscore
+```{r}
+# All the oultierls are positive and the higher data or more dissperse is 4.69
+women_in_gov <- women_in_gov %>%
+  mutate(zscore_prop_women = scores(prop_women)) %>%
+  mutate(is_outlier = zscore_prop_women > 3 | zscore_prop_women < -3)  %>%
+  arrange(desc(zscore_prop_women))
+women_in_gov %>%
+  mutate_at("year", as.character) %>%
+  ggplot(aes(x = year, y = prop_women)) +
+  geom_boxplot() + coord_flip() +
+  facet_wrap("is_outlier") 
+#the outliers are after 2003, and become higher through the pass of the time, it show that the power of the women in the parlament special in some countries is increassing, e.i. Rwanda
+outlier_women <- women_in_gov %>%
+  filter(is_outlier == TRUE)
+outlier_women %>%
+  ggplot(aes("women_outliers", prop_women))+
+  geom_boxplot()
+```
+8. what will you do with the outliers 
+```{r}
+#I will keep the outliers, because I really believe they show the reality 
+women_in_gov <- women_in_gov %>%
+  select(country_name, country_code, year, prop_women, is_outlier)
+#I study the outliers, study is country that has outliers and this are my conclussion
+#Actually if you study the data separate, you could see that the prop_women in the congress in Rwanda doesn't have any outliers, same with Cuba, Andorra, Iceland
+women_in_gov %>%
+  filter(country_name == "Rwanda") %>%
+  ggplot(aes(x ="Rwanda_congress_woman", y = prop_women)) +
+  geom_boxplot()
+women_in_gov %>%
+  filter(country_name == "Cuba") %>%
+  ggplot(aes(x ="Cuba_congress_woman", y = prop_women)) +
+  geom_boxplot()
+women_in_gov %>%
+  filter(country_name == "Bolivia") %>%
+  ggplot(aes(x ="Bolivia_congress_woman", y = prop_women)) +
+  geom_boxplot()
+women_in_gov %>%
+  filter(country_name == "Andorra") %>%
+  ggplot(aes(x ="Andorra_congress_woman", y = prop_women)) +
+  geom_boxplot()
+#In Mexico is 1 outlier in 2018, the year that they choose a socialist president, so probably it means that the way that people think and decide in Mexico is changing 
+women_in_gov %>%
+  filter(country_name == "Mexico") %>%
+  ggplot(aes(x ="Mexico_congress_woman", y = prop_women)) +
+  geom_boxplot()
+women_in_gov %>%
+  filter(country_name == "Iceland") %>%
+  ggplot(aes(x ="Iceland_congress_woman", y = prop_women)) +
+  geom_boxplot()
+#Sweden actually has a negative outlierm and It is becuse in 1998 the proportion of women in the congres increasse 26% and it has been growing since them. 
+women_in_gov %>%
+  filter(country_name == "Sweden") %>%
+  ggplot(aes(x ="Sweden_congress_woman", y = prop_women)) +
+  geom_boxplot()
+```
+9 top 10 countries
+```{r}
+#top 10 by mean
+women_in_gov %>%
+  group_by(country_name) %>%
+  summarise(mean_women_congress = mean(prop_women)) %>%
+  arrange(desc(mean_women_congress)) %>%
+  head(10) 
+#bottom 10
+women_in_gov %>%
+  group_by(country_name) %>%
+  summarise(mean_women_congress = mean(prop_women)) %>%
+  arrange(mean_women_congress) %>%
+  head(10) 
+```
+
