@@ -1754,19 +1754,98 @@ summary {
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5gYGAifQ== -->
 <pre class="r"><code>library(tidyverse)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUmVnaXN0ZXJlZCBTMyBtZXRob2Qgb3ZlcndyaXR0ZW4gYnkgJ2RwbHlyJzpcbiAgbWV0aG9kICAgICAgICAgICBmcm9tXG4gIHByaW50LnJvd3dpc2VfZGYgICAgIFxuUmVnaXN0ZXJlZCBTMyBtZXRob2RzIG92ZXJ3cml0dGVuIGJ5ICdkYnBseXInOlxuICBtZXRob2QgICAgICAgICBmcm9tXG4gIHByaW50LnRibF9sYXp5ICAgICBcbiAgcHJpbnQudGJsX3NxbCAgICAgIFxuXHUwMDFiWzM3beKUgOKUgCBcdTAwMWJbMW1BdHRhY2hpbmcgcGFja2FnZXNcdTAwMWJbMjJtIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCB0aWR5dmVyc2UgMS4zLjAg4pSA4pSAXHUwMDFiWzM5bVxuXHUwMDFiWzM3bVx1MDAxYlszMm3inJNcdTAwMWJbMzdtIFx1MDAxYlszNG1nZ3Bsb3QyXHUwMDFiWzM3bSAzLjIuMSAgICAgXHUwMDFiWzMybeKck1x1MDAxYlszN20gXHUwMDFiWzM0bXB1cnJyICBcdTAwMWJbMzdtIDAuMy4zXG5cdTAwMWJbMzJt4pyTXHUwMDFiWzM3bSBcdTAwMWJbMzRtdGliYmxlIFx1MDAxYlszN20gMi4xLjMgICAgIFx1MDAxYlszMm3inJNcdTAwMWJbMzdtIFx1MDAxYlszNG1kcGx5ciAgXHUwMDFiWzM3bSAwLjguNFxuXHUwMDFiWzMybeKck1x1MDAxYlszN20gXHUwMDFiWzM0bXRpZHlyICBcdTAwMWJbMzdtIDEuMC4yICAgICBcdTAwMWJbMzJt4pyTXHUwMDFiWzM3bSBcdTAwMWJbMzRtc3RyaW5nclx1MDAxYlszN20gMS40LjBcblx1MDAxYlszMm3inJNcdTAwMWJbMzdtIFx1MDAxYlszNG1yZWFkciAgXHUwMDFiWzM3bSAxLjMuMSAgICAgXHUwMDFiWzMybeKck1x1MDAxYlszN20gXHUwMDFiWzM0bWZvcmNhdHNcdTAwMWJbMzdtIDAuNS4wXHUwMDFiWzM5bVxuXHUwMDFiWzM3beKUgOKUgCBcdTAwMWJbMW1Db25mbGljdHNcdTAwMWJbMjJtIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCB0aWR5dmVyc2VfY29uZmxpY3RzKCkg4pSA4pSAXG5cdTAwMWJbMzFteFx1MDAxYlszN20gXHUwMDFiWzM0bWRwbHlyXHUwMDFiWzM3bTo6XHUwMDFiWzMybWZpbHRlcigpXHUwMDFiWzM3bSBtYXNrcyBcdTAwMWJbMzRtc3RhdHNcdTAwMWJbMzdtOjpmaWx0ZXIoKVxuXHUwMDFiWzMxbXhcdTAwMWJbMzdtIFx1MDAxYlszNG1kcGx5clx1MDAxYlszN206Olx1MDAxYlszMm1sYWcoKVx1MDAxYlszN20gICAgbWFza3MgXHUwMDFiWzM0bXN0YXRzXHUwMDFiWzM3bTo6bGFnKClcdTAwMWJbMzltXG4ifQ== -->
+<pre><code>Registered S3 method overwritten by 'dplyr':
+  method           from
+  print.rowwise_df     
+Registered S3 methods overwritten by 'dbplyr':
+  method         from
+  print.tbl_lazy     
+  print.tbl_sql      
+[37m── [1mAttaching packages[22m ────────────────────────────────────────────── tidyverse 1.3.0 ──[39m
+[37m[32m✓[37m [34mggplot2[37m 3.2.1     [32m✓[37m [34mpurrr  [37m 0.3.3
+[32m✓[37m [34mtibble [37m 2.1.3     [32m✓[37m [34mdplyr  [37m 0.8.4
+[32m✓[37m [34mtidyr  [37m 1.0.2     [32m✓[37m [34mstringr[37m 1.4.0
+[32m✓[37m [34mreadr  [37m 1.3.1     [32m✓[37m [34mforcats[37m 0.5.0[39m
+[37m── [1mConflicts[22m ───────────────────────────────────────────────── tidyverse_conflicts() ──
+[31mx[37m [34mdplyr[37m::[32mfilter()[37m masks [34mstats[37m::filter()
+[31mx[37m [34mdplyr[37m::[32mlag()[37m    masks [34mstats[37m::lag()[39m</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>load</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29kZWNsYW5fdHdlZXRzIDwtIHJlYWRfY3N2KFwiZGF0YS9jb2RlX2NsYW5fdHdlZXRzLmNzdlwiKVxuI2NvZGVjYWtuX3R3ZWV0cyBoYXZlIDIzNCByb3dzIGFuZCAyNyBjb2x1bW5zXG5kaW0oY29kZWNsYW5fdHdlZXRzKVxuI3ZhcmlhYmxlcyBuYW1lcyBhcmUgbWVhbmluZ2Z1bCBhbmQgaW4gd3JpdGVyIGluIHRoZSByaWdodCB3YXlcbm5hbWVzKGNvZGVjbGFuX3R3ZWV0cylcbmNvZGVjbGFuX2luZm8gPC0gcmVhZF9jc3YoXCJkYXRhL2NvZGVfY2xhbl9pbmZvLmNzdlwiKVxuYGBgIn0= -->
-<pre class="r"><code>codeclan_tweets &lt;- read_csv(&quot;data/code_clan_tweets.csv&quot;)
-#codecakn_tweets have 234 rows and 27 columns
-dim(codeclan_tweets)
-#variables names are meaningful and in writer in the right way
-names(codeclan_tweets)
-codeclan_info &lt;- read_csv(&quot;data/code_clan_info.csv&quot;)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29kZWNsYW5fdHdlZXRzIDwtIHJlYWRfY3N2KFwiZGF0YS9jb2RlX2NsYW5fdHdlZXRzLmNzdlwiKVxuYGBgIn0= -->
+<pre class="r"><code>codeclan_tweets &lt;- read_csv(&quot;data/code_clan_tweets.csv&quot;)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICAuZGVmYXVsdCA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgdHdlZXRfaWQgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgdXNlcl9pZCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBkaXNwbGF5X3RleHRfd2lkdGggPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgcmVwbHlfdG9fc3RhdHVzX2lkID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIHJlcGx5X3RvX3VzZXJfaWQgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgaXNfcXVvdGUgPSBcdTAwMWJbMzNtY29sX2xvZ2ljYWwoKVx1MDAxYlszOW0sXG4gIGlzX3JldHdlZXQgPSBcdTAwMWJbMzNtY29sX2xvZ2ljYWwoKVx1MDAxYlszOW0sXG4gIGZhdm9yaXRlX2NvdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIHJldHdlZXRfY291bnQgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgcXVvdGVfY291bnQgPSBcdTAwMWJbMzNtY29sX2xvZ2ljYWwoKVx1MDAxYlszOW0sXG4gIHJlcGx5X2NvdW50ID0gXHUwMDFiWzMzbWNvbF9sb2dpY2FsKClcdTAwMWJbMzltLFxuICBzeW1ib2xzID0gXHUwMDFiWzMzbWNvbF9sb2dpY2FsKClcdTAwMWJbMzltLFxuICByZXR3ZWV0X2Zhdm9yaXRlX2NvdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIHJldHdlZXRfcmV0d2VldF9jb3VudCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICByZXR3ZWV0X3VzZXJfaWQgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bVxuKVxuU2VlIHNwZWMoLi4uKSBmb3IgZnVsbCBjb2x1bW4gc3BlY2lmaWNhdGlvbnMuXG4ifQ== -->
+<pre><code>Parsed with column specification:
+cols(
+  .default = col_character(),
+  tweet_id = [32mcol_double()[39m,
+  user_id = [32mcol_double()[39m,
+  display_text_width = [32mcol_double()[39m,
+  reply_to_status_id = [32mcol_double()[39m,
+  reply_to_user_id = [32mcol_double()[39m,
+  is_quote = [33mcol_logical()[39m,
+  is_retweet = [33mcol_logical()[39m,
+  favorite_count = [32mcol_double()[39m,
+  retweet_count = [32mcol_double()[39m,
+  quote_count = [33mcol_logical()[39m,
+  reply_count = [33mcol_logical()[39m,
+  symbols = [33mcol_logical()[39m,
+  retweet_favorite_count = [32mcol_double()[39m,
+  retweet_retweet_count = [32mcol_double()[39m,
+  retweet_user_id = [32mcol_double()[39m
+)
+See spec(...) for full column specifications.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2NvZGVjYWtuX3R3ZWV0cyBoYXZlIDIzNCByb3dzIGFuZCAyNyBjb2x1bW5zXG5kaW0oY29kZWNsYW5fdHdlZXRzKVxuYGBgIn0= -->
+<pre class="r"><code>#codecakn_tweets have 234 rows and 27 columns
+dim(codeclan_tweets)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDIzNCAgMjdcbiJ9 -->
+<pre><code>[1] 234  27</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3ZhcmlhYmxlcyBuYW1lcyBhcmUgbWVhbmluZ2Z1bCBhbmQgaW4gd3JpdGVyIGluIHRoZSByaWdodCB3YXlcbm5hbWVzKGNvZGVjbGFuX3R3ZWV0cylcbmBgYCJ9 -->
+<pre class="r"><code>#variables names are meaningful and in writer in the right way
+names(codeclan_tweets)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcInR3ZWV0X2lkXCIgICAgICAgICAgICAgICBcInVzZXJfaWRcIiAgICAgICAgICAgICAgICBcImNyZWF0ZWRfYXRcIiAgICAgICAgICAgIFxuIFs0XSBcInNjcmVlbl9uYW1lXCIgICAgICAgICAgICBcInRleHRcIiAgICAgICAgICAgICAgICAgICBcInNvdXJjZVwiICAgICAgICAgICAgICAgIFxuIFs3XSBcImRpc3BsYXlfdGV4dF93aWR0aFwiICAgICBcInJlcGx5X3RvX3N0YXR1c19pZFwiICAgICBcInJlcGx5X3RvX3VzZXJfaWRcIiAgICAgIFxuWzEwXSBcInJlcGx5X3RvX3NjcmVlbl9uYW1lXCIgICBcImlzX3F1b3RlXCIgICAgICAgICAgICAgICBcImlzX3JldHdlZXRcIiAgICAgICAgICAgIFxuWzEzXSBcImZhdm9yaXRlX2NvdW50XCIgICAgICAgICBcInJldHdlZXRfY291bnRcIiAgICAgICAgICBcInF1b3RlX2NvdW50XCIgICAgICAgICAgIFxuWzE2XSBcInJlcGx5X2NvdW50XCIgICAgICAgICAgICBcImhhc2h0YWdzXCIgICAgICAgICAgICAgICBcInN5bWJvbHNcIiAgICAgICAgICAgICAgIFxuWzE5XSBcInVybHNfdXJsXCIgICAgICAgICAgICAgICBcInVybHNfdC5jb1wiICAgICAgICAgICAgICBcInVybHNfZXhwYW5kZWRfdXJsXCIgICAgIFxuWzIyXSBcIm1lZGlhX3R5cGVcIiAgICAgICAgICAgICBcInJldHdlZXRfc291cmNlXCIgICAgICAgICBcInJldHdlZXRfZmF2b3JpdGVfY291bnRcIlxuWzI1XSBcInJldHdlZXRfcmV0d2VldF9jb3VudFwiICBcInJldHdlZXRfdXNlcl9pZFwiICAgICAgICBcInJldHdlZXRfbG9jYXRpb25cIiAgICAgIFxuIn0= -->
+<pre><code> [1] &quot;tweet_id&quot;               &quot;user_id&quot;                &quot;created_at&quot;            
+ [4] &quot;screen_name&quot;            &quot;text&quot;                   &quot;source&quot;                
+ [7] &quot;display_text_width&quot;     &quot;reply_to_status_id&quot;     &quot;reply_to_user_id&quot;      
+[10] &quot;reply_to_screen_name&quot;   &quot;is_quote&quot;               &quot;is_retweet&quot;            
+[13] &quot;favorite_count&quot;         &quot;retweet_count&quot;          &quot;quote_count&quot;           
+[16] &quot;reply_count&quot;            &quot;hashtags&quot;               &quot;symbols&quot;               
+[19] &quot;urls_url&quot;               &quot;urls_t.co&quot;              &quot;urls_expanded_url&quot;     
+[22] &quot;media_type&quot;             &quot;retweet_source&quot;         &quot;retweet_favorite_count&quot;
+[25] &quot;retweet_retweet_count&quot;  &quot;retweet_user_id&quot;        &quot;retweet_location&quot;      </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29kZWNsYW5faW5mbyA8LSByZWFkX2NzdihcImRhdGEvY29kZV9jbGFuX2luZm8uY3N2XCIpXG5gYGAifQ== -->
+<pre class="r"><code>codeclan_info &lt;- read_csv(&quot;data/code_clan_info.csv&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICB0d2VldF9pZCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBzdGF0dXNfdXJsID0gXHUwMDFiWzMxbWNvbF9jaGFyYWN0ZXIoKVx1MDAxYlszOW0sXG4gIG5hbWUgPSBcdTAwMWJbMzFtY29sX2NoYXJhY3RlcigpXHUwMDFiWzM5bSxcbiAgbG9jYXRpb24gPSBcdTAwMWJbMzFtY29sX2NoYXJhY3RlcigpXHUwMDFiWzM5bSxcbiAgZGVzY3JpcHRpb24gPSBcdTAwMWJbMzFtY29sX2NoYXJhY3RlcigpXHUwMDFiWzM5bSxcbiAgdXJsID0gXHUwMDFiWzMxbWNvbF9jaGFyYWN0ZXIoKVx1MDAxYlszOW0sXG4gIHByb3RlY3RlZCA9IFx1MDAxYlszM21jb2xfbG9naWNhbCgpXHUwMDFiWzM5bSxcbiAgZm9sbG93ZXJzX2NvdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIGZyaWVuZHNfY291bnQgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgbGlzdGVkX2NvdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIHN0YXR1c2VzX2NvdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIGZhdm91cml0ZXNfY291bnQgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgYWNjb3VudF9jcmVhdGVkX2F0ID0gXHUwMDFiWzMxbWNvbF9jaGFyYWN0ZXIoKVx1MDAxYlszOW0sXG4gIHZlcmlmaWVkID0gXHUwMDFiWzMzbWNvbF9sb2dpY2FsKClcdTAwMWJbMzltLFxuICBwcm9maWxlX3VybCA9IFx1MDAxYlszMW1jb2xfY2hhcmFjdGVyKClcdTAwMWJbMzltXG4pXG4ifQ== -->
+<pre><code>Parsed with column specification:
+cols(
+  tweet_id = [32mcol_double()[39m,
+  status_url = [31mcol_character()[39m,
+  name = [31mcol_character()[39m,
+  location = [31mcol_character()[39m,
+  description = [31mcol_character()[39m,
+  url = [31mcol_character()[39m,
+  protected = [33mcol_logical()[39m,
+  followers_count = [32mcol_double()[39m,
+  friends_count = [32mcol_double()[39m,
+  listed_count = [32mcol_double()[39m,
+  statuses_count = [32mcol_double()[39m,
+  favourites_count = [32mcol_double()[39m,
+  account_created_at = [31mcol_character()[39m,
+  verified = [33mcol_logical()[39m,
+  profile_url = [31mcol_character()[39m
+)</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>favorite_count</p>
@@ -1855,113 +1934,49 @@ codeclan_tweets %&gt;%
 <p>hastang</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInNwZWNfdGJsX2RmIiwidGJsX2RmIiwidGJsIiwiZGF0YS5mcmFtZSJdLCJuY29sIjoyLCJucm93IjoxMTd9LCJyZGYiOiJINHNJQUFBQUFBQUFBODFZelhMYk5oQm1aQ3V4M1RqeEpMWGI5TmZqekhScVQrMzY1NUtlNmtNbjUwNm5uY21wRmdoQ0pDUVNvQUhTc25yS3ZaYytRaCtoajlCSDZDUGtFZm9FY1JmVUI0bWlKVnR1ZXFobXJBV3gzMzY3QzJBWGxILzQ3dFhKMnF1MUlBaVdncVg3OU4ybVlkRCs2Y2VYK3krQ1lMbEZEL2VDNVdEVnlVdFNQNldCbTN4RWYrVnArWnREQjZmbGE4Z081UGVRcDVEQlNCWi9RLzRKK1Fja2VJb2NFanpGOWtoYTRPenZrUEJuZ2Jmd1orSFBIa0p1UU1LL2VRUDVGeVI0RFhnTjRqRGdOK0EzNERYZ05ZakxnTitBL3h5ODU4anZIUHpuNEQySC9UbnNjK0J6NEhQZ2MvalA0VDlIZmpuaXlNR1RleDc0MTNoVzRGUElTL2w1NExJM2tOQ240TzBEMXdldUIxd1B1QjdpNm5VZ2daT1lsNWlYNEpQZ2s4QWw0RXNRWHdLN0JIWUo3QkxnWStCaTZHUG9ZL0RHd0hXQjY0S3ZDNXlBUDRINEJmUUNmTUxqd0NmQUY4RXVBbThFK3dqMkVld2oyRVd3NDhCelBJZXdDNEVQNFMrRW5nSFB3TXZBMThGOEIvWWQySGU4SHZabndKM0IvZ3o4WjlEL0hQalBCdjJWS09UN1Vha2lJZkMwWEFpZVlMeml4bG1aMlgvNS9LU3JqVkJXY3B0b2tSdXBpbmZSckVwMUlZd1NkZ0dvaUtRS1N4UDdURnI4RXFPSFhFZUNwMHlsc3V0emJyTllwdjVoeGNwWXNhT2pJWjYzK1pjN1BYYkJMRGN5TDNhKzJ0NkpVMlpqUFhERG50M1pCZTRsNFp5Wm0yYWNVNWd5bEtrc3FnbXJ1OFdBR2VIR1Nja0dRdVluaDduUmxTN1JoVmFqMlRIYlUySnpxK2tBby8wWnF4N0pMR2U4c0dXV3llTG9HOHgrVGdaR2RNdFlDT3VNcGtHM0dPK1JjY09BS0M1WVdvS01WdDRXMmt5eWZaQ1hKdGRXM0VqN2pHZ3Z6SjJqbVQzN05aRU5SSnE2QXpDRGttYnFPenQyc1RNek5ablJsb2Vza0ZxTmtkc3prWnlwU0hjcCt6dmoxb1VxREoxTG9VUnA3QjJOdjVpSkt3VEx3dGlOUXE1TmZzczYvdGNKUGZUbHpkTXluRlB5enpMS21xV0pZR21STUhmazNYNE5oT2dEOElLY2phdnoycTVWT2ZMRWo1MU9pVUVvSi92NUlkblR0RlN4UDVoVlN4anJIMGN5bGhTQm96aytISy9GLzJmYUZlb2tiRmYvWEJlVWYxUXQrRlNlelhWeVNkK1M1N2RrbHBhOFA0eVBUaHE5cXJuUVVOWFhmVkxlVU43UU5EZXJlZ3hIOWUzZDdNNDVGck1JRG9nZ05pd3FSMlY0UzRTN056QjkxbHhTajNGTE83YjhoRkRkTWsxdHdYaS9hdDZUcnI1YjI1eWViU2l2TC81V2MzTWNlb29rWXVTRm1kejFnT29HS0dRMHBBanRKSk9QQ1RhOTl3UVRVdFQ2NHdmT1R6WGpWR09IWHQydWRPL3c4SjdiSnJwRlk2MGpmLys3eUd2OU8wNTF5RklYcDcwZTN4VFpPaCtHTGtGZUdycjFNSG5zeWpXVnRBeVh1VEFrK2Fpd0x5ZGtibkVTYVNLeXBDdG1OdmN0QzNIdDFXQUwxNmM3Z3JlRXZlVnlLNlJOSE42VzVrSU1hL1gwcE83WUZpSmJZUEUvZFRtWGRGOW1vaXFPZWt1Y1d5SHo2WjY3RUd5dVRYMEgzUFVzSTZGamxnbDcxd05SMytPTmVvSzBMWjVxYnlweEhGTnAxWFF2Q2VVdmN6TnFQaTlTZjNzTDN3N2U0aU95b0JjcGFpUjBkWTB1aFVheHZvOXluTlduRml6VkJXSFhqcUZyVEZQOWNhYlpaaTFBdjlKVFhXdHFSU0p4SVZKTnhXVG5kZXZqNjB0Q2pScDI3akJXTk9TUUtaWU9yWndRYlZyM0doM3pWREExMUtXaGZJVXdVQzVKWFgrTFdhUlp6N2tqcHYrUjBGYnVET05IU1d0OGVPaWRvVGlUdmkydEpJd3FsTVcyYVV3aFdHL3NKOWRjY2dkZHlsODA0S3RHRHc2OHYzWG43elY5WFYxZC9VcmliUVA4UU9mdVppSm95LzJmbzkzd2NzODBKaDZYeWxGSCt6d3BWWC8veEVWU3FVZWZkWXpMMnJnMWN0bTZBbFhiL3lZVEtwWnEvUHNrWmFGSS9ic2VwVkJsY0ZEOTVQRXAwNnc5S0RRMUdqL0RkZXBucXR5Q3QvOEFKNHBJS2Q0UkFBQT0ifQ== -->
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["tweet_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["hashtags"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"345","2":"dundee"},{"1":"344","2":"tech"},{"1":"342","2":"techmums"},{"1":"341","2":"techmums"},{"1":"340","2":"techmums"},{"1":"336","2":"techmums"},{"1":"335","2":"forensicshoeprints"},{"1":"332","2":"forensicshoeprints"},{"1":"331","2":"forensicshoeprints"},{"1":"329","2":"inverness"},{"1":"327","2":"forensicshoeprints"},{"1":"326","2":"edinburgh"},{"1":"322","2":"cx"},{"1":"315","2":"codeclanlife"},{"1":"314","2":"agile"},{"1":"312","2":"signa11y"},{"1":"311","2":"c(\"javascript\", \"glasgow\", \"js\")"},{"1":"309","2":"c(\"a11y\", \"accessibility\", \"software\", \"huaweip30pro\", \"shotonhuawei\")"},{"1":"308","2":"c(\"tech\", \"dundee\")"},{"1":"307","2":"impactsummit19"},{"1":"305","2":"c(\"refugees\", \"impactsummit19\")"},{"1":"304","2":"impactsummit19"},{"1":"302","2":"c(\"impactsummit19\", \"values\", \"investors\")"},{"1":"301","2":"purpose"},{"1":"299","2":"impactsummit19"},{"1":"298","2":"c(\"vr\", \"impactsummit19\")"},{"1":"297","2":"impactsummit19"},{"1":"296","2":"impactsummit19"},{"1":"295","2":"c(\"wellness\", \"impactsummit19\", \"codeclanlife\")"},{"1":"292","2":"c(\"impactsummit19\", \"imagibation\")"},{"1":"291","2":"c(\"impactsummit19\", \"candofest\")"},{"1":"290","2":"c(\"impactsummit19\", \"candofest\")"},{"1":"289","2":"entrepreneurs"},{"1":"288","2":"c(\"impactsummit19\", \"candofest\")"},{"1":"285","2":"c(\"impactsummit19\", \"teambg\", \"bcorp\")"},{"1":"284","2":"impactsummit19"},{"1":"283","2":"c(\"impactsummit19\", \"candofest\")"},{"1":"281","2":"c(\"impactsummit19\", \"candofest\")"},{"1":"275","2":"techmumsclub"},{"1":"274","2":"techmums"},{"1":"269","2":"mentalhealthawarenessweek"},{"1":"268","2":"c(\"edinburgh\", \"codeclanlife\", \"techlife\", \"codenewbie\")"},{"1":"267","2":"c(\"coding\", \"inverness\")"},{"1":"264","2":"digitaltech2019"},{"1":"263","2":"digitaltech2019"},{"1":"261","2":"digitaltech2019"},{"1":"260","2":"digitaltech2019"},{"1":"259","2":"digitaltech2019"},{"1":"258","2":"digitaltech2019"},{"1":"256","2":"digitaltech2019"},{"1":"249","2":"c(\"inverness\", \"scotlandcando\")"},{"1":"246","2":"c(\"edinburgh\", \"coding\")"},{"1":"245","2":"digitaltech2019"},{"1":"241","2":"c(\"luckyg13\", \"glasgow\", \"codeclanlife\", \"glasgowlife\", \"tech\")"},{"1":"240","2":"glasgow"},{"1":"239","2":"codeclanlife"},{"1":"237","2":"c(\"webvr\", \"glasgow\")"},{"1":"226","2":"techmums"},{"1":"217","2":"codeclanlife"},{"1":"216","2":"c(\"graduation\", \"codeclanlife\", \"glasgowlife\")"},{"1":"215","2":"codeclanlife"},{"1":"213","2":"c(\"inverness\", \"codeclanscot\")"},{"1":"212","2":"c(\"fullstack\", \"javascript\")"},{"1":"211","2":"c(\"js\", \"javascript\", \"coding\")"},{"1":"208","2":"c(\"edinburgh\", \"java\")"},{"1":"204","2":"c(\"datacarpentry\", \"tidyverse\")"},{"1":"203","2":"c(\"scotlandcando\", \"eie19\")"},{"1":"202","2":"c(\"eie19\", \"edinburgh\")"},{"1":"201","2":"eie19"},{"1":"200","2":"eie19"},{"1":"199","2":"eie19"},{"1":"198","2":"eie19"},{"1":"196","2":"eie19"},{"1":"195","2":"techforgood"},{"1":"194","2":"data"},{"1":"192","2":"c(\"globalscots\", \"eie19\")"},{"1":"190","2":"eie19"},{"1":"187","2":"cybersecurity"},{"1":"186","2":"c(\"clientxperience\", \"cx\", \"eie19\", \"thirdsector\")"},{"1":"185","2":"eie19"},{"1":"184","2":"c(\"eie19\", \"edinburgh\")"},{"1":"182","2":"inverness"},{"1":"180","2":"c(\"techmums\", \"eie19\")"},{"1":"178","2":"eie19"},{"1":"175","2":"scottishtechsurvey2019"},{"1":"173","2":"c(\"eie19\", \"stem\")"},{"1":"172","2":"eie19"},{"1":"171","2":"eie19"},{"1":"170","2":"c(\"customer\", \"mentalhealth\")"},{"1":"169","2":"techmums"},{"1":"168","2":"eie19"},{"1":"167","2":"eie19"},{"1":"166","2":"c(\"esports\", \"eie19\", \"videogames\")"},{"1":"165","2":"eie19"},{"1":"164","2":"eie19"},{"1":"163","2":"eie19"},{"1":"161","2":"data"},{"1":"160","2":"c(\"eie19\", \"cx\")"},{"1":"158","2":"c(\"eie19\", \"scotlandisnow\", \"codeclanbiz\")"},{"1":"152","2":"techmums"},{"1":"149","2":"techmums"},{"1":"147","2":"c(\"fullstack\", \"javascript\")"},{"1":"146","2":"c(\"edinburgh\", \"codeclanlife\", \"techlife\")"},{"1":"144","2":"c(\"programming\", \"coding\")"},{"1":"142","2":"c(\"data\", \"glasgow\")"},{"1":"140","2":"c(\"datacarpentry\", \"tidyverse\")"},{"1":"137","2":"c(\"datacarpentry\", \"tidyverse\")"},{"1":"134","2":"inverness"},{"1":"133","2":"c(\"r\", \"glasgow\", \"tidyverse\")"},{"1":"131","2":"c(\"data\", \"scotland\")"},{"1":"129","2":"c(\"edinburgh\", \"developers\")"},{"1":"128","2":"glasgow"},{"1":"127","2":"c(\"programming\", \"webdevelopment\", \"dataanalysis\")"},{"1":"126","2":"springcleanyourcareer"},{"1":"125","2":"ios"},{"1":"124","2":"c(\"codeclanlife\", \"glasgowlife\")"},{"1":"120","2":"c(\"webvr\", \"glasgow\")"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[117]},"pages":{}}}
-  </script>
-</div>
-<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29kZWNsYW5faGFzaHRhZ3MgPC0gY29kZWNsYW5fdHdlZXRzICU+JVxuICBzZWxlY3QodHdlZXRfaWQsIGhhc2h0YWdzKSAlPiVcbiAgZmlsdGVyKCFpcy5uYShoYXNodGFncykpICU+JVxuICBtdXRhdGUoaGFzaHRhZ3MgPSBzdHJfdG9fbG93ZXIoaGFzaHRhZ3MpKVxuYGBgIn0= -->
+<pre class="r"><code>codeclan_hashtags &lt;- codeclan_tweets %&gt;%
+  select(tweet_id, hashtags) %&gt;%
+  filter(!is.na(hashtags)) %&gt;%
+  mutate(hashtags = str_to_lower(hashtags))</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>extension</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29kZWNsYW5faGFzaHRhZ3MkaGFzaHRhZ3MgJT4lXG4gIHN0cl9zdWIoMSwyKSAlPiVcbiAgc3RyX2RldGVjdChwYXR0ZXJuKSAlPiVcbiAgc3VtKClcblxuYGBgIn0= -->
-<pre class="r"><code>codeclan_hashtags$hashtags %&gt;%
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIzQ5XG5wYXR0ZXJuID0gXCJjXFxcXChcIlxuY29kZWNsYW5faGFzaHRhZ3MkaGFzaHRhZ3MgJT4lXG4gIHN0cl9zdWIoMSwyKSAlPiVcbiAgc3RyX2RldGVjdChwYXR0ZXJuKSAlPiVcbiAgc3VtKClcbmBgYCJ9 -->
+<pre class="r"><code>#49
+pattern = &quot;c\\(&quot;
+codeclan_hashtags$hashtags %&gt;%
   str_sub(1,2) %&gt;%
   str_detect(pattern) %&gt;%
-  sum()
-</code></pre>
+  sum()</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIDQ5XG4ifQ== -->
 <pre><code>[1] 49</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29kZWNsYW5fdHdlZXRzJHRleHQgJT4lXG4gIHN0cl9kZXRlY3QocGF0dGVybikgJT4lXG4gIHN1bSgpXG5cbmBgYCJ9 -->
-<pre class="r"><code>codeclan_tweets$text %&gt;%
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIzMzXG5wYXR0ZXJuID0gXCJFZGluYnVyZ2hcIlxuY29kZWNsYW5fdHdlZXRzJHRleHQgJT4lXG4gIHN0cl9kZXRlY3QocGF0dGVybikgJT4lXG4gIHN1bSgpXG5gYGAifQ== -->
+<pre class="r"><code>#33
+pattern = &quot;Edinburgh&quot;
+codeclan_tweets$text %&gt;%
   str_detect(pattern) %&gt;%
-  sum()
-</code></pre>
+  sum()</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIDMzXG4ifQ== -->
 <pre><code>[1] 33</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29kZWNsYW5fdHdlZXRzJHRleHQgJT4lXG4gIHN0cl9leHRyYWN0X2FsbChwYXR0ZXJuKSAlPiVcbiAgZmxhdHRlbl9jaHIoKVxuXG5gYGAifQ== -->
-<pre class="r"><code>codeclan_tweets$text %&gt;%
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGF0dGVybiA9IFwiQFthLXpBLVowLTlfXStcIlxuY29kZWNsYW5fdHdlZXRzJHRleHQgJT4lXG4gIHN0cl9leHRyYWN0X2FsbChwYXR0ZXJuKSAlPiVcbiAgZmxhdHRlbl9jaHIoKVxuICBcbmBgYCJ9 -->
+<pre class="r"><code>pattern = &quot;@[a-zA-Z0-9_]+&quot;
+codeclan_tweets$text %&gt;%
   str_extract_all(pattern) %&gt;%
   flatten_chr()
-</code></pre>
+  </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICBbMV0gXCJAQ29kZUNsYW5TY290XCIgICAgXCJAWW91VHViZVwiICAgICAgICAgXCJAZXBsYWNlbWVudHNjb3RcIiAgXCJAR0FfRHVuZGVlXCIgICAgICBcbiAgWzVdIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQE9VU2NvdGxhbmRcIiAgICAgIFwiQEluZ2xlZGV3U3RlcGhlblwiIFwiQENfTGVhdmVyXCIgICAgICAgXG4gIFs5XSBcIkBNYU1DaGFubmVsXCIgICAgICBcIkBHZXJyeU1jQ3Vza2VyXCIgICBcIkBEb25hbGRNY0xcIiAgICAgICBcIkBwb2xseXBcIiAgICAgICAgIFxuIFsxM10gXCJAVGVjaG11bXNIUVwiICAgICAgXCJAQ29kZUNsYW5TY290XCIgICAgXCJAVGVjaG11bXNIUVwiICAgICAgXCJAQ29kZUNsYW5TY290XCIgICBcbiBbMTddIFwiQF9MYXVyZW5BbGxpc29uX1wiIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQGxyY2ZzXCIgICAgICAgICAgIFwiQGVwbGFjZW1lbnRzY290XCIgXG4gWzIxXSBcIkBDb2RlQ2xhblNjb3RcIiAgICBcIkBPcGVuVW5pdmVyc2l0eVwiICBcIkBBYmVydGF5VW5pXCIgICAgICBcIkBkdW5kZWV1bmlcIiAgICAgIFxuIFsyNV0gXCJAbHJjZnNcIiAgICAgICAgICAgXCJAQ29kZUNsYW5TY290X1wiICAgXCJAbHJjZnNcIiAgICAgICAgICAgXCJAQ29kZUNsYW5TY290XCIgICBcbiBbMjldIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQEthdGVGb3JiZXNNU1BcIiAgIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQENvZGVDbGFuU2NvdFwiICAgXG4gWzMzXSBcIkBDb2RlQ2xhblNjb3RcIiAgICBcIkBPbmVDaGVycnlBcHBcIiAgICBcIkBuZXdzZGlyZWN0XCIgICAgICBcIkBlZGZyaW5nZVwiICAgICAgIFxuIFszN10gXCJAYWx6c2NvdFwiICAgICAgICAgXCJAS2lyc3R5UmVnYW5cIiAgICAgXCJAbmV3c2RpcmVjdFwiICAgICAgXCJAQ29kZUNsYW5TY290XCIgICBcbiBbNDFdIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQEFselNjb3REaWdpdGFsXCIgIFwiQGFsenNjb3RcIiAgICAgICAgIFwiQGNlbGxvc2lnbmFsXCIgICAgXG4gWzQ1XSBcIkBDb2RlQ2xhblNjb3RcIiAgICBcIkBjZWxsb3NpZ25hbFwiICAgICBcIkBjb2RlY2xhblwiICAgICAgICBcIkBzY290bGFuZGlzXCIgICAgIFxuIFs0OV0gXCJAZnV0ZXJyYVwiICAgICAgICAgXCJAc29jaWFsZ29vZGhxXCIgICAgXCJATWFkZUJyYXZlXCIgICAgICAgXCJAQ29kZVlvdXJGdXR1cmVfXCJcbiBbNTNdIFwiQElyaW5hUHJlZGFcIiAgICAgIFwiQElyaW5hUHJlZGFcIiAgICAgIFwiQENvZGVZb3VyRnV0dXJlX1wiIFwiQGZ1dGVycmFcIiAgICAgICAgXG4gWzU3XSBcIkBPbGx5TGF3ZGVyXCIgICAgICBcIkB0b3BvbHl0aWNzXCIgICAgICBcIkBzaW9iaGFubWtpbHRzXCIgICBcIkBCcmV3R29vZHJcIiAgICAgIFxuIFs2MV0gXCJAYWx0ZXJ3YXN0ZVwiICAgICAgXCJAU3VzdGFpbmFibHlcIiAgICAgXCJAbG9yYWxxdWlublwiICAgICAgXCJAZnV0ZXJyYV9cIiAgICAgICBcbiBbNjVdIFwiQE9sbHlMYXdkZXJfXCIgICAgIFwiQGFwcmlsd2Vuc2VsXCIgICAgIFwiQEhleUdpcmxzVUtcIiAgICAgIFwiQFphcHBhckFwcFwiICAgICAgXG4gWzY5XSBcIkBhcHJpbHdlbnNlbFwiICAgICBcIkBHZXRBZG1pbmlzdHJhdGVcIiBcIkBqb2huanBlZWJsZXNcIiAgICBcIkBhcHJpbHdlbnNlbFwiICAgIFxuIFs3M10gXCJAQ29sbGVnZXNTY290XCIgICAgXCJAU2NvdEZ1bmRDb3VuY2lsXCIgXCJAc2NvdGxhbmRpc1wiICAgICAgXCJAYXByaWx3ZW5zZWxcIiAgICBcbiBbNzddIFwiQEltcGFjdFN1bW1pdF9cIiAgIFwiQFNXRzNnbGFzZ293XCIgICAgIFwiQGFwcmlsd2Vuc2VsXCIgICAgIFwiQERlcmVrTWFja2F5U05QXCIgXG4gWzgxXSBcIkBoYXplbF9naWJiZW5zXCIgICBcIkBGdXR1cmVYR2xvYmFsXCIgICBcIkBEZXJla01hY2theVNOUFwiICBcIkBEZXJla01hY2theVNOUFwiIFxuIFs4NV0gXCJAQ29kZUNsYW5TY290XCIgICAgXCJAc2Vhbm10cmFjZXlcIiAgICAgXCJAcmNydWlja3NcIiAgICAgICAgXCJAeWFtaW5pZ3Jhb1wiICAgICBcbiBbODldIFwiQElCTWNsb3VkXCIgICAgICAgIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQEdpbGxpYW5Eb2NcIiAgICAgIFwiQENvZGVDbGFuU2NvdFwiICAgXG4gWzkzXSBcIkBDT0RFQ0xBTlwiICAgICAgICBcIkBUZWNobXVtc0hRXCIgICAgICBcIkBzaGFtYmxlc21pbGxlclwiICBcIkBDT0RFQ0xBTlwiICAgICAgIFxuIFs5N10gXCJAY29kZWNsYW5cIiAgICAgICAgXCJAQ29kZUNsYW5TY290XCIgICAgXCJAQ29kZUNsYW5TY290XCIgICAgXCJARGF0YUxhYlNjb3RsYW5kXCJcblsxMDFdIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQGNvbGluX3JpZGRlbGxcIiAgIFwiQGFpcnRzbHRkXCIgICAgICAgIFwiQE1hTUNoYW5uZWxcIiAgICAgXG5bMTA1XSBcIkBDb2RlQ2xhblNjb3RcIiAgICBcIkBNYU1DaGFubmVsXCIgICAgICBcIkBDb2RlQ2xhblNjb3RcIiAgICBcIkBwb2xseXBcIiAgICAgICAgIFxuWzEwOV0gXCJAQ29kZUNsYW5TY290XCIgICAgXCJAS2F0ZUZvcmJlc01TUFwiICAgXCJAY2l0eXJlZ2lvbmRlYWxcIiAgXCJAZ2V6dGhlcGV6ODhcIiAgICBcblsxMTNdIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQEludG9Xb3JrNTdcIiAgICAgIFwiQGNvcnRleHd3XCIgICAgICAgXG5bMTE3XSBcIkBEYXRhTGFiU2NvdGxhbmRcIiBcIkBDb2RlQ2xhblNjb3RcIiAgICBcIkBHQV9EdW5kZWVcIiAgICAgICBcIkBJQk1EZXZlbG9wZXJVS1wiIFxuWzEyMV0gXCJAQ29kZUNsYW5TY290XCIgICAgXCJARENoaXNob2xtSElFXCIgICAgXCJAbW9yYXljaGFtYmVyXCIgICAgXCJAbW9yYXllY29ub215XCIgICBcblsxMjVdIFwiQG1vcmF5Y2hhbWJlclwiICAgIFwiQG1vcmF5ZWNvbm9teVwiICAgIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQENvZGVDbGFuU2NvdFwiICAgXG5bMTI5XSBcIkBrZWxzZXlnXCIgICAgICAgICBcIkBDb2RlQ2xhblNjb3RcIiAgICBcIkBUaGVIYXBweUxhc3NcIiAgICBcIkBhZnJhbWV2clwiICAgICAgIFxuWzEzM10gXCJAQ29kZUNsYW5TY290XCIgICAgXCJAS2xvc3RhcmludGhlc2t5XCIgXCJAS2xvc3RhcmludGhlc2t5XCIgXCJAS2F0ZUZvcmJlc01TUFwiICBcblsxMzddIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQEthdGVGb3JiZXNNU1BcIiAgIFwiQE9yaWdvX1NlcnZpY2VzXCIgXG5bMTQxXSBcIkBDb2RlQ2xhblNjb3RcIiAgICBcIkBLYXRlRm9yYmVzTVNQXCIgICBcIkBDb2RlQ2xhblNjb3RcIiAgICBcIkBDb2RlQ2xhblNjb3RcIiAgIFxuWzE0NV0gXCJAVGFuaWFzdGFibGV0c1wiICAgXCJAZGlnaXRmeWlcIiAgICAgICAgXCJAU05IX01hcHNcIiAgICAgICAgXCJAQ29kZUNsYW5TY290XCIgICBcblsxNDldIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQEthdGVGb3JiZXNNU1BcIiAgIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQENvZGVDbGFuU2NvdFwiICAgXG5bMTUzXSBcIkB3YXNwc3N0dWRpb3NcIiAgICBcIkBDb2RlQ2xhblNjb3RcIiAgICBcIkBDb2RlQ2xhblNjb3RcIiAgICBcIkBDb2RlQ2xhblNjb3RcIiAgIFxuWzE1N10gXCJAQ29kZUNsYW5TY290XCIgICAgXCJAQXJjaGliYWxkSmVublwiICAgXCJASm9uWmFyZWNraVwiICAgICAgXCJAUkJTQnVzaW5lc3NcIiAgICBcblsxNjFdIFwiQHBhdWxhYnJvd244NFwiICAgIFwiQGJlZXplcmV1YW5cIiAgICAgIFwiQEN5YW5Gb3JlbnNpY3NcIiAgIFwiQERyX0JsYWNrXCIgICAgICAgXG5bMTY1XSBcIkBDeWFuRm9yZW5zaWNzXCIgICBcIkBDb2RlQ2xhblNjb3RcIiAgICBcIkBjbGFpcmVlZGVuc2NvdHRcIiBcIkBpbmZ2ZW50dXJlc1wiICAgIFxuWzE2OV0gXCJARGVib3JhaE1hZ2lkMVwiICAgXCJAYWxpc3RhaXJmb3JiZXNcIiAgXCJATWVyY2lhVGVjaFwiICAgICAgXCJAZmxhY2tib3lcIiAgICAgICBcblsxNzNdIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQEVkaW5idXJnaFVuaVwiICAgIFwiQGluZnZlbnR1cmVzXCIgICAgIFwiQGN1bHRpdmF0ZWhxXCIgICAgXG5bMTc3XSBcIkBlYWdsZV9sYWJzX2VkaW5cIiBcIkBDb2RlYmFzZVRlY2hcIiAgICBcIkBUaGVTY290c21hblwiICAgICBcIkBpbmZ2ZW50dXJlc1wiICAgIFxuWzE4MV0gXCJAYWxpc3RhaXJmb3JiZXNcIiAgXCJARHJfQmxhY2tcIiAgICAgICAgXCJAVGVjaG11bXNIUVwiICAgICAgXCJAQ29kZUNsYW5TY290XCIgICBcblsxODVdIFwiQEphbmllX0tlbm5lZHlcIiAgIFwiQERyX0JsYWNrXCIgICAgICAgIFwiQERyX0JsYWNrX1wiICAgICAgIFwiQENvZGVDbGFuU2NvdF9cIiAgXG5bMTg5XSBcIkBzY290bGFuZGlzXCIgICAgICBcIkBEcl9CbGFja1wiICAgICAgICBcIkBibGV0Y2hsZXlwYXJrXCIgICBcIkBzdGVwaGVuZnJ5XCIgICAgIFxuWzE5M10gXCJAVGVjaG11bXNIUVwiICAgICAgXCJAQ29kZUNsYW5TY290XCIgICAgXCJAcG9sbHlwXCIgICAgICAgICAgXCJAc2NvdGxhbmRpc1wiICAgICBcblsxOTddIFwiQFBvbGx5UFwiICAgICAgICAgIFwiQEJCQ1JhZGlvU2NvdFwiICAgIFwiQHBvbGx5cFwiICAgICAgICAgIFwiQERyX0JsYWNrXCIgICAgICAgXG5bMjAxXSBcIkBUZWNobXVtc0hRXCIgICAgICBcIkB0aW1lMmRpbmV1a1wiICAgICBcIkBjaGF0X2FsbGlcIiAgICAgICBcIkBfTGF1cmVuQWxsaXNvbl9cIlxuWzIwNV0gXCJAVGVjaG11bXNIUVwiICAgICAgXCJAVm94aW9BSVwiICAgICAgICAgXCJAQWxsaWNoYXRfVm94c2lvXCIgXCJAQWxsYXR1c1VuaXR5XCIgICBcblsyMDldIFwiQEJMQUNLQlh3aWZpXCIgICAgIFwiQEJlZXplckFwcHNcIiAgICAgIFwiQEFsbGljaGF0X1ZveHNpb1wiIFwiQHdhbGxldF9zZXJ2aWNlc1wiXG5bMjEzXSBcIkBwZ192cmVvXCIgICAgICAgICBcIkB0cmFkZV9zcGFjZVwiICAgICBcIkBRd2VydHlcIiAgICAgICAgICBcIkBzY290X2J1c2luZXNzXCIgIFxuWzIxN10gXCJAVGhlU2NvdHNtYW5cIiAgICAgXCJAQ29kZUNsYW5TY290XCIgICAgXCJAYnJpdGFubmlheWFjaHRcIiAgXCJAQ29kZUNsYW5TY290XCIgICBcblsyMjFdIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQFRlY2htdW1zSFFcIiAgICAgXG5bMjI1XSBcIkBEcl9CbGFja1wiICAgICAgICBcIkBDb2RlQ2xhblNjb3RcIiAgICBcIkBjdXJpb3VzX2NoaXBcIiAgICBcIkBDb2RlQ2xhblNjb3RcIiAgIFxuWzIyOV0gXCJAVGVjaG11bXNIUVwiICAgICAgXCJAX2xhdXJlbmFsbGlzb25fXCIgXCJAY3VyaW91c19jaGlwXCIgICAgXCJAY29kZWNsYW5cIiAgICAgICBcblsyMzNdIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQENvZGVDbGFuU2NvdFwiICAgXG5bMjM3XSBcIkBjb2RlY2xhblwiICAgICAgICBcIkBjb2RlY2xhblwiICAgICAgICBcIkBDb2RlclNjb3RcIiAgICAgICBcIkBDb2RlclNjb3RcIiAgICAgIFxuWzI0MV0gXCJAcmNydWlja3NcIiAgICAgICAgXCJAQ29kZUNsYW5TY290XCIgICAgXCJATWFNQ2hhbm5lbFwiICAgICAgXCJAQ29kZUNsYW5TY290XCIgICBcblsyNDVdIFwiQFJCU19Xb21lblwiICAgICAgIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQENvZGVDbGFuU2NvdFwiICAgIFwiQGNvZGVjbGFuXCIgICAgICAgXG5bMjQ5XSBcIkBDb2RlQ2xhblNjb3RcIiAgICBcIkBUaGVIYXBweUxhc3NcIiAgICBcIkBhZnJhbWV2clwiICAgICAgICBcIkBjb2RlY2xhblwiICAgICAgIFxuWzI1M10gXCJAU3dhcm1PbmxpbmVcIiAgICAgXCJAVGhlSGFwcHlMYXNzXCIgICAgXCJAQ29kZUNsYW5TY290XCIgICAgXCJAYWZyYW1ldnJcIiAgICAgICBcbiJ9 -->
-<pre><code>  [1] &quot;@CodeClanScot&quot;    &quot;@YouTube&quot;         &quot;@eplacementscot&quot;  &quot;@GA_Dundee&quot;      
-  [5] &quot;@CodeClanScot&quot;    &quot;@OUScotland&quot;      &quot;@IngledewStephen&quot; &quot;@C_Leaver&quot;       
-  [9] &quot;@MaMChannel&quot;      &quot;@GerryMcCusker&quot;   &quot;@DonaldMcL&quot;       &quot;@pollyp&quot;         
- [13] &quot;@TechmumsHQ&quot;      &quot;@CodeClanScot&quot;    &quot;@TechmumsHQ&quot;      &quot;@CodeClanScot&quot;   
- [17] &quot;@_LaurenAllison_&quot; &quot;@CodeClanScot&quot;    &quot;@lrcfs&quot;           &quot;@eplacementscot&quot; 
- [21] &quot;@CodeClanScot&quot;    &quot;@OpenUniversity&quot;  &quot;@AbertayUni&quot;      &quot;@dundeeuni&quot;      
- [25] &quot;@lrcfs&quot;           &quot;@CodeClanScot_&quot;   &quot;@lrcfs&quot;           &quot;@CodeClanScot&quot;   
- [29] &quot;@CodeClanScot&quot;    &quot;@KateForbesMSP&quot;   &quot;@CodeClanScot&quot;    &quot;@CodeClanScot&quot;   
- [33] &quot;@CodeClanScot&quot;    &quot;@OneCherryApp&quot;    &quot;@newsdirect&quot;      &quot;@edfringe&quot;       
- [37] &quot;@alzscot&quot;         &quot;@KirstyRegan&quot;     &quot;@newsdirect&quot;      &quot;@CodeClanScot&quot;   
- [41] &quot;@CodeClanScot&quot;    &quot;@AlzScotDigital&quot;  &quot;@alzscot&quot;         &quot;@cellosignal&quot;    
- [45] &quot;@CodeClanScot&quot;    &quot;@cellosignal&quot;     &quot;@codeclan&quot;        &quot;@scotlandis&quot;     
- [49] &quot;@futerra&quot;         &quot;@socialgoodhq&quot;    &quot;@MadeBrave&quot;       &quot;@CodeYourFuture_&quot;
- [53] &quot;@IrinaPreda&quot;      &quot;@IrinaPreda&quot;      &quot;@CodeYourFuture_&quot; &quot;@futerra&quot;        
- [57] &quot;@OllyLawder&quot;      &quot;@topolytics&quot;      &quot;@siobhanmkilts&quot;   &quot;@BrewGoodr&quot;      
- [61] &quot;@alterwaste&quot;      &quot;@Sustainably&quot;     &quot;@loralquinn&quot;      &quot;@futerra_&quot;       
- [65] &quot;@OllyLawder_&quot;     &quot;@aprilwensel&quot;     &quot;@HeyGirlsUK&quot;      &quot;@ZapparApp&quot;      
- [69] &quot;@aprilwensel&quot;     &quot;@GetAdministrate&quot; &quot;@johnjpeebles&quot;    &quot;@aprilwensel&quot;    
- [73] &quot;@CollegesScot&quot;    &quot;@ScotFundCouncil&quot; &quot;@scotlandis&quot;      &quot;@aprilwensel&quot;    
- [77] &quot;@ImpactSummit_&quot;   &quot;@SWG3glasgow&quot;     &quot;@aprilwensel&quot;     &quot;@DerekMackaySNP&quot; 
- [81] &quot;@hazel_gibbens&quot;   &quot;@FutureXGlobal&quot;   &quot;@DerekMackaySNP&quot;  &quot;@DerekMackaySNP&quot; 
- [85] &quot;@CodeClanScot&quot;    &quot;@seanmtracey&quot;     &quot;@rcruicks&quot;        &quot;@yaminigrao&quot;     
- [89] &quot;@IBMcloud&quot;        &quot;@CodeClanScot&quot;    &quot;@GillianDoc&quot;      &quot;@CodeClanScot&quot;   
- [93] &quot;@CODECLAN&quot;        &quot;@TechmumsHQ&quot;      &quot;@shamblesmiller&quot;  &quot;@CODECLAN&quot;       
- [97] &quot;@codeclan&quot;        &quot;@CodeClanScot&quot;    &quot;@CodeClanScot&quot;    &quot;@DataLabScotland&quot;
-[101] &quot;@CodeClanScot&quot;    &quot;@colin_riddell&quot;   &quot;@airtsltd&quot;        &quot;@MaMChannel&quot;     
-[105] &quot;@CodeClanScot&quot;    &quot;@MaMChannel&quot;      &quot;@CodeClanScot&quot;    &quot;@pollyp&quot;         
-[109] &quot;@CodeClanScot&quot;    &quot;@KateForbesMSP&quot;   &quot;@cityregiondeal&quot;  &quot;@gezthepez88&quot;    
-[113] &quot;@CodeClanScot&quot;    &quot;@CodeClanScot&quot;    &quot;@IntoWork57&quot;      &quot;@cortexww&quot;       
-[117] &quot;@DataLabScotland&quot; &quot;@CodeClanScot&quot;    &quot;@GA_Dundee&quot;       &quot;@IBMDeveloperUK&quot; 
-[121] &quot;@CodeClanScot&quot;    &quot;@DChisholmHIE&quot;    &quot;@moraychamber&quot;    &quot;@morayeconomy&quot;   
-[125] &quot;@moraychamber&quot;    &quot;@morayeconomy&quot;    &quot;@CodeClanScot&quot;    &quot;@CodeClanScot&quot;   
-[129] &quot;@kelseyg&quot;         &quot;@CodeClanScot&quot;    &quot;@TheHappyLass&quot;    &quot;@aframevr&quot;       
-[133] &quot;@CodeClanScot&quot;    &quot;@Klostarinthesky&quot; &quot;@Klostarinthesky&quot; &quot;@KateForbesMSP&quot;  
-[137] &quot;@CodeClanScot&quot;    &quot;@CodeClanScot&quot;    &quot;@KateForbesMSP&quot;   &quot;@Origo_Services&quot; 
-[141] &quot;@CodeClanScot&quot;    &quot;@KateForbesMSP&quot;   &quot;@CodeClanScot&quot;    &quot;@CodeClanScot&quot;   
-[145] &quot;@Taniastablets&quot;   &quot;@digitfyi&quot;        &quot;@SNH_Maps&quot;        &quot;@CodeClanScot&quot;   
-[149] &quot;@CodeClanScot&quot;    &quot;@KateForbesMSP&quot;   &quot;@CodeClanScot&quot;    &quot;@CodeClanScot&quot;   
-[153] &quot;@waspsstudios&quot;    &quot;@CodeClanScot&quot;    &quot;@CodeClanScot&quot;    &quot;@CodeClanScot&quot;   
-[157] &quot;@CodeClanScot&quot;    &quot;@ArchibaldJenn&quot;   &quot;@JonZarecki&quot;      &quot;@RBSBusiness&quot;    
-[161] &quot;@paulabrown84&quot;    &quot;@beezereuan&quot;      &quot;@CyanForensics&quot;   &quot;@Dr_Black&quot;       
-[165] &quot;@CyanForensics&quot;   &quot;@CodeClanScot&quot;    &quot;@claireedenscott&quot; &quot;@infventures&quot;    
-[169] &quot;@DeborahMagid1&quot;   &quot;@alistairforbes&quot;  &quot;@MerciaTech&quot;      &quot;@flackboy&quot;       
-[173] &quot;@CodeClanScot&quot;    &quot;@EdinburghUni&quot;    &quot;@infventures&quot;     &quot;@cultivatehq&quot;    
-[177] &quot;@eagle_labs_edin&quot; &quot;@CodebaseTech&quot;    &quot;@TheScotsman&quot;     &quot;@infventures&quot;    
-[181] &quot;@alistairforbes&quot;  &quot;@Dr_Black&quot;        &quot;@TechmumsHQ&quot;      &quot;@CodeClanScot&quot;   
-[185] &quot;@Janie_Kennedy&quot;   &quot;@Dr_Black&quot;        &quot;@Dr_Black_&quot;       &quot;@CodeClanScot_&quot;  
-[189] &quot;@scotlandis&quot;      &quot;@Dr_Black&quot;        &quot;@bletchleypark&quot;   &quot;@stephenfry&quot;     
-[193] &quot;@TechmumsHQ&quot;      &quot;@CodeClanScot&quot;    &quot;@pollyp&quot;          &quot;@scotlandis&quot;     
-[197] &quot;@PollyP&quot;          &quot;@BBCRadioScot&quot;    &quot;@pollyp&quot;          &quot;@Dr_Black&quot;       
-[201] &quot;@TechmumsHQ&quot;      &quot;@time2dineuk&quot;     &quot;@chat_alli&quot;       &quot;@_LaurenAllison_&quot;
-[205] &quot;@TechmumsHQ&quot;      &quot;@VoxioAI&quot;         &quot;@Allichat_Voxsio&quot; &quot;@AllatusUnity&quot;   
-[209] &quot;@BLACKBXwifi&quot;     &quot;@BeezerApps&quot;      &quot;@Allichat_Voxsio&quot; &quot;@wallet_services&quot;
-[213] &quot;@pg_vreo&quot;         &quot;@trade_space&quot;     &quot;@Qwerty&quot;          &quot;@scot_business&quot;  
-[217] &quot;@TheScotsman&quot;     &quot;@CodeClanScot&quot;    &quot;@britanniayacht&quot;  &quot;@CodeClanScot&quot;   
-[221] &quot;@CodeClanScot&quot;    &quot;@CodeClanScot&quot;    &quot;@CodeClanScot&quot;    &quot;@TechmumsHQ&quot;     
-[225] &quot;@Dr_Black&quot;        &quot;@CodeClanScot&quot;    &quot;@curious_chip&quot;    &quot;@CodeClanScot&quot;   
-[229] &quot;@TechmumsHQ&quot;      &quot;@_laurenallison_&quot; &quot;@curious_chip&quot;    &quot;@codeclan&quot;       
-[233] &quot;@CodeClanScot&quot;    &quot;@CodeClanScot&quot;    &quot;@CodeClanScot&quot;    &quot;@CodeClanScot&quot;   
-[237] &quot;@codeclan&quot;        &quot;@codeclan&quot;        &quot;@CoderScot&quot;       &quot;@CoderScot&quot;      
-[241] &quot;@rcruicks&quot;        &quot;@CodeClanScot&quot;    &quot;@MaMChannel&quot;      &quot;@CodeClanScot&quot;   
-[245] &quot;@RBS_Women&quot;       &quot;@CodeClanScot&quot;    &quot;@CodeClanScot&quot;    &quot;@codeclan&quot;       
-[249] &quot;@CodeClanScot&quot;    &quot;@TheHappyLass&quot;    &quot;@aframevr&quot;        &quot;@codeclan&quot;       
-[253] &quot;@SwarmOnline&quot;     &quot;@TheHappyLass&quot;    &quot;@CodeClanScot&quot;    &quot;@aframevr&quot;       </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
