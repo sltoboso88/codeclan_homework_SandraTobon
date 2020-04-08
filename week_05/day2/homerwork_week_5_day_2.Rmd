@@ -1,0 +1,245 @@
+---
+title: "Homework Week 5 Day 2"
+author: "Sandra Tobon"
+date: "07/04/2020"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+    df_print: paged
+    css: styles.css
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r include=FALSE}
+library(tidyverse)
+library(CodeClanData)
+library(lubridate)
+```
+<center>
+# Homework ggplot2 Advance   
+</center>
+
+## MVP  
+
+  1. Revenue across the two years in the dataset  
+  
+```{r}
+col_scheme <- c("#E89FE9", "#50434F", "#B6A7B5", "#F9A472", "#BD7040")
+
+ggplot(qb_revenue_breakdown) +
+  aes(x = Year, y = Revenue, fill = Product) +
+  geom_bar(stat = "identity", position="stack") +
+  scale_y_continuous(labels = scales::dollar_format(prefix = "£")) +
+  scale_fill_manual(values = col_scheme) +
+  labs(
+    title = "QikBit Revenue 2018 - 2019",
+    subtitle = "By Product",
+    x = "Time (years)"
+  ) +
+  theme(
+    plot.title = element_text(size = 16, face = "bold"),
+    plot.subtitle = element_text(size = 12, face = "italic"),
+    axis.title = element_text(size = 12),
+    axis.text = element_text(size = 8),
+    legend.title = element_text(size = 12),
+    legend.text = element_text(size = 12), 
+    panel.grid = element_line(colour = "lightgrey")
+  )
+```
+  
+  2. Make a line chart showing monthly sales of the “flagship product” - the KwikBit Unit1 - over the last year  
+  
+```{r}
+
+qb_monthly_sales %>%
+  filter(Cashflow == "Kwikbit Unit 1 Sales") %>%
+  mutate(Cashflow = recode(Cashflow, "Kwikbit Unit 1 Sales" = "Kwikbit Unit 1")) %>%
+  ggplot() +
+  aes(x = Date, y = Amount, colour = Cashflow) +
+  geom_line() +
+  scale_y_continuous(labels = scales::dollar_format(prefix = "£"), limits = c(0, 700)) +
+  scale_color_manual(values = col_scheme) +
+  labs(
+    title = "KwikBit Unit1 sales (£)",
+    colour = "Product",
+    x = "Time (months)"
+  ) +
+  theme(
+    plot.title = element_text(size = 16, face = "bold"),
+    axis.text = element_text(size = 8),
+    axis.title = element_text(size = 12),
+    legend.title  = element_text(size = 12), 
+    legend.text = element_text(size = 12), 
+    panel.grid = element_line(colour = "lightgrey")
+  )
+
+```
+  
+  3. Line chart showing monthly revenue and costs over the last year  
+  
+```{r}
+qb_monthly_sales %>%
+  filter(Cashflow != "Kwikbit Unit 1 Sales") %>%
+  mutate(Cashflow = recode(Cashflow, "Total Revenue" = "Revenue")) %>%
+  ggplot() +
+  aes(x = Date, y = Amount, colour = Cashflow) +
+  geom_line() +
+  scale_y_continuous(labels = scales::dollar_format(prefix = "£"),
+                     limits = c(0, 3000)) +
+  scale_color_manual(values = col_scheme[4:5]) +
+  labs(
+    title = "QikBit Revenue and Costs",
+    x = "Time (months)",
+    colour = ""
+  ) +
+  theme(
+    plot.title = element_text(size = 16, face = "bold"),
+    plot.subtitle = element_text(size = 12, face = "italic"),
+    axis.title = element_text(size = 12),
+    axis.text = element_text(size = 8),
+    legend.title  = element_text(size = 12), 
+    legend.text = element_text(size = 12), 
+    panel.grid = element_line(colour = "lightgrey")
+  )
+
+```
+
+  4. Show annual sales of personal fitness trackers over the last 5 years broken down by company as a ribbon plot.  
+  
+```{r}
+qb_competitors %>%
+ggplot() +
+  aes(x = Year, y = Revenue, fill = Company) +
+  geom_area() +
+  scale_fill_manual(values = col_scheme[2:5]) +
+  scale_y_continuous(labels = scales::dollar_format(prefix = "£")) +
+  labs(
+    title = "Fitness tracker sales",
+    subtitle = "By competitor, between 2015 and 2019",
+    x = "Time (years)\n",
+    y = "Revenue \n",
+    fill = ""
+  ) +
+  theme(
+    plot.title = element_text(size = 16, face = "bold"),
+    plot.subtitle = element_text(size = 12, face = "italic"),
+    axis.title = element_text(size = 12),
+    axis.text = element_text(size = 8), 
+    legend.title  = element_text(size = 12), 
+    legend.text = element_text(size = 12), 
+    panel.grid = element_line(colour = "lightgrey")
+  )
+```
+
+  5. The sales from the 5 competitors as a line graph. Include an extra layer that shows the data points used to make the lines.
+
+```{r}
+qb_competitors %>%
+  ggplot() +
+  aes(x = Year, y = Revenue, color = Company) +
+  geom_line() +
+  geom_point() +
+  scale_color_manual(values = col_scheme[2:5]) +
+  scale_y_continuous(labels = scales::dollar_format(prefix = "£")) +
+  labs(
+    title = "Fitness tracker sales",
+    subtitle = "By competitor, between 2015 and 2019",
+    x = "Time (years)\n",
+    y = "Revenue \n",
+    color = ""
+  ) +
+  theme(
+    plot.title = element_text(size = 16, face = "bold"),
+    plot.subtitle = element_text(size = 12, face = "italic"),
+    axis.title = element_text(size = 12),
+    axis.text = element_text(size = 8), 
+    legend.title  = element_text(size = 12), 
+    legend.text = element_text(size = 12), 
+    panel.grid = element_line(colour = "lightgrey")
+  )
+```
+
+  6. Number of steps that their device counts vs. their competitors.  
+  
+```{r}
+qb_device_data %>%
+  ggplot() +
+  aes(x = hours, y = counts, color = id) +
+  geom_line() +
+  facet_grid(device~id) +
+  scale_color_manual(values = col_scheme) +
+  labs(
+    title = "Accuracy of stepcount devices",
+    subtitle = "Comparison of four different devices across five people",
+    x = "Time (hours)\n",
+    y = "Number of steps \n",
+    colour = ""
+  ) +
+  theme(
+    plot.title = element_text(size = 16, face = "bold"),
+    plot.subtitle = element_text(size = 12, face = "italic"),
+    axis.title = element_text(size = 12),
+    axis.text = element_text(size = 8), 
+    legend.title  = element_text(size = 12), 
+    legend.text = element_text(size = 12), 
+    panel.grid = element_line(colour = "lightgrey")
+  )
+```
+  
+## Extensions  
+```{r}
+qb_monthly_sales %>%
+  filter(Cashflow == "Kwikbit Unit 1 Sales") %>%
+  mutate(Cashflow = recode(Cashflow, "Kwikbit Unit 1 Sales" = "Kwikbit Unit 1")) %>%
+  ggplot() +
+  aes(x = Date, y = Amount, fill = Cashflow) +
+  geom_histogram( stat = "identity") +
+  scale_y_continuous(labels = scales::dollar_format(prefix = "£"), limits = c(0, 700)) +
+  scale_fill_manual(values = col_scheme) +
+  labs(
+    title = "KwikBit Unit1 sales (£)",
+    fill = "Product",
+    x = "Time (months)"
+  ) +
+  theme(
+    plot.title = element_text(size = 16, face = "bold"),
+    axis.text = element_text(size = 8),
+    axis.title = element_text(size = 12),
+    legend.title  = element_text(size = 12), 
+    legend.text = element_text(size = 12), 
+    panel.grid = element_line(colour = "lightgrey")
+  )
+```
+
+
+```{r}
+qb_monthly_sales %>%
+  filter(Cashflow != "Kwikbit Unit 1 Sales") %>%
+  mutate(Cashflow = recode(Cashflow, "Total Revenue" = "Revenue")) %>%
+  ggplot() +
+  aes(x = Date, y = Amount, fill = Cashflow) +
+  geom_histogram(stat = "identity", position = "stack") +
+  scale_y_continuous(labels = scales::dollar_format(prefix = "£")) +
+  scale_fill_manual(values = col_scheme[4:5]) +
+  labs(
+    title = "QikBit Revenue and Costs",
+    x = "Time (months)",
+    fill = ""
+  ) +
+  theme(
+    plot.title = element_text(size = 16, face = "bold"),
+    plot.subtitle = element_text(size = 12, face = "italic"),
+    axis.title = element_text(size = 12),
+    axis.text = element_text(size = 8),
+    legend.title  = element_text(size = 12), 
+    legend.text = element_text(size = 12), 
+    panel.grid = element_line(colour = "lightgrey")
+  )
+```
+
