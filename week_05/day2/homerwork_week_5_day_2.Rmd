@@ -169,6 +169,7 @@ qb_competitors %>%
   
 ```{r}
 qb_device_data %>%
+  mutate(hours = hours + (mins/60)) %>%
   ggplot() +
   aes(x = hours, y = counts, color = id) +
   geom_line() +
