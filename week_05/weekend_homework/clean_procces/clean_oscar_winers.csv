@@ -1,0 +1,442 @@
+person,award,year_of_award,movie,state,country,date_of_birth,race_ethnicity,religion,sexual_orientation,age_win,continent
+Lewis Milestone,Best Director,1927,Two Arabian Knights,NA, Moldova,1895,White,Unknown,Straight,32,Europe
+Frank Lloyd,Best Director,1930,The Divine Lady,NA, Scotland,1886,White,Unknown,Straight,44,Europe
+Lewis Milestone,Best Director,1931,All Quiet on the Western Front,NA, Moldova,1895,White,Unknown,Straight,36,Europe
+Norman Taurog,Best Director,1932,Skippy, Il,United States of America,1899,White,Unknown,Straight,33,North America
+Frank Borzage,Best Director,1933,Bad Girl, Ut,United States of America,1894,White,Roman Catholic,Straight,39,North America
+Frank Lloyd,Best Director,1934,Cavalcade,NA, Scotland,1886,White,Unknown,Straight,48,Europe
+Frank Capra,Best Director,1935,It Happened One Night, Sicily, Italy,1897,White,Roman Catholic,Straight,38,Europe
+John Ford,Best Director,1936,The Informer, Me,United States of America,1894,White,Roman Catholic,Bisexual,42,North America
+Frank Capra,Best Director,1937,Mr. Deeds Goes to Town, Sicily, Italy,1897,White,Roman Catholic,Straight,40,Europe
+Leo McCarey,Best Director,1938,The Awful Truth, Ca,United States of America,1898,White,Unknown,Straight,40,North America
+Frank Capra,Best Director,1939,You Can't Take It with You, Sicily, Italy,1897,White,Roman Catholic,Straight,42,Europe
+Victor Fleming,Best Director,1940,Gone with the Wind, Ca,United States of America,1883,White,Unknown,Straight,57,North America
+John Ford,Best Director,1941,The Grapes of Wrath, Me,United States of America,1894,White,Roman Catholic,Bisexual,47,North America
+John Ford,Best Director,1942,How Green Was My Valley, Me,United States of America,1894,White,Roman Catholic,Bisexual,48,North America
+William Wyler,Best Director,1943,Mrs. Miniver, Haut-Rhin, France,1902,White,Unknown,Straight,41,Europe
+Michael Curtiz,Best Director,1944,Casablanca,NA, Hungary,1886,White,Unknown,Straight,58,Europe
+Leo McCarey,Best Director,1945,Going My Way, Ca,United States of America,1898,White,Unknown,Straight,47,North America
+Jerome Robbins,Best Director,1962,West Side Story,NY,United States of America,1918,White,Jewish,Gay,44,North America
+Billy Wilder,Best Director,1946,The Lost Weekend, Galicia, Austria,1906,White,Jewish,Straight,40,Europe
+William Wyler,Best Director,1947,The Best Years of Our Lives, Haut-Rhin, France,1902,White,Unknown,Straight,45,Europe
+Elia Kazan,Best Director,1948,Gentleman's Agreement,NA, Turkey,1909,White,Unknown,Straight,39,Asia
+John Huston,Best Director,1949,The Treasure of the Sierra Madre, Mo,United States of America,1906,White,Unknown,Straight,43,North America
+Joseph L. Mankiewicz,Best Director,1950,A Letter to Three Wives, Pa,United States of America,1909,White,Jewish,Straight,41,North America
+Joseph L. Mankiewicz,Best Director,1951,All About Eve, Pa,United States of America,1909,White,Jewish,Straight,42,North America
+George Stevens,Best Director,1952,A Place in the Sun, Ca,United States of America,1904,White,Unknown,Straight,48,North America
+John Ford,Best Director,1953,The Quiet Man, Me,United States of America,1894,White,Roman Catholic,Bisexual,59,North America
+Fred Zinnemann,Best Director,1954,From Here to Eternity,NA, Austria,1907,White,Jewish,Straight,47,Europe
+Elia Kazan,Best Director,1955,On the Waterfront,NA, Turkey,1909,White,Unknown,Straight,46,Asia
+Delbert Mann,Best Director,1956,Marty, Ks,United States of America,1920,White,Any type of Christian,Straight,36,North America
+George Stevens,Best Director,1957,Giant, Ca,United States of America,1904,White,Unknown,Straight,53,North America
+David Lean,Best Director,1958,The Bridge on the River Kwai, Surrey, England,1908,White,Unknown,Straight,50,Europe
+Vincente Minnelli,Best Director,1959,Gigi, Il,United States of America,1903,White,Unknown,Bisexual,56,North America
+William Wyler,Best Director,1960,Ben-Hur, Haut-Rhin, France,1902,White,Unknown,Straight,58,Europe
+Billy Wilder,Best Director,1961,The Apartment, Galicia, Austria,1906,White,Jewish,Straight,55,Europe
+Robert Wise,Best Director,1961,West Side Story, In,United States of America,1914,White,Unknown,Straight,47,North America
+David Lean,Best Director,1963,Lawrence of Arabia, Surrey, England,1908,White,Unknown,Straight,55,Europe
+Tony Richardson,Best Director,1964,Tom Jones, Yorkshire, England,1928,White,Unknown,Bisexual,36,Europe
+George Cukor,Best Director,1965,My Fair Lady,NY,United States of America,1899,White,Unknown,Gay,66,North America
+Robert Wise,Best Director,1966,The Sound of Music, In,United States of America,1914,White,Unknown,Straight,52,North America
+Fred Zinnemann,Best Director,1967,A Man for All Seasons,NA, Austria,1907,White,Jewish,Straight,60,Europe
+Mike Nichols,Best Director,1968,The Graduate,NA, Germany,1931,White,Jewish,Straight,37,Europe
+Joel Coen,Best Director,2008,No Country for Old Men, Mn,United States of America,1954,White,Jewish,Straight,54,North America
+Carol Reed,Best Director,1969,Oliver!,NA, England,1906,White,Unknown,Straight,63,Europe
+John Schlesinger,Best Director,1969,Midnight Cowboy,NA, England,1926,White,Unknown,Gay,43,Europe
+Franklin J. Schaffner,Best Director,1970,Patton,NA, Japan,1920,White,Unknown,Straight,50,Asia
+William Friedkin,Best Director,1972,The French Connection, Il,United States of America,1935,White,Jewish,Straight,37,North America
+Bob Fosse,Best Director,1973,Cabaret, Il,United States of America,1927,White,Unknown,Straight,46,North America
+George Roy Hill,Best Director,1973,The Sting, Mn,United States of America,1921,White,Unknown,Straight,52,North America
+Francis Ford Coppola,Best Director,1975,The Godfather Part II, Mi,United States of America,1939,White,Unknown,Straight,36,North America
+Milos Forman,Best Director,1976,One Flew over the Cuckoo's Nest,NA, Czechoslovakia,1932,White,Unknown,Straight,44,Europe
+John G. Avildsen,Best Director,1976,Rocky, Il,United States of America,1935,White,Unknown,Straight,41,North America
+Woody Allen,Best Director,1978,Annie Hall, Ny,United States of America,1935,White,Jewish,Straight,43,North America
+Michael Cimino,Best Director,1979,The Deer Hunter,NY,United States of America,1939,White,Unknown,Straight,40,North America
+Robert Benton,Best Director,1980,Kramer vs. Kramer, Tx,United States of America,1932,White,Unknown,Straight,48,North America
+Robert Redford,Best Director,1980,Ordinary People, Ca,United States of America,1936,White,Unknown,Straight,44,North America
+Warren Beatty,Best Director,1981,Reds, Va,United States of America,1937,White,Any type of Christian,Straight,44,North America
+Richard Attenborough,Best Director,1982,Gandhi,NA, England,1923,White,Unknown,Straight,59,Europe
+James L. Brooks,Best Director,1983,Terms of Endearment, Nj,United States of America,1940,White,Unknown,Straight,43,North America
+Milos Forman,Best Director,1985,Amadeus,NA, Czechoslovakia,1932,White,Unknown,Straight,53,Europe
+Sydney Pollack,Best Director,1986,Out of Africa, In,United States of America,1934,White,Jewish,Straight,52,North America
+Oliver Stone,Best Director,1990,Platoon,NY,United States of America,1946,White,Atheist,Straight,44,North America
+Bernardo Bertolucci,Best Director,1988,The Last Emperor, Emilia-Romagna, Italy,1941,White,Unknown,Straight,47,Europe
+Barry Levinson,Best Director,1989,Rain Man, Md,United States of America,1942,White,Jewish,Straight,47,North America
+Oliver Stone,Best Director,1990,Born on the Fourth of July,NY,United States of America,1946,White,Atheist,Straight,44,North America
+Kevin Costner,Best Director,1991,Dances with Wolves, Ca,United States of America,1955,White,Any type of Christian,Straight,36,North America
+Jonathan Demme,Best Director,1992,The Silence of the Lambs, Ny,United States of America,1944,White,Unknown,Straight,48,North America
+Clint Eastwood,Best Director,1993,Unforgiven, Ca,United States of America,1930,White,Unknown,Straight,63,North America
+Steven Spielberg,Best Director,1994,Schindler's List, Oh,United States of America,1946,White,Jewish,Straight,48,North America
+Robert Zemeckis,Best Director,1995,Forrest Gump, Il,United States of America,1952,White,Roman Catholic,Straight,43,North America
+Mel Gibson,Best Director,1996,Braveheart, Ny,United States of America,1956,White,Roman Catholic,Straight,40,North America
+Anthony Minghella,Best Director,1997,The English Patient, Isle of Wight, England,1954,White,Unknown,Straight,43,Europe
+James Cameron,Best Director,1998,Titanic, Ontario, Canada,1954,White,Atheist,Straight,44,North America
+Steven Spielberg,Best Director,1999,Saving Private Ryan, Oh,United States of America,1946,White,Jewish,Straight,53,North America
+Sam Mendes,Best Director,2000,American Beauty, Berkshire, England,1965,White,Unknown,Straight,35,Europe
+Steven Soderbergh,Best Director,2001,Traffic, Ga,United States of America,1963,White,Atheist,Straight,38,North America
+Ron Howard,Best Director,2002,A Beautiful Mind, Ok,United States of America,1954,White,Unknown,Straight,48,North America
+Roman Polanski,Best Director,2003,The Pianist,NA, France,1933,White,Unknown,Straight,70,Europe
+Peter Jackson,Best Director,2004,The Lord of the Rings: Return of the King,NA, New Zealand,1961,White,Unknown,Straight,43,Oceania
+Clint Eastwood,Best Director,2005,Million Dollar Baby, Ca,United States of America,1930,White,Unknown,Straight,75,North America
+Ang Lee,Best Director,2006,Brokeback Mountain,NA, Taiwan,1954,Asian,Unknown,Straight,52,Asia
+Martin Scorsese,Best Director,2007,The Departed, Ny,United States of America,1942,White,Roman Catholic,Straight,65,North America
+Ethan Coen,Best Director,2008,No Country for Old Men, Mn,United States of America,1957,White,Jewish,Straight,51,North America
+Danny Boyle,Best Director,2009,Slumdog Millionaire,NA, England,1956,White,Roman Catholic,Straight,53,Europe
+Kathryn Bigelow,Best Director,2009,The Hurt Locker, Ca,United States of America,1951,White,Unknown,Straight,58,North America
+Tom Hooper,Best Director,2011,The King's Speech,NA, England,1972,White,Unknown,Na,39,Europe
+Michel Hazanavicius,Best Director,2012,The Artist,NA, France,1967,White,Jewish,Straight,45,Europe
+Ang Lee,Best Director,2013,Life of Pi,NA, Taiwan,1954,Asian,Unknown,Straight,59,Asia
+Emil Jannings,Best Actor,1929,The Last Command,NA, Switzerland,1884,White,Unknown,Bisexual,45,Europe
+Warner Baxter,Best Actor,1930,In Old Arizona, Oh,United States of America,1889,White,Unknown,Straight,41,North America
+George Arliss,Best Actor,1930,Desraeli,NA, England,1868,White,Unknown,Straight,62,Europe
+Lionel Barrymore,Best Actor,1931,A Free Soul, Pa,United States of America,1878,White,Roman Catholic,Straight,53,North America
+Wallace Beery,Best Actor,1932,The Champ, Mo,United States of America,1885,White,Unknown,Straight,47,North America
+Charles Laughton,Best Actor,1934,The Private Life of Henry VIII, Scarborough, England,1899,White,Roman Catholic,Gay,35,Europe
+Clark Gable,Best Actor,1935,It Happened One Night, Oh,United States of America,1901,White,Unknown,Straight,34,North America
+Victor McLaglen,Best Actor,1936,The Informer, Kent, England,1883,White,Any type of Christian,Straight,53,Europe
+Paul Muni,Best Actor,1937,The Story of Louis Pasteur,NA, Ukraine,1895,White,Jewish,Straight,42,Europe
+Spencer Tracy,Best Actor,1938,Captains Courageous, Wi,United States of America,1900,White,Roman Catholic,Straight,38,North America
+Spencer Tracy,Best Actor,1939,Boys Town, Wi,United States of America,1900,White,Roman Catholic,Straight,39,North America
+Robert Donat,Best Actor,1940,Goodbye Mr. Chips, Manchester, England,1905,White,Unknown,Straight,35,Europe
+Jimmy Stewart,Best Actor,1941,The Philadelphia Story, Pa,United States of America,1908,White,Any type of Christian,Straight,33,North America
+Gary Cooper,Best Actor,1942,Sergeant York, Mt,United States of America,1901,White,Roman Catholic,Straight,41,North America
+James Cagney,Best Actor,1943,Yankee Doodle Dandy, Ny,United States of America,1899,White,Roman Catholic,Straight,44,North America
+Paul Lukas,Best Actor,1944,Watch on the Rhine,NA, Hungary,1887,White,Unknown,Straight,57,Europe
+Bing Crosby,Best Actor,1945,Going My Way, Wa,United States of America,1903,White,Roman Catholic,Straight,42,North America
+Ray Milland,Best Actor,1946,The Lost Weekend,NA, Wales,1907,White,Unknown,Straight,39,Europe
+Fredric March,Best Actor,1947,The Best Years of Our Lives, Wi,United States of America,1897,White,Unknown,Straight,50,North America
+Ronald Colman,Best Actor,1948,A Double Life, Surrey, England,1891,White,Unknown,Straight,57,Europe
+Laurence Olivier,Best Actor,1949,Hamlet, Surrey, England,1907,White,Unknown,Bisexual,42,Europe
+Broderick Crawford,Best Actor,1950,All The King's Men, Pa,United States of America,1911,White,Unknown,Straight,39,North America
+Jose Ferrer,Best Actor,1951,Cyrano de Bergerac,NA, Puerto Rico,1909,Hispanic,Unknown,Straight,42,Latin America
+Humphrey Bogart,Best Actor,1952,The Africa Queen,NY,United States of America,1899,White,Unknown,Straight,53,North America
+Gary Cooper,Best Actor,1953,High Noon, Mt,United States of America,1901,White,Roman Catholic,Straight,52,North America
+William Holden,Best Actor,1954,Stalag 17, Il,United States of America,1918,White,Unknown,Straight,36,North America
+Marlon Brando,Best Actor,1955,On the Waterfront, Ne,United States of America,1924,White,Deist,Bisexual,31,North America
+Ernest Borgnine,Best Actor,1956,Marty, Ct,United States of America,1917,White,Unknown,Straight,39,North America
+Yul Brynner,Best Actor,1957,The King and I,NA, Russia,1920,White,Unknown,Straight,37,Europe
+Alec Guinness,Best Actor,1958,The Bridge on the River Kwai,NA, England,1914,White,Roman Catholic,Bisexual,44,Europe
+David Niven,Best Actor,1959,Separate Tables,NA, England,1909,White,Unknown,Straight,50,Europe
+Charlton Heston,Best Actor,1960,Ben-hur, Il,United States of America,1923,White,Any type of Christian,Straight,37,North America
+Burt Lancaster,Best Actor,1961,Elmer Gantry,NY,United States of America,1913,White,Any type of Christian,Straight,48,North America
+Maximilian Schell,Best Actor,1962,Judgement at Nuremberg,NA, Austria,1930,White,Unknown,Straight,32,Europe
+Gregory Peck,Best Actor,1963,To Kill a Mockingbird, Ca,United States of America,1916,White,Roman Catholic,Straight,47,North America
+Sidney Poitier,Best Actor,1964,Lilies of the Field, Fl,United States of America,1927,Black,Deist,Straight,37,North America
+Rex Harrison,Best Actor,1965,My Fair Lady, Lancashire, England,1908,White,Unknown,Straight,57,Europe
+Lee Marvin,Best Actor,1966,Cat Ballou,NY,United States of America,1924,White,Unknown,Straight,42,North America
+Paul Scofield,Best Actor,1967,A Man For All Seasons, West Sussex, England,1922,White,Unknown,Straight,45,Europe
+Rod Steiger,Best Actor,1968,In the Heat of the Night, Ny,United States of America,1925,White,Any type of Christian,Straight,43,North America
+Cliff Robertson,Best Actor,1969,Charly, Ca,United States of America,1923,White,Unknown,Straight,46,North America
+John Wayne,Best Actor,1970,True Grit, Ia,United States of America,1907,White,Roman Catholic,Straight,63,North America
+George C. Scott,Best Actor,1971,Patton, Va,United States of America,1927,White,Unknown,Straight,44,North America
+Gene Hackman,Best Actor,1972,The French Connection, Ca,United States of America,1930,White,Unknown,Straight,42,North America
+Marlon Brando,Best Actor,1973,The Godfather, Ne,United States of America,1924,White,Deist,Bisexual,49,North America
+Jack Lemmon,Best Actor,1974,Save the Tiger, Ma,United States of America,1925,White,Roman Catholic,Straight,49,North America
+Art Carney,Best Actor,1975,Harry and Tonto, Ny,United States of America,1918,White,Unknown,Straight,57,North America
+Jack Nicholson,Best Actor,1976,One Flew Over the Cuckoo's Nest,NY,United States of America,1937,White,Atheist,Straight,39,North America
+Peter Finch,Best Actor,1977,Network, London, England,1916,White,Unknown,Straight,61,Europe
+Richard Dreyfuss,Best Actor,1978,The Goodbye Girl, Ny,United States of America,1947,White,Jewish,Straight,31,North America
+Jon Voight,Best Actor,1979,Coming Home, Ny,United States of America,1938,White,Roman Catholic,Straight,41,North America
+Dustin Hoffman,Best Actor,1980,Kramer vs. Kramer, Ca,United States of America,1937,White,Jewish,Straight,43,North America
+Robert De Niro,Best Actor,1981,Raging Bull,NY,United States of America,1943,White,Roman Catholic,Straight,38,North America
+Henry Fonda,Best Actor,1982,On Golden Pond, Ne,United States of America,1905,White,Unknown,Straight,77,North America
+Ben Kingsley,Best Actor,1983,Gandhi, Yorkshire, England,1943,Multiracial,Any type of Christian,Straight,40,Europe
+Robert Duvall,Best Actor,1984,Tender Mercies, Ca,United States of America,1931,White,Unknown,Straight,53,North America
+F. Murray Abraham,Best Actor,1985,Amadeus, Pa,United States of America,1939,Middle Eastern,Unknown,Straight,46,North America
+William Hurt,Best Actor,1986,Kiss of the Spider Woman, Dc,United States of America,1950,White,Any type of Christian,Straight,36,North America
+Paul Newman,Best Actor,1987,The Color of Money, Oh,United States of America,1925,White,Jewish,Straight,62,North America
+Michael Douglas,Best Actor,1988,Wall Street, Nj,United States of America,1944,White,Jewish,Straight,44,North America
+Dustin Hoffman,Best Actor,1989,Rainman, Ca,United States of America,1937,White,Jewish,Straight,52,North America
+Daniel Day-Lewis,Best Actor,1990,My Left Foot,NA, England,1957,White,Unknown,Straight,33,Europe
+Jeremy Irons,Best Actor,1991,Reversal of Fortune, Isle of Wight, England,1948,White,Unknown,Straight,43,Europe
+Anthony Hopkins,Best Actor,1992,Silence of the Lambs,NA, Wales,1937,White,Unknown,Straight,55,Europe
+Al Pacino,Best Actor,1993,Scent of a Woman,NA,United States of America,1940,White,Roman Catholic,Straight,53,North America
+Tom Hanks,Best Actor,1994,Philadelphia, Ca,United States of America,1956,White,Any type of Christian,Straight,38,North America
+Tom Hanks,Best Actor,1995,Forrest Gump, Ca,United States of America,1956,White,Any type of Christian,Straight,39,North America
+Nicolas Cage,Best Actor,1996,Leaving Las Vegas, Ca,United States of America,1964,White,Roman Catholic,Straight,32,North America
+Geoffrey Rush,Best Actor,1997,Shine, Queensland, Australia,1951,White,Unknown,Straight,46,Oceania
+Jack Nicholson,Best Actor,1997,As Good as It Gets,NY,United States of America,1937,White,Atheist,Straight,60,North America
+Roberto Benigni,Best Actor,1999,Life is Beautiful, Arezzo, Italy,1952,White,Unknown,Straight,47,Europe
+Kevin Spacey,Best Actor,2000,American Beauty, Nj,United States of America,1959,White,Unknown,Matter of Dispute,41,North America
+Russell Crowe,Best Actor,2001,Gladiator,NA, New Zealand,1964,White,Unknown,Straight,37,Oceania
+Denzel Washington,Best Actor,2002,Training Day, Ny,United States of America,1954,Black,Any type of Christian,Straight,48,North America
+Adrien Brody,Best Actor,2003,The Pianist,NY,United States of America,1973,White,Jewish,Straight,30,North America
+Sean Penn,Best Actor,2003,Mystic River, Ca,United States of America,1960,White,Roman Catholic,Straight,43,North America
+Jamie Foxx,Best Actor,2005,Ray, Tx,United States of America,1967,Black,Any type of Christian,Straight,38,North America
+Philip Seymour Hoffman,Best Actor,2006,Capote, Ny,United States of America,1967,White,Unknown,Straight,39,North America
+Forest Whitaker,Best Actor,2007,The Last King of Scotland, Tx,United States of America,1961,Black,Unknown,Straight,46,North America
+Daniel Day-Lewis,Best Actor,2008,There Will Be Blood,NA, England,1957,White,Unknown,Straight,51,Europe
+Sean Penn,Best Actor,2009,Milk, Ca,United States of America,1960,White,Roman Catholic,Straight,49,North America
+Jeff Bridges,Best Actor,2010,Crazy Heart, Ca,United States of America,1949,White,Any type of Christian,Straight,61,North America
+Colin Firth,Best Actor,2011,The King's Speech, Hampshire, England,1960,White,Unknown,Straight,51,Europe
+Jean Dujardin,Best Actor,2012,The Artist, Hauts-De-Seine, France,1972,White,Unknown,Straight,40,Europe
+Daniel Day-Lewis,Best Actor,2013,Lincoln,NA, England,1957,White,Unknown,Straight,56,Europe
+Matthew McConaughey,Best Actor,2014,Dallas Buyers Club, Tx,United States of America,1969,White,Unknown,Straight,45,North America
+Walter Brennan,Best Supporting Actor,1938,Come and Get It, Ma,United States of America,1894,White,Unknown,Straight,44,North America
+Joseph Schildkraut,Best Supporting Actor,1938,The Life of Emile Zola,NA, Austria,1896,White,Unknown,Straight,42,Europe
+Walter Brennan,Best Supporting Actor,1939,Kentucky, Ma,United States of America,1894,White,Unknown,Straight,45,North America
+Thomas Mitchell,Best Supporting Actor,1940,Stagecoach, Nj,United States of America,1892,White,Unknown,Straight,48,North America
+Walter Brennan,Best Supporting Actor,1941,The Westerner, Ma,United States of America,1894,White,Unknown,Straight,47,North America
+Donald Crisp,Best Supporting Actor,1942,How Green Was My Valley,NA, England,1880,White,Unknown,Straight,62,Europe
+Van Heflin,Best Supporting Actor,1943,Johnny Eager, Ok,United States of America,1910,White,Unknown,Straight,33,North America
+Charles Coburn,Best Supporting Actor,1944,The More the Merrier, Ga,United States of America,1877,White,Unknown,Straight,67,North America
+Barry Fitzgerald,Best Supporting Actor,1945,Going My Way,NA, Ireland,1888,White,Any type of Christian,Na,57,Europe
+James Dunn,Best Supporting Actor,1946,A Tree Grows in Brooklyn,NY,United States of America,1901,White,Unknown,Straight,45,North America
+Harold Russell,Best Supporting Actor,1947,The Best Years of Our Lives, Nova Scotia, Canada,1914,White,Unknown,Straight,33,North America
+Edmund Gwenn,Best Supporting Actor,1948,Miracle on 34th Street,NA, Wales,1875,White,Unknown,Na,73,Europe
+Walter Huston,Best Supporting Actor,1949,The Treasure of the Sierra Madre, Ontario, Canada,1884,White,Unknown,Straight,65,North America
+Dean Jagger,Best Supporting Actor,1950,Twelve O'Clock High, Oh,United States of America,1903,White,Unknown,Straight,47,North America
+George Sanders,Best Supporting Actor,1951,All About Eve,NA, Russia,1906,White,Unknown,Straight,45,Europe
+Karl Malden,Best Supporting Actor,1952,A Streetcar Named Desire, Il,United States of America,1912,White,Unknown,Straight,40,North America
+Anthony Quinn,Best Supporting Actor,1953,Viva Zapata!,NA, Mexico,1915,Hispanic,Unknown,Straight,38,Latin America
+Frank Sinatra,Best Supporting Actor,1954,From Here to Eternity, Nj,United States of America,1915,White,Unknown,Straight,39,North America
+Edmond O'Brien,Best Supporting Actor,1955,The Barefoot Contessa,NY,United States of America,1915,White,Roman Catholic,Straight,40,North America
+Jack Lemmon,Best Supporting Actor,1956,Mister Roberts, Ma,United States of America,1925,White,Roman Catholic,Straight,31,North America
+Anthony Quinn,Best Supporting Actor,1957,Lust for Life,NA, Mexico,1915,Hispanic,Unknown,Straight,42,Latin America
+Red Buttons,Best Supporting Actor,1958,Sayonara,NY,United States of America,1919,White,Jewish,Straight,39,North America
+Burl Ives,Best Supporting Actor,1959,The Big Country, Il,United States of America,1909,White,Unknown,Straight,50,North America
+Hugh Griffith,Best Supporting Actor,1960,Ben-Hur, Anglesey, Wales,1912,White,Unknown,Na,48,Europe
+Peter Ustinov,Best Supporting Actor,1961,Spartacus,NA, England,1921,White,Unknown,Straight,40,Europe
+George Chakiris,Best Supporting Actor,1962,West Side Story, Oh,United States of America,1934,White,Unknown,Gay,28,North America
+"Ed Begley, Sr.",Best Supporting Actor,1963,Sweet Bird of Youth, Ct,United States of America,1901,White,Unknown,Straight,62,North America
+Melvyn Douglas,Best Supporting Actor,1964,Hud, Ga,United States of America,1901,White,Jewish,Straight,63,North America
+Peter Ustinov,Best Supporting Actor,1965,Topkapi,NA, England,1921,White,Unknown,Straight,44,Europe
+Martin Balsam,Best Supporting Actor,1966,A Thousand Clowns, Ny,United States of America,1919,White,Unknown,Straight,47,North America
+Walter Matthau,Best Supporting Actor,1967,The Fortune Cookie,NY,United States of America,1920,White,Jewish,Straight,47,North America
+George Kennedy,Best Supporting Actor,1968,Cool Hand Luke,NY,United States of America,1925,White,Unknown,Straight,43,North America
+Jack Albertson,Best Supporting Actor,1969,The Subject Was Roses, Ma,United States of America,1907,White,Unknown,Na,62,North America
+Gig Young,Best Supporting Actor,1970,"They Shoot Horses, Don't They?", Mn,United States of America,1913,White,Unknown,Straight,57,North America
+John Mills,Best Supporting Actor,1971,Ryan's Daughter, Suffolk, England,1908,White,Unknown,Straight,63,Europe
+Ben Johnson,Best Supporting Actor,1972,The Last Picture Show, Ok,United States of America,1918,White,Unknown,Straight,54,North America
+Joel Grey,Best Supporting Actor,1973,Cabaret, Oh,United States of America,1932,White,Jewish,Gay,41,North America
+John Houseman,Best Supporting Actor,1974,The Paper Chase,NA, Romania,1902,White,Unknown,Straight,72,Europe
+Robert De Niro,Best Supporting Actor,1975,The Godfather Part II,NY,United States of America,1943,White,Roman Catholic,Straight,32,North America
+George Burns,Best Supporting Actor,1976,The Sunshine Boys,NY,United States of America,1896,White,Jewish,Straight,80,North America
+Jason Robards,Best Supporting Actor,1977,All the President's Men, Il,United States of America,1922,White,Unknown,Straight,55,North America
+Jason Robards,Best Supporting Actor,1978,Julia, Il,United States of America,1922,White,Unknown,Straight,56,North America
+Christopher Walken,Best Supporting Actor,1979,The Deer Hunter, Ny,United States of America,1943,White,Unknown,Straight,36,North America
+Melvyn Douglas,Best Supporting Actor,1980,Being There, Ga,United States of America,1901,White,Jewish,Straight,79,North America
+Timothy Hutton,Best Supporting Actor,1981,Oridnary People, Ca,United States of America,1960,White,Unknown,Straight,21,North America
+John Gielgud,Best Supporting Actor,1982,Arthur,NA, England,1904,White,Unknown,Gay,78,Europe
+"Lou Gossett, Jr.",Best Supporting Actor,1983,An Officer and a Gentleman, Ny,United States of America,1936,Black,Unknown,Straight,47,North America
+Jack Nicholson,Best Supporting Actor,1984,Terms of Endearment,NY,United States of America,1937,White,Atheist,Straight,47,North America
+Haing S. Ngor,Best Supporting Actor,1985,The Killing Fields,NA, Cambodia,1940,Asian,Buddhist,Straight,45,Asia
+Don Ameche,Best Supporting Actor,1986,Cocoon, Wi,United States of America,1904,White,Roman Catholic,Straight,82,North America
+Michael Caine,Best Supporting Actor,1987,Hannah and Her Sisters,NA, England,1933,White,Unknown,Straight,54,Europe
+Sean Connery,Best Supporting Actor,1988,The Untouchables,NA, Scotland,1930,White,Roman Catholic,Straight,58,Europe
+Kevin Kline,Best Supporting Actor,1989,A Fish Called Wanda, Mo,United States of America,1947,White,Roman Catholic,Straight,42,North America
+Denzel Washington,Best Supporting Actor,1990,Glory, Ny,United States of America,1954,Black,Any type of Christian,Straight,36,North America
+Joe Pesci,Best Supporting Actor,1991,Good Fellas, Nj,United States of America,1943,White,Unknown,Straight,48,North America
+Jack Palance,Best Supporting Actor,1992,City Slickers, Pa,United States of America,1919,White,Unknown,Straight,73,North America
+Gene Hackman,Best Supporting Actor,1993,Unforgiven, Ca,United States of America,1930,White,Unknown,Straight,63,North America
+Tommy Lee Jones,Best Supporting Actor,1994,The Fugitive, Tx,United States of America,1946,White,Unknown,Straight,48,North America
+Martin Landau,Best Supporting Actor,1995,Ed Wood, Ny,United States of America,1931,White,Jewish,Straight,64,North America
+Kevin Spacey,Best Supporting Actor,1996,The Usual Suspects, Nj,United States of America,1959,White,Unknown,Matter of Dispute,37,North America
+"Cuba Gooding, Jr.",Best Supporting Actor,1997,Jerry Maguire, Ny,United States of America,1968,Black,Unknown,Straight,29,North America
+Robin Williams,Best Supporting Actor,1998,Good Will Hunting, Il,United States of America,1951,White,Any type of Christian,Straight,47,North America
+James Coburn,Best Supporting Actor,1999,Affliction, Ne,United States of America,1928,White,Unknown,Straight,71,North America
+Michael Caine,Best Supporting Actor,2000,The Cider House Rules,NA, England,1933,White,Unknown,Straight,67,Europe
+Benicio Del Toro,Best Supporting Actor,2001,Traffic,NA, Puerto Rico,1967,Hispanic,Unknown,Straight,34,Latin America
+Jim Broadbent,Best Supporting Actor,2002,Iris, Lincolnshire, England,1949,White,Unknown,Straight,53,Europe
+Chris Cooper,Best Supporting Actor,2003,Adaptation, Mo,United States of America,1951,White,Unknown,Straight,52,North America
+Tim Robbins,Best Supporting Actor,2004,Mystic River, Ca,United States of America,1958,White,Roman Catholic,Straight,46,North America
+Morgan Freeman,Best Supporting Actor,2005,Million Dollar Baby, Tn,United States of America,1937,Black,Unknown,Straight,68,North America
+George Clooney,Best Supporting Actor,2006,Syriana, Ky,United States of America,1961,White,Unknown,Straight,45,North America
+Alan Arkin,Best Supporting Actor,2007,Little Miss Sunshine, Ny,United States of America,1934,White,Jewish,Straight,73,North America
+Javier Bardem,Best Supporting Actor,2008,No Country for Old Men,NA, Spain,1969,Hispanic,Unknown,Straight,39,Europe
+Heath Ledger,Best Supporting Actor,2009,The Dark Knight,NA, Australia,1979,White,Unknown,Straight,30,Oceania
+Christoph Waltz,Best Supporting Actor,2010,Inglourious Basterds,NA, Austria,1956,White,Unknown,Straight,54,Europe
+Christian Bale,Best Supporting Actor,2011,The Fighter, Pembrokeshire, Wales,1974,White,Unknown,Straight,37,Europe
+Christopher Plummer,Best Supporting Actor,2012,Beginning, Ontario, Canada,1929,White,Unknown,Straight,83,North America
+Christoph Waltz,Best Supporting Actor,2013,Django Unchained,NA, Austria,1956,White,Unknown,Straight,57,Europe
+Jared Leto,Best Supporting Actor,2014,Dallas Buyers Club, La,United States of America,1971,White,Unknown,Straight,43,North America
+Janet Gaynor,Best Actress,1929,7th Heaven, Pa,United States of America,1906,White,Unknown,Straight,23,North America
+Mary Pickford,Best Actress,1930,Coquette, Ontario, Canada,1892,White,Unknown,Straight,38,North America
+Norma Shearer,Best Actress,1930,The Divorcee, Quebec, Canada,1902,White,Unknown,Straight,28,North America
+Marie Dressler,Best Actress,1931,Min and Bill, Ontario, Canada,1868,White,Unknown,Straight,63,North America
+Helen Hayes,Best Actress,1932,The Sin of Madelon Claudet, Dc,United States of America,1900,White,Unknown,Straight,32,North America
+Katharine Hepburn,Best Actress,1934,Morning Glory, Ct,United States of America,1907,White,Atheist,Bisexual,27,North America
+Claudette Colbert,Best Actress,1935,It Happened One Night,NA, France,1903,White,Unknown,Straight,32,Europe
+Bette Davis,Best Actress,1936,Dangerous, Ma,United States of America,1908,White,Unknown,Straight,28,North America
+Luise Rainer,Best Actress,1937,The Great Ziegfeld,NA, Germany,1910,White,Jewish,Straight,27,Europe
+Luise Rainer,Best Actress,1938,The Good Earth,NA, Germany,1910,White,Jewish,Straight,28,Europe
+Bette Davis,Best Actress,1939,Jezebel, Ma,United States of America,1908,White,Unknown,Straight,31,North America
+Vivien Leigh,Best Actress,1940,Gone with the Wind,NA, India,1913,White,Roman Catholic,Straight,27,Asia
+Ginger Rogers,Best Actress,1941,Kitty Foyle, Mo,United States of America,1911,White,Any type of Christian,Straight,30,North America
+Joan Fontaine,Best Actress,1940,Suspicion,NA, Japan,1917,White,Unknown,Straight,23,Asia
+Greer Garson,Best Actress,1942,Mrs. Miniver,NA, England,1904,White,Unknown,Straight,38,Europe
+Jennifer Jones,Best Actress,1944,The Song of Bernadette, Ok,United States of America,1919,White,Roman Catholic,Straight,25,North America
+Ingrid Bergman,Best Actress,1945,Gaslight,NA, Sweden,1915,White,Unknown,Straight,30,Europe
+Joan Crawford,Best Actress,1946,Mildred Pierce, Tx,United States of America,1905,White,Any type of Christian,Bisexual,41,North America
+Olivia de Havilland,Best Actress,1947,To Each His Own,NA, Japan,1916,White,Unknown,Straight,31,Asia
+Loretta Young,Best Actress,1948,The Farmer's Daughter, Ut,United States of America,1913,White,Roman Catholic,Straight,35,North America
+Jane Wyman,Best Actress,1949,Johnny Belinda, Mo,United States of America,1917,White,Roman Catholic,Straight,32,North America
+Olivia de Havilland,Best Actress,1950,The Heiress,NA, Japan,1916,White,Unknown,Straight,34,Asia
+Judy Holliday,Best Actress,1951,Born Yesterday,NY,United States of America,1921,White,Unknown,Straight,30,North America
+Vivien Leigh,Best Actress,1952,A Streetcar Named Desire,NA, India,1913,White,Roman Catholic,Straight,39,Asia
+Shirley Booth,Best Actress,1953,"Come Back, Little Sheba",NY,United States of America,1898,White,Unknown,Straight,55,North America
+Audrey Hepburn,Best Actress,1954,Roman Holiday,NA, Belgium,1929,White,Any type of Christian,Straight,25,Europe
+Grace Kelly,Best Actress,1955,The Country Girl, Pa,United States of America,1929,White,Roman Catholic,Straight,26,North America
+Anna Magnani,Best Actress,1956,The Rose Tattoo,NA, Italy,1908,White,Unknown,Straight,48,Europe
+Ingrid Bergman,Best Actress,1957,Anastasia,NA, Sweden,1915,White,Unknown,Straight,42,Europe
+Joanne Woodward,Best Actress,1958,The Three Faces of Eve, Ga,United States of America,1930,White,Unknown,Straight,28,North America
+Susan Hayward,Best Actress,1959,I Want To Live!, Ny,United States of America,1918,White,Roman Catholic,Straight,41,North America
+Simone Signoret,Best Actress,1960,Room at the Top,NA, Germany,1921,White,Unknown,Straight,39,Europe
+Elizabeth Taylor,Best Actress,1961,Butterfield 8,NA, England,1932,White,Jewish,Straight,29,Europe
+Sophia Loren,Best Actress,1962,Two Women,NA, Italy,1934,White,Roman Catholic,Straight,28,Europe
+Anne Bancroft,Best Actress,1963,The Miracle Worker, Ny,United States of America,1931,White,Roman Catholic,Straight,32,North America
+Patricia Neal,Best Actress,1964,Hud, Ky,United States of America,1926,White,Roman Catholic,Straight,38,North America
+Julie Andrews,Best Actress,1965,Mary Poppins, Surrey, England,1935,White,Unknown,Straight,30,Europe
+Julie Christie,Best Actress,1966,Darling, Assam, India,1941,White,Unknown,Straight,25,Asia
+Elizabeth Taylor,Best Actress,1967,Who's Afraid of Virginia Woolf?,NA, England,1932,White,Jewish,Straight,35,Europe
+Katharine Hepburn,Best Actress,1968,Guess Who's Coming to Dinner, Ct,United States of America,1907,White,Atheist,Bisexual,61,North America
+Barbra Streisand,Best Actress,1969,Funny Girl, Ny,United States of America,1942,White,Jewish,Straight,27,North America
+Katharine Hepburn,Best Actress,1969,The Lion in Winter, Ct,United States of America,1907,White,Atheist,Bisexual,62,North America
+Maggie Smith,Best Actress,1970,The Prime of Miss Jean Brodie, Essex, England,1934,White,Unknown,Straight,36,Europe
+Glenda Jackson,Best Actress,1971,Women in Love, Cheshire, England,1936,White,Unknown,Straight,35,Europe
+Jane Fonda,Best Actress,1972,Klute,NY,United States of America,1937,White,Any type of Christian,Straight,35,North America
+Liza Minnelli,Best Actress,1973,Cabaret, Ca,United States of America,1946,White,Unknown,Na,27,North America
+Glenda Jackson,Best Actress,1974,A Touch of Class, Cheshire, England,1936,White,Unknown,Straight,38,Europe
+Ellen Burstyn,Best Actress,1975,Alice Doesn't Live Here Anymore, Mi,United States of America,1932,White,Sufism,Straight,43,North America
+Louise Fletcher,Best Actress,1976,One Flew Over the Cuckoo's Nest, Al,United States of America,1934,White,Unknown,Straight,42,North America
+Faye Dunaway,Best Actress,1977,Network, Fl,United States of America,1941,White,Roman Catholic,Straight,36,North America
+Diane Keaton,Best Actress,1978,Annie Hall, Ca,United States of America,1946,White,Atheist,Straight,32,North America
+Jane Fonda,Best Actress,1979,Coming Home,NY,United States of America,1937,White,Any type of Christian,Straight,42,North America
+Sally Field,Best Actress,1980,Norma Rae, Ca,United States of America,1946,White,Unknown,Straight,34,North America
+Sissy Spacek,Best Actress,1981,Coal Miner's Daughter, Tx,United States of America,1949,White,Unknown,Straight,32,North America
+Katharine Hepburn,Best Actress,1982,On Golden Pond, Ct,United States of America,1907,White,Atheist,Bisexual,75,North America
+Meryl Streep,Best Actress,1983,Sophie's Choice, Nj,United States of America,1949,White,Unknown,Straight,34,North America
+Shirley MacLaine,Best Actress,1984,Terms of Endearment, Va,United States of America,1934,White,Any type of Christian,Straight,50,North America
+Sally Field,Best Actress,1985,Places in the Heart, Ca,United States of America,1946,White,Unknown,Straight,39,North America
+Geraldine Page,Best Actress,1986,The Trip to Bountiful, Mo,United States of America,1924,White,Unknown,Straight,62,North America
+Marlee Matlin,Best Actress,1987,Children of a Lesser God, Il,United States of America,1965,White,Jewish,Straight,22,North America
+Cher,Best Actress,1988,Moonstruck, Ca,United States of America,1946,White,Unknown,Bisexual,42,North America
+Jodie Foster,Best Actress,1989,The Accused, Ca,United States of America,1962,White,Atheist,Lesbian,27,North America
+Jessica Tandy,Best Actress,1990,Driving Miss Daisy,NA, England,1909,White,Unknown,Straight,81,Europe
+Kathy Bates,Best Actress,1991,Misery, Tn,United States of America,1948,White,Unknown,Straight,43,North America
+Jodie Foster,Best Actress,1992,The Silence of the Lambs, Ca,United States of America,1962,White,Atheist,Lesbian,30,North America
+Emma Thompson,Best Actress,1993,Howards End,NA, England,1959,White,Unknown,Straight,34,Europe
+Holly Hunter,Best Actress,1994,The Piano, Ga,United States of America,1958,White,Unknown,Straight,36,North America
+Jessica Lange,Best Actress,1995,Blue Sky, Mn,United States of America,1949,White,Unknown,Straight,46,North America
+Susan Sarandon,Best Actress,1996,Dead Man Walking, Ny,United States of America,1946,White,Roman Catholic,Straight,50,North America
+Frances McDormand,Best Actress,1997,Fargo, Il,United States of America,1957,White,Any type of Christian,Straight,40,North America
+Helen Hunt,Best Actress,1998,As Good As It Gets, Ca,United States of America,1963,White,Unknown,Straight,35,North America
+Gwyneth Paltrow,Best Actress,1999,Shakespeare in Love, Ca,United States of America,1972,White,Jewish,Straight,27,North America
+Hilary Swank,Best Actress,2000,Boys Don't Cry, Ne,United States of America,1974,White,Unknown,Straight,26,North America
+Julia Roberts,Best Actress,2001,Erin Brockovich, Ga,United States of America,1967,White,Hindu,Straight,34,North America
+Halle Berry,Best Actress,2002,Monster's Ball, Oh,United States of America,1966,Multiracial,Unknown,Straight,36,North America
+Nicole Kidman,Best Actress,2003,The Hours, Hi,United States of America,1967,White,Roman Catholic,Straight,36,North America
+Charlize Theron,Best Actress,2004,Monster,NA, South Africa,1975,White,Unknown,Straight,29,Africa
+Hilary Swank,Best Actress,2005,Million Dollar Baby, Ne,United States of America,1974,White,Unknown,Straight,31,North America
+Reese Witherspoon,Best Actress,2006,Walk the Line, La,United States of America,1976,White,Unknown,Straight,30,North America
+Helen Mirren,Best Actress,2007,The Queen, London, England,1945,White,Unknown,Straight,62,Europe
+Marion Cotillard,Best Actress,2008,The Passionate Life of Edith Piaf,NA, France,1975,White,Unknown,Straight,33,Europe
+Kate Winslet,Best Actress,2009,The Reader,NA, England,1975,White,Unknown,Straight,34,Europe
+Sandra Bullock,Best Actress,2010,The Blind Side, Va,United States of America,1964,White,Unknown,Straight,46,North America
+Natalie Portman,Best Actress,2011,Black Swan,NA, Israel,1981,White,Jewish,Straight,30,Asia
+Meryl Streep,Best Actress,2012,The Iron Lady, Nj,United States of America,1949,White,Unknown,Straight,63,North America
+Jennifer Lawrence,Best Actress,2013,Silver Linings Playbook, Ky,United States of America,1990,White,Unknown,Na,23,North America
+Cate Blanchett,Best Actress,2014,Blue Jasmine, Victoria, Australia,1969,White,Unknown,Straight,45,Oceania
+Gale Sondergaard,Best Supporting Actress,1937,Anthony Adverse, Mn,United States of America,1899,White,Unknown,Straight,38,North America
+Alice Brady,Best Supporting Actress,1938,In Old Chicago,NY,United States of America,1892,White,Unknown,Straight,46,North America
+Fay Bainter,Best Supporting Actress,1939,Jezebel, Ca,United States of America,1891,White,Unknown,Straight,48,North America
+Hattie McDaniel,Best Supporting Actress,1940,Gone with the Wind, Ks,United States of America,1893,Black,Any type of Christian,Matter of Dispute,47,North America
+Jane Darwell,Best Supporting Actress,1941,The Grapes of Wrath, Mo,United States of America,1879,White,Unknown,Straight,62,North America
+Mary Astor,Best Supporting Actress,1942,The Great Lie, Il,United States of America,1906,White,Roman Catholic,Straight,36,North America
+Teresa Wright,Best Supporting Actress,1943,Mrs. Miniver,NY,United States of America,1918,White,Unknown,Straight,25,North America
+Katina Paxinou,Best Supporting Actress,1944,For Whom the Bell Tolls,NA, Greece,1900,White,Unknown,Straight,44,Europe
+Ethel Barrymore,Best Supporting Actress,1945,None but the Lonely Heart, Pa,United States of America,1879,White,Roman Catholic,Straight,66,North America
+Anne Revere,Best Supporting Actress,1946,National Velvet,NY,United States of America,1903,White,Unknown,Straight,43,North America
+Anne Baxter,Best Supporting Actress,1947,The Razor's Edge, In,United States of America,1923,White,Unknown,Straight,24,North America
+Celeste Holm,Best Supporting Actress,1948,Gentleman's Agreement,NY,United States of America,1917,White,Unknown,Straight,31,North America
+Claire Trevor,Best Supporting Actress,1949,Key Largo,NY,United States of America,1910,White,Unknown,Straight,39,North America
+Mercedes McCambridge,Best Supporting Actress,1950,All the King's Men, Il,United States of America,1916,White,Roman Catholic,Straight,34,North America
+Josephine Hull,Best Supporting Actress,1951,Harvey, Ma,United States of America,1886,White,Unknown,Straight,65,North America
+Kim Hunter,Best Supporting Actress,1952,A Streetcar Named Desire, Mi,United States of America,1922,White,Unknown,Straight,30,North America
+Gloria Grahame,Best Supporting Actress,1953,The Bad and the Beautiful, Ca,United States of America,1923,White,Unknown,Straight,30,North America
+Donna Reed,Best Supporting Actress,1954,From Here to Eternity, Ia,United States of America,1921,White,Unknown,Straight,33,North America
+Eva Marie Saint,Best Supporting Actress,1955,On the Waterfront, Nj,United States of America,1924,White,Unknown,Straight,31,North America
+Jo Van Fleet,Best Supporting Actress,1956,East of Eden, Ca,United States of America,1914,White,Unknown,Straight,42,North America
+Dorothy Malone,Best Supporting Actress,1957,Written on the Wind, Il,United States of America,1925,White,Unknown,Straight,32,North America
+Miyoshi Umeki,Best Supporting Actress,1958,Sayonara, Hokkaido, Japan,1929,Asian,Unknown,Straight,29,Asia
+Wendy Hiller,Best Supporting Actress,1959,Separate Tables, Cheshire, England,1912,White,Unknown,Straight,47,Europe
+Shelley Winters,Best Supporting Actress,1960,The Diary of Anne Frank, Mo,United States of America,1920,White,Jewish,Straight,40,North America
+Shirley Jones,Best Supporting Actress,1961,Elmer Gantry, Pa,United States of America,1934,White,Any type of Christian,Straight,27,North America
+Rita Moreno,Best Supporting Actress,1962,West Side Story,NA, Puerto Rico,1931,Hispanic,Unknown,Straight,31,Latin America
+Patty Duke,Best Supporting Actress,1963,The Miracle Worker, Ny,United States of America,1946,White,Roman Catholic,Straight,17,North America
+Margaret Rutherford,Best Supporting Actress,1964,the V.I.P.s,NA, England,1892,White,Unknown,Straight,72,Europe
+Lila Kedrova,Best Supporting Actress,1965,Zorba the Greek,NA, Russia,1918,White,Unknown,Straight,47,Europe
+Shelley Winters,Best Supporting Actress,1966,A Patch of Blue, Mo,United States of America,1920,White,Jewish,Straight,46,North America
+Sandy Dennis,Best Supporting Actress,1967,Who's Afraid of Virginia Woolf?, Ne,United States of America,1937,White,Unknown,Bisexual,30,North America
+Estelle Parsons,Best Supporting Actress,1968,Bonnie and Clyde, Ma,United States of America,1927,White,Unknown,Straight,41,North America
+Ruth Gordon,Best Supporting Actress,1969,Rosemary's Baby, Ma,United States of America,1896,White,Unknown,Straight,73,North America
+Goldie Hawn,Best Supporting Actress,1970,Cactus Flower, Md,United States of America,1945,White,Buddhist,Straight,25,North America
+Helen Hayes,Best Supporting Actress,1971,Airport, Dc,United States of America,1900,White,Unknown,Straight,71,North America
+Cloris Leachman,Best Supporting Actress,1972,The Last Picture Show, Ia,United States of America,1926,White,Unknown,Straight,46,North America
+Eileen Heckart,Best Supporting Actress,1973,Butterflies Are Free, Oh,United States of America,1919,White,Unknown,Straight,54,North America
+Tatum O'Neal,Best Supporting Actress,1974,Paper Moon, Ca,United States of America,1963,White,Unknown,Straight,11,North America
+Ingrid Bergman,Best Supporting Actress,1975,Murder on the Orient Express,NA, Sweden,1915,White,Unknown,Straight,60,Europe
+Lee Grant,Best Supporting Actress,1976,Shampoo,NY,United States of America,1927,White,Jewish,Straight,49,North America
+Beatrice Straight,Best Supporting Actress,1977,Network, Ny,United States of America,1914,White,Unknown,Straight,63,North America
+Vanessa Redgrave,Best Supporting Actress,1978,Julia,NA, England,1937,White,Unknown,Straight,41,Europe
+Maggie Smith,Best Supporting Actress,1979,California Suite, Essex, England,1934,White,Unknown,Straight,45,Europe
+Meryl Streep,Best Supporting Actress,1980,Kramer vs. Kramer, Nj,United States of America,1949,White,Unknown,Straight,31,North America
+Mary Steenburgen,Best Supporting Actress,1981,Melvin and Howard, Ar,United States of America,1953,White,Unknown,Straight,28,North America
+Maureen Stapleton,Best Supporting Actress,1982,Reds, Ny,United States of America,1925,White,Roman Catholic,Straight,57,North America
+Jessica Lange,Best Supporting Actress,1983,Tootsie, Mn,United States of America,1949,White,Unknown,Straight,34,North America
+Linda Hunt,Best Supporting Actress,1984,The Year of Living Dangerously, Nj,United States of America,1945,White,Unknown,Na,39,North America
+Peggy Ashcroft,Best Supporting Actress,1985,A Passage to India, Surrey, England,1907,White,Agnostic,Straight,78,Europe
+Anjelica Huston,Best Supporting Actress,1986,Prizzi's Honor, Ca,United States of America,1951,White,Unknown,Straight,35,North America
+Dianne Wiest,Best Supporting Actress,1987,Hannah and Her Sisters, Mo,United States of America,1948,White,Unknown,Straight,39,North America
+Olympia Dukakis,Best Supporting Actress,1988,Moonstruck, Ma,United States of America,1931,White,Unknown,Straight,57,North America
+Geena Davis,Best Supporting Actress,1989,The Accidental Tourist, Ma,United States of America,1956,White,Any type of Christian,Straight,33,North America
+Brenda Fricker,Best Supporting Actress,1990,My Left Foot,NA, Ireland,1945,White,Unknown,Straight,45,Europe
+Whoopi Goldberg,Best Supporting Actress,1991,Ghost,NY,United States of America,1955,Black,Atheist,Straight,36,North America
+Mercedes Ruehl,Best Supporting Actress,1992,The Fisher King, Ny,United States of America,1948,Hispanic,Roman Catholic,Straight,44,North America
+Marisa Tomei,Best Supporting Actress,1993,My Cousin Vinny, Ny,United States of America,1964,White,Unknown,Straight,29,North America
+Anna Paquin,Best Supporting Actress,1994,The Piano, Manitoba, Canada,1982,White,Unknown,Bisexual,12,North America
+Dianne Wiest,Best Supporting Actress,1995,Bullets Over Broadway, Mo,United States of America,1948,White,Unknown,Straight,47,North America
+Mira Sorvino,Best Supporting Actress,1996,Mighty Aphrodite, Nj,United States of America,1967,White,Atheist,Straight,29,North America
+Juliette Binoche,Best Supporting Actress,1997,The English Patient,NA, France,1964,White,Unknown,Straight,33,Europe
+Kim Basinger,Best Supporting Actress,1998,L.A. Confidential, Ga,United States of America,1953,White,Unknown,Straight,45,North America
+Judi Dench,Best Supporting Actress,1999,Shakespeare in Love, North Yorkshire, England,1934,White,Any type of Christian,Straight,65,Europe
+Angelina Jolie,Best Supporting Actress,2000,"Girl, Interrupted", Ca,United States of America,1975,White,Buddhist,Bisexual,25,North America
+Marcia Gay Harden,Best Supporting Actress,2001,Pollock, Ca,United States of America,1959,White,Unknown,Straight,42,North America
+Jennifer Connelly,Best Supporting Actress,2002,A Beautiful Mind, Ny,United States of America,1970,White,Jewish,Straight,32,North America
+Catherine Zeta-Jones,Best Supporting Actress,2003,Chicago,NA, Wales,1969,White,Roman Catholic,Straight,34,Europe
+Ren̩e Zellweger,Best Supporting Actress,2004,Cold Mountain, Tx,United States of America,1969,White,Unknown,Straight,35,North America
+Cate Blanchett,Best Supporting Actress,2005,The Aviator, Victoria, Australia,1969,White,Unknown,Straight,36,Oceania
+Rachel Weisz,Best Supporting Actress,2006,The Constant Gardener,NA, England,1971,White,Jewish,Straight,35,Europe
+Jennifer Hudson,Best Supporting Actress,2007,Dreamgirls, Il,United States of America,1981,Black,Any type of Christian,Straight,26,North America
+Tilda Swinton,Best Supporting Actress,2007,Michael Clayton,NA, England,1960,White,Unknown,Straight,47,Europe
+Penelope Cruz,Best Supporting Actress,2009,Vicky Cristina Barcelona,NA, Spain,1974,Hispanic,Buddhist,Straight,35,Europe
+Mo'Nique,Best Supporting Actress,2010,Precious, Md,United States of America,1967,Black,Unknown,Straight,43,North America
+Melissa Leo,Best Supporting Actress,2011,The Fighter,NY,United States of America,1960,White,Unknown,Straight,51,North America
+Octavia Spencer,Best Supporting Actress,2012,The Help, Al,United States of America,1972,Black,Unknown,Na,40,North America
+Anne Hathaway,Best Supporting Actress,2013,Les Mis̩rables, Ny,United States of America,1982,White,Any type of Christian,Straight,31,North America
+Lupita Nyong'o,Best Supporting Actress,2014,12 Years a Slave,NA, Mexico,1983,Black,Unknown,Na,31,Latin America
+Billy Wilder,Best Director,1961,The Apartment, Galicia, Austria,1906,White,Jewish,Straight,55,Europe
+Ginger Rogers,Best Actress,1941,Kitty Foyle, Mo,United States of America,1911,White,Any type of Christian,Straight,30,North America
+Tom Hanks,Best Actor,1994,Philadelphia, Ca,United States of America,1956,White,Any type of Christian,Straight,38,North America
+Michael Cimino,Best Director,1979,The Deer Hunter,NY,United States of America,1939,White,Unknown,Straight,40,North America
+Mary Astor,Best Supporting Actress,1942,The Great Lie, Il,United States of America,1906,White,Roman Catholic,Straight,36,North America
+Angelina Jolie,Best Supporting Actress,2000,"Girl, Interrupted", Ca,United States of America,1975,White,Buddhist,Bisexual,25,North America
+Lee Grant,Best Supporting Actress,1976,Shampoo,NY,United States of America,1927,White,Jewish,Straight,49,North America
+Anne Revere,Best Supporting Actress,1946,National Velvet,NY,United States of America,1903,White,Unknown,Straight,43,North America
+Faye Dunaway,Best Actress,1977,Network, Fl,United States of America,1941,White,Roman Catholic,Straight,36,North America
+Van Heflin,Best Supporting Actor,1943,Johnny Eager, Ok,United States of America,1910,White,Unknown,Straight,33,North America
+Joanne Woodward,Best Actress,1958,The Three Faces of Eve, Ga,United States of America,1930,White,Unknown,Straight,28,North America
+Gary Cooper,Best Actor,1953,High Noon, Mt,United States of America,1901,White,Roman Catholic,Straight,52,North America
+Elizabeth Taylor,Best Actress,1967,Who's Afraid of Virginia Woolf?,NA, England,1932,White,Jewish,Straight,35,Europe
+Hilary Swank,Best Actress,2005,Million Dollar Baby, Ne,United States of America,1974,White,Unknown,Straight,31,North America
+Hilary Swank,Best Actress,2005,Million Dollar Baby, Ne,United States of America,1974,White,Unknown,Straight,31,North America
+Gwyneth Paltrow,Best Actress,1999,Shakespeare in Love, Ca,United States of America,1972,White,Jewish,Straight,27,North America
+Jack Albertson,Best Supporting Actor,1969,The Subject Was Roses, Ma,United States of America,1907,White,Unknown,Na,62,North America
+Mo'Nique,Best Supporting Actress,2010,Precious, Md,United States of America,1967,Black,Unknown,Straight,43,North America
+Marcia Gay Harden,Best Supporting Actress,2001,Pollock, Ca,United States of America,1959,White,Unknown,Straight,42,North America
+Maggie Smith,Best Actress,1970,The Prime of Miss Jean Brodie, Essex, England,1934,White,Unknown,Straight,36,Europe
+Rachel Weisz,Best Supporting Actress,2006,The Constant Gardener,NA, England,1971,White,Jewish,Straight,35,Europe
+Danny Boyle,Best Director,2009,Slumdog Millionaire,NA, England,1956,White,Roman Catholic,Straight,53,Europe
+Jason Robards,Best Supporting Actor,1977,All the President's Men, Il,United States of America,1922,White,Unknown,Straight,55,North America
+James Coburn,Best Supporting Actor,1999,Affliction, Ne,United States of America,1928,White,Unknown,Straight,71,North America
+John Huston,Best Director,1949,The Treasure of the Sierra Madre, Mo,United States of America,1906,White,Unknown,Straight,43,North America

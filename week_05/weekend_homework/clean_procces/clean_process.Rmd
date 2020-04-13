@@ -1,0 +1,111 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(readr)
+library(here)
+```
+
+```{r}
+oscar_winers <- read_csv(here("Oscars-demographics-DFE.csv"))
+```
+
+```{r}
+oscar_winers <- oscar_winers %>%
+  select(-c(1:5),
+         - ends_with(":confidence"),
+         - ends_with("_gold"),
+         -"biourl")
+
+oscar_winers <- oscar_winers[,c(9, 7, 6, 8, 1, 2, 3, 4, 5)]  
+
+oscar_winers <- oscar_winers %>%
+  mutate(date_of_birth = 
+           str_replace(date_of_birth, "[0-9]{2}-[A-Z]{1}[a-z]{2}-", "")) %>%
+  mutate(date_of_birth = 
+           str_replace(date_of_birth, "[0-9]{1}-[A-Z]{1}[a-z]{2}-", "")) %>%
+  mutate(date_of_birth = str_replace(date_of_birth, "\\[1\\]", "")) %>%
+  mutate_at("date_of_birth", as.integer) %>%
+  mutate(date_of_birth =
+           ifelse(date_of_birth < 100, date_of_birth + 1900, date_of_birth)) %>%
+  mutate(age_win = year_of_award - date_of_birth)
+
+oscar_winers <- oscar_winers %>%
+  separate(birthplace,
+           c("city", "state", "country"),
+           sep = ",", 
+           )
+
+oscar_winers <- oscar_winers %>%
+  mutate(city = ifelse(city == "Na", "Viena", city)) %>%
+  mutate(state = ifelse(city == "New York City", "NY", state))
+
+oscar_winers <- oscar_winers %>%
+  mutate(is_more_two = str_detect(state, "[A-Za-z]{3}")) %>%
+  mutate(country = ifelse(is_more_two == TRUE & is.na(country), 
+                          state, country)) %>%
+  mutate(country = ifelse(is_more_two == FALSE, 
+                          "United States of America",
+                          country)) %>%
+  mutate(country = ifelse(is.na(state), " Austria", country)) %>%
+  mutate(state = ifelse(state == country, NA, state))
+
+oscar_winers <- oscar_winers %>%
+  mutate(country = ifelse(country == " Tuscany", " Italy", country)) %>%
+  mutate(country = ifelse(country == " Canary Islands", " Spain", country)) %>%
+  mutate(country = ifelse(country == " New York City", 
+                          "United States of America", country)) %>%
+  mutate(country = ifelse(country == " Yorkshire", " England", country)) %>%
+  mutate(country = ifelse(country == " Alsace", " France", country))
+
+europe <- c(" Moldova", " Italy", " Austria", " Germany", " Switzerland",
+" Ireland", " Sweden", " Scotland", " France", " Ukraine", " Russia", " Spain",
+" Belgium", " Greece", " Hungary", " England", " Czechoslovakia", " Wales",
+" Romania")
+
+asia <- c(" Cambodia", " Israel", " Japan", " Turkey", " Japan", " Taiwan",
+" India")
+
+north_america <- c("United States of America", " Canada")
+
+latin_america <- c(" Puerto Rico", " Mexico")
+
+africa <- c(" South Africa")
+
+oceania <- c(" New Zealand", " Australia")
+
+
+oscar_winers <- oscar_winers %>%
+  mutate(continent = ifelse(country %in% europe, "Europe", NA)) %>%
+  mutate(continent = ifelse(country %in% asia, "Asia", continent)) %>%
+  mutate(continent = ifelse(country %in% oceania, "Oceania", continent)) %>%
+  mutate(continent = ifelse(country %in% north_america, "North America", 
+                            continent)) %>%
+  mutate(continent = ifelse(country %in% latin_america, "Latin America",
+                            continent)) %>%
+  mutate(continent = ifelse(country %in% africa, "Africa", continent))
+
+oscar_winers <- oscar_winers %>%
+  select(-c(is_more_two, city))
+
+christian <- c("Christian", "Born-Again Christian", "Protestant",
+"Presbyterian", "Congregationalist", "Baptist", "Anglican/episcopalian",
+"Lutheran", "Disciples of Christ", "Methodist", "Christian Science", "Quaker")
+
+unknown <- c("See Note", "Na")
+
+oscar_winers <- oscar_winers %>%
+  mutate(religion = ifelse(religion %in% christian, 
+                           "Any type of Christian", religion)) %>%
+  mutate(religion = ifelse(religion %in% unknown,
+                           "Unknown", religion))        
+write_csv(oscar_winers, "~/codeclan_homework_SandraTobon/week_05/weekend_homework/clean_procces/clean_oscar_winers.csv")
+  
+
+  
+```
+
+

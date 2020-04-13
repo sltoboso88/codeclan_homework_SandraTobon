@@ -1,0 +1,44 @@
+Clean Oscars Table
+
+The dimensions of the original table are: rows 441, columns 27
+
+The columns _golden, _unit_state, _trusted_judgments and _last_judgment_at
+are the result for a computational modeling that try to try to identify if the
+award was deserved or not. In this case we decide don't use it.
+
+Also this table have some columns with the name confidence that are the
+confidence interval analysis about the data, so we don't need them for making
+the shiny project.
+
+The columns that finish with _gold are result of the modeling and we don't need
+for this project.
+
+We separate the column place of birth so in this way we could have the
+information about the city, state and country and we clean some miss data
+because in the case of United States of America we have only the city and state
+and we don't have country, some data have only the country and city so we had to
+move this data from state to country
+
+Europe = " Moldova", " Italy", " Austria", " Germany", " Switzerland",
+" Ireland", " Sweden", " Scotland", " France", " Ukraine", " Russia", " Spain",
+" Belgium", " Greece", " Hungary", " England", " Czechoslovakia", " Wales",
+" Romania"
+
+North America = "United States of America", " Canada"
+
+Latin America = " Puerto Rico", " Mexico"
+
+Asia = " Cambodia", " Israel", " Japan", " Turkey", " Japan", " Taiwan",
+" India"
+
+Oceania = " New Zealand", " Australia"
+
+Africa = " South Africa"
+
+Also we group the religions like this:
+
+Any type of Christian = "Christian", "Born-Again Christian", "Protestant",
+"Presbyterian", "Congregationalist", "Baptist", "Anglican/episcopalian",
+"Lutheran", "Disciples of Christ", "Methodist", "Christian Science", "Quaker"
+
+no_answer = "See Note", "Na"
