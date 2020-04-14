@@ -1,0 +1,179 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(prob)
+library(gtools)
+library(tidyverse)
+
+```
+
+1. If I roll a six-sided dice once, what is the probability of getting a number less than 5?
+A1. SE(<5)/6 = {1, 2, 3, 4}/6  = 4 = 4/6 = 2/3 = 0.667
+
+2. How many outcomes are there in the sample space of an experiment in which we toss three dice?
+A2. 216 (6^3)
+```{r}
+nrow(rolldie(3))
+```
+
+3. In an experiment where we roll four dice:
+
+- how many outcomes are in the event total_equals_5_6_7 ? 
+A 34
+- what is the probability of this event?
+A 0.026
+- what assumptions do we apply in answering part ii?
+```{r}
+four_dices <- rolldie(4)
+
+nrow(four_dices)
+
+nrow(four_dices %>%
+  mutate(sum_values_dice = X1 + X2 + X3 + X4) %>%
+  filter(sum_values_dice %in% c(5, 6, 7))) 
+
+nrow(four_dices %>%
+  mutate(sum_values_dice = X1 + X2 + X3 + X4) %>%
+  filter(sum_values_dice %in% c(5, 6, 7))) /
+  nrow(four_dices)
+
+```
+
+4. Five chairs are placed in a row in a room, along with five people of differing height. The people sit down randomly on the chairs. What is the probability that they sit in order of decreasing height, left to right?
+A4. 5 because is a permutation 5*4!/4!
+```{r}
+height <- c(150, 140, 180, 190, 178)
+
+nrow(permutations(n = 5,
+             r = 1,
+             v = height,
+             repeats.allowed = FALSE))
+```
+
+5. I roll six dice:
+
+what is the probability I see the numbers 6, 5, 4, 3, 2 and 1 in order on the dice, left to right? 
+A    2.14 e^-05 (1/6)^6
+what is the probability I see one each of the numbers 6, 5, 4, 3, 2 and 1 on the dice regardless of order?,
+A 0.0154
+
+```{r}
+1/(6^6)
+six_dices <- rolldie(6)
+
+nrow(six_dices %>%
+  filter(X1 == 6 & X2 == 5 & X3 == 4 & X4 == 3 & X5 == 2 & X6 == 1 ))/
+  nrow(six_dices)
+
+nrow(subset(six_dices, isin(six_dices, c(1, 2, 3, 4, 5, 6), ordered = FALSE))) /
+nrow(six_dices)
+```
+
+6. If I draw a single card from a 52-card deck, and it is black, what is the probability that its suit is spades?
+
+A6. 13/26 = 1/2 = 0.5
+
+```{r}
+nrow(cards(jokers = FALSE) %>%
+  filter(suit %in% c("Spade")))/
+nrow(cards(jokers = FALSE) %>%
+  filter(suit %in% c("Spade", "Club")))
+```
+
+7. Eight patients: Alice, Bob, Carmen, Dinesh, Ella, Fergus, Gianna and Henry are waiting to see a doctor, but only five appointment slots are left today.
+ In how many different orders can the doctor see patients today?
+ A 6720
+ What is the probability of Gianna and Danesh both being seen today?
+ A 0.357
+ What is the probability of Gianna being seen before Dinesh today?
+ A 0.179
+ Carmen and Henry have now been triaged as high priority and will be seen in the first two available slots, although their order hasn’t yet been determined. In how many different orders can the patients now be seen?
+ A 240
+ 
+```{r}
+patients <- c("Alice", "Bob", "Carmen", "Dinesh", "Ella", "Fergus", "Gianna", "Henry")
+
+permutation_patients <- as_tibble(permutations(n = 8,
+                                     r = 5,
+                                     v = patients,
+                                    repeats.allowed = FALSE))
+
+
+nrow(permutation_patients)
+
+nrow(subset(permutation_patients, 
+       isin(permutation_patients, c("Gianna", "Dinesh"), ordered = FALSE))) /
+nrow(permutation_patients)
+
+nrow(subset(permutation_patients, 
+       isin(permutation_patients, c("Gianna", "Dinesh"), ordered = TRUE))) /
+nrow(permutation_patients)
+
+
+patients_1 <- c("Carmen", "Henry")
+
+patients_1_permutation <- as_tibble(permutations(n =2,
+                                    r =2,
+                                    v = patients_1,
+                                    repeats.allowed = FALSE))
+
+patients_1_permutation <- rename(patients_1_permutation, "cita1" = V1, "cita2" = V2) 
+
+patients_2 <- c("Alice", "Bob", "Dinesh", "Ella", "Fergus", "Gianna")
+
+patients_2_permutation <- as_tibble(permutations(n =6,
+                                    r =3,
+                                    v = patients_2,
+                                    repeats.allowed = FALSE))
+
+nrow(merge(patients_1_permutation, patients_2_permutation))
+
+```
+
+8. If order is not significant, how many ways are there to select a 5 student quiz team from a group of 8 students
+ A8. 56
+
+```{r}
+nrow(combinations(n = 8,
+             r = 5,
+             repeats.allowed = FALSE))
+```
+
+10. The following data from a sample of 120 families shows the record of university attendance by mothers and their eldest sons.
+
+in 32 families, both the mother and son attended university;
+in 31 families, neither the mother nor the son attended university
+in 22 families, the mother attended university while the son did not
+in 35 families, the son attended university while the mother did not.
+Arrange the data above in a convenient dataframe and answer the following questions:
+
+What is the probability that a son attended university given that his mother attended university?
+ A. 0.478 32 / (32 + 35) 
+ 
+What is the probability that a son attended university given that his mother did not attend university?
+  A. 0.522 35 / (32 + 35)
+
+Is attending university by the son independent of whether his mother attended university?
+  A.  0.558 (32 + 35) / 120
+```{r}
+families <- tibble(
+  names = c("m_u_s_u", "m_nu_s_nu", "m_u_s_nu", "m_nu_s_u", "total"), 
+  mom = c(32, 31, 22, 35, 120),
+  son = c(32, 31, 22, 35, 120),
+)
+
+families <- families %>%
+  mutate(total_row = mom + son)
+
+32 / (32 + 35) 
+
+35 / (32 + 35)
+
+(32 + 35) / 120
+
+
+```
+
