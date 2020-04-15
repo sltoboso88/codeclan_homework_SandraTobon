@@ -1,0 +1,106 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(readr)
+library(tidyverse)
+library(janitor)
+library(e1071)
+library(outliers)
+```
+
+Load Data
+```{r}
+mobile_phone <- read_csv("data/20190928-items.csv")
+```
+
+Clean Names
+```{r}
+mobile_phone <- clean_names(mobile_phone)
+```
+
+Brand with the higest number of phone
+  A. The one with more mobile phone is Samsung so we will continue with this data
+```{r}
+mobile_phone %>%
+  group_by(brand) %>%
+  summarise(total_mobile_per_brand = n()) %>%
+  arrange(desc(total_mobile_per_brand))
+
+mobile_phone_samsung <- mobile_phone %>%
+  filter(brand == "Samsung")
+```
+Plot the distribution
+  A. First we need to look the mean, standar desviation, but also because we want to understand the data we will look the median and mode.
+  The mean, median and mode are very close together all the values are around 3.6 and the sd is 0.68, this could suggest that the distribution could be normal. The skewed is - 0.93 this suggest that the data is moderatily skewed to the left and actually the boxplot show that some outliers close to the left and this explain why the mean is a little lower that the median and mode (0.3). The data have 8 phones with a rating of 1, those phone are outliers. Rating of 1 are real data, so we will keep here, and we will try to see the distribution that the data follow. Actually when we plot the data we can see that the data follow a normal distribution with skewed on the left.
+```{r}
+getMode <- function(data){
+
+  tabled_data <- table(data)
+  table_names <- names(tabled_data)
+  
+  return( table_names[tabled_data == max(tabled_data)] )
+  
+}
+
+mobile_phone_samsung %>%
+  ggplot(aes(y = rating)) +
+  geom_boxplot()
+
+mobile_phone_samsung %>%
+  mutate(score_samsung = scores(rating)) %>%
+  mutate(is_outlier = ifelse(score_samsung > 3 | score_samsung < -3, TRUE, FALSE)) %>%
+  filter(is_outlier == TRUE)
+
+mobile_samsung_stat <- mobile_phone_samsung %>%
+  summarise(num_samsung = n(),
+            mean_samsung = mean(rating),
+            median_samsung = median(rating),
+            sd_samsung = sd(rating),
+            mode_samsung = getMode(rating),
+            skewness_samsung = skewness(rating)  )
+
+mobile_phone_samsung %>%
+  ggplot(aes(x = rating)) +
+  geom_histogram(aes(y = ..density..), col = "white", bins = 30) +
+  stat_function(
+    fun = dnorm,
+    args = list(
+      mean = mobile_samsung_stat$mean_samsung,
+      sd = mobile_samsung_stat$sd_samsung
+    ), 
+    col = "blue"
+  )
+
+```
+Calculate the proportions of ratings within one-, two- and three standard deviations of the mean. Compare these proportions with those you expect for a normal distribution.
+  A. The 79% of the data is between -1 to 1 sd far away from the media, this is more that the theorical value (68.26%), so in this way the normal distribution fix.
+  The percentage of values within two standard deviations of the mean is 91.93% the theorical is 95.44%,  3.51 lower that the normal, but this could be explain for the outliers values.
+  The percentage of values within three standard deviations of the mean is 97.98% the theorical is 99.73%, 1.75% lower that the normal, but this could be explain for the outliers values.
+  
+```{r}
+#1 Standar desviation
+mobile_phone_samsung %>%
+  filter(rating >= mobile_samsung_stat$mean_samsung - mobile_samsung_stat$sd_samsung)%>%
+  filter(rating <= mobile_samsung_stat$mean_samsung + mobile_samsung_stat$sd_samsung) %>%
+  summarise(prob_with_1sd = (n()/nrow(mobile_phone_samsung) *100))
+#2 standar desviation
+mobile_phone_samsung %>%
+  filter(rating >= mobile_samsung_stat$mean_samsung - (2 * mobile_samsung_stat$sd_samsung))%>%
+  filter(rating <= mobile_samsung_stat$mean_samsung + (2 * mobile_samsung_stat$sd_samsung)) %>%
+  summarise(prob_with_2sd = (n()/nrow(mobile_phone_samsung) *100))
+#3 standar desviation
+mobile_phone_samsung %>%
+  filter(rating >= mobile_samsung_stat$mean_samsung - (3 * mobile_samsung_stat$sd_samsung))%>%
+  filter(rating <= mobile_samsung_stat$mean_samsung + (3 * mobile_samsung_stat$sd_samsung)) %>%
+  summarise(prob_with_2sd = (n()/nrow(mobile_phone_samsung) *100))
+
+```
+EXtension:
+The data look very normal except for the extremes, so this could explain why after 2 SD and 3 SD the values were lower that the normal values for Normal Distribution.
+```{r}
+qqnorm(mobile_phone_samsung$rating)
+```
+

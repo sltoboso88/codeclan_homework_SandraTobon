@@ -45,8 +45,7 @@ nrow(four_dices %>%
 4. Five chairs are placed in a row in a room, along with five people of differing height. The people sit down randomly on the chairs. What is the probability that they sit in order of decreasing height, left to right?
 A4. 5 because is a permutation 5*4!/4!
 ```{r}
-height <- c(150, 140, 180, 190, 178)
-
+height <- c(150, 140, 180, 190, 178)1/5
 nrow(permutations(n = 5,
              r = 1,
              v = height,
@@ -151,10 +150,10 @@ in 35 families, the son attended university while the mother did not.
 Arrange the data above in a convenient dataframe and answer the following questions:
 
 What is the probability that a son attended university given that his mother attended university?
- A. 0.478 32 / (32 + 35) 
+ A. 0.592 32 / (32 + 22) 
  
 What is the probability that a son attended university given that his mother did not attend university?
-  A. 0.522 35 / (32 + 35)
+  A. 0.53 35 / (32 + 35)
 
 Is attending university by the son independent of whether his mother attended university?
   A.  0.558 (32 + 35) / 120
@@ -168,9 +167,9 @@ families <- tibble(
 families <- families %>%
   mutate(total_row = mom + son)
 
-32 / (32 + 35) 
+32 / (32 + 22) 
 
-35 / (32 + 35)
+35 / (31 + 35)
 
 (32 + 35) / 120
 
