@@ -1,0 +1,149 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(infer)
+library(janitor)
+library(here)
+```
+
+Homework - CIs
+
+Load
+```{r}
+ames <- read_csv("data/ames.csv")
+
+ames <- clean_names(ames)
+```
+
+Plot
+ The distribution is unimodal with a big concentration. I don't believe is a normal distribution the data is very concentrate. 
+```{r}
+ames %>%
+  ggplot(aes(x = lot_area)) +
+  geom_histogram(aes(y =..density..), col = "white") +
+  stat_function(
+    fun = dnorm, 
+    args = list(
+      mean = mean(ames$lot_area), 
+      sd = sd(ames$lot_area)
+    ),
+    col = "red"
+  )
+```
+Bootstrap
+```{r}
+bootstarp_lot_area <- ames %>%
+  specify(response = lot_area) %>%
+  generate(reps = 10000, type = "bootstrap") %>%
+  calculate(stat = "mean") 
+```
+Now the Lot_area looks very normal 
+```{r}
+bootstarp_lot_area %>%
+  ggplot(aes(x = stat)) +
+  geom_histogram(aes(y =..density..), col = "white") +
+   stat_function(
+    fun = dnorm, 
+    args = list(
+      mean = mean(bootstarp_lot_area$stat), 
+      sd = sd(bootstarp_lot_area$stat)
+    ),
+    col = "red"
+  )
+```
+
+```{r}
+bootstarp_lot_area_ci <- bootstarp_lot_area %>%
+  get_ci(level = 0.95, type = "percentile")
+
+```
+
+Visualization
+```{r}
+bootstarp_lot_area %>%
+  visualise() +
+  shade_ci(endpoints = bootstarp_lot_area_ci)
+```
+
+```{r}
+bootstarp_lot_area_ci_99 <- bootstarp_lot_area %>%
+  get_ci(level = 0.99, type = "percentile")
+
+bootstarp_lot_area %>%
+  visualise() +
+  shade_ci(endpoints = bootstarp_lot_area_ci_99)
+```
+
+```{r}
+margin_error <- c(1.96, 2.58)
+
+stat_lot_area <- bootstarp_lot_area %>%
+  summarise(
+    mean_lot_area =mean(stat),
+    sd_lot_area = sd(stat)
+  )
+
+margin_95_ci <- c(
+  "lower" = c(stat_lot_area$mean_lot_area - margin_error[1] * stat_lot_area$sd_lot_area),
+  "upper" = c(stat_lot_area$mean_lot_area + margin_error[1] * stat_lot_area$sd_lot_area)
+)
+
+margin_99_ci <- c(
+  "lower" = c(stat_lot_area$mean_lot_area - margin_error[2] * stat_lot_area$sd_lot_area),
+  "upper" = c(stat_lot_area$mean_lot_area + margin_error[2] * stat_lot_area$sd_lot_area)
+)
+
+margin_95_ci
+bootstarp_lot_area_ci
+
+margin_99_ci
+bootstarp_lot_area_ci_99
+```
+
+EXTENSION
+```{r}
+ames <- ames %>%
+  mutate(year_before = as.numeric(year_built < 1920))
+
+before_1920_stat <- ames %>%
+  summarise(
+    prop_before_1920 = mean(year_before),
+    sd_before_1920 = sd(year_before)
+  )
+
+ames %>%
+  ggplot(aes(x = year_before)) +
+  geom_bar()
+
+bootstrap_1920_200 <- ames %>%
+  specify(response = year_before) %>%
+  generate(reps = 200, type = "bootstrap") %>%
+  calculate(stat = "mean")
+
+bootstrap_1920_200_ci <- bootstrap_1920_200 %>%
+  get_ci(level = 0.95, type = "percentile")
+
+bootstrap_1920_200 %>%
+  visualise() +
+  shade_ci(endpoints = bootstrap_1920_200_ci)
+
+```
+The last one with 50000 is closer to a normal distribution that the first with 200
+```{r}
+bootstrap_1920_50000 <- ames %>%
+  specify(response = year_before) %>%
+  generate(reps = 50000, type = "bootstrap") %>%
+  calculate(stat = "mean")
+
+bootstrap_1920_50000_ci <- bootstrap_1920_50000 %>%
+  get_ci(level = 0.95, type = "percentile")
+
+bootstrap_1920_50000 %>%
+  visualise() +
+  shade_ci(endpoints = bootstrap_1920_50000_ci)
+```
+
