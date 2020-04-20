@@ -1,0 +1,256 @@
+---
+title: "Animal Sleep Hours"
+author: "Sandra Tobon"
+date: "17/04/2020"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+    df_print: paged
+    css: styles.css
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r include=FALSE}
+library(tidyverse)
+library(infer)
+```
+
+# MVP Practical part  
+```{r include=FALSE}
+glimpse(msleep)
+```
+
+The data set has 83 rows with 11 variables. This data is about the sleeping hours of different animal species.   
+
+1. Jabberwockies sleep for around 7 hours a night, on average. Perform an appropriate statistical test to determine whether the mean sleep_total in the sampled population of animal types differs from the typical value for jabberwockies.  
+
+<center>
+
+H0: μ sleep_total_animals = 7 (Jabberwockies)  
+Ha: μ sleep_totla_animals ≠ 7 (Jabberwockies)  
+alpha: 0.05
+</center>  
+
+There are no NA values in the sleep_total column, therefore we can continue to work with this column without worries.   
+Now, let's look at the data set itself. The distribution is not particularly unimodal. There are a few local peaks, but the highest one is around 10 hours.   
+```{r}
+msleep %>%
+  ggplot(aes(x = sleep_total)) +
+  geom_histogram(col = "white")
+```
+Dispersion of the data.  
+  The data doesn't look completely disperse and there aren't any outliers that we can identify in the boxplot.  
+```{r}
+msleep %>%
+  ggplot(aes(y = sleep_total)) +
+  geom_boxplot()
+```
+Now, let us consider the mean of our sleep_total column.  
+  The mean of the sleep_total column is 10.43 hours. A brief inspection of the data, suggests that the mean of sleep hours in animals could be higher than in Jabberwockies.  
+```{r}
+msleep_stat <- msleep %>%
+  summarise(mean_sleep_total = mean(sleep_total))
+
+msleep_stat
+```
+
+Now we will build our null distribution to see if this suggestion is true.   
+  We need a test for **one continuous** variable, and in this case we will use **bootstrap** with 10,000 repetitions.
+```{r}
+msleep_null_distribution <- msleep %>%
+  specify(response = sleep_total) %>%
+  hypothesize(null = "point", mu = 7) %>%
+  generate(reps = 10000, type = "bootstrap") %>%
+  calculate(stat = "mean")
+```
+
+So, let's take a look to this null distribution.   
+  In this case because we are interested in seeing whether the mean sleep_total in this sample differs from the mean for jabberwockies. We will check both directions.   
+```{r}
+msleep_null_distribution %>%
+  visualise() +
+  shade_p_value(obs_stat = msleep_stat$mean_sleep_total, direction = "both")
+```
+
+  In this graph it is possible to see that the mean of sleep_total differs a lot from the mean value for jabberwockies, so probably the p_value will be very close to 0.   
+  Let's take a look to the p_value  
+```{r}
+p_value_msleep <- msleep_null_distribution %>%
+  get_p_value(obs_stat = msleep_stat$mean_sleep_total, direction = "both")
+
+p_value_msleep
+```
+  
+  p_value_msleep is 0, so it is enough evidence for reject the H0 and say that the mean of the sleep hours of the animals in the sample isn't the same as the mean of sleep hours for Jabberwockies.  
+
+  2. Perform an appropriate statistical test to determine whether omnivores sleep for significantly longer than herbivores, on average.   
+  <center>  
+  H0: μ sleep_total_omnivores - sleep_total_herbivores  = 0  
+  Ha: μ sleep_total_omnivores - sleep_total_herbivores  > 0  
+  alpha: 0.05  
+  </center>
+  
+  Here we have two independent and different variables, therefore we will use an independent sample test for 2 continuous variables in order to examine H0.
+  
+  But first let's take the time to visualize the data. 
+  
+```{r}
+msleep_omni_hervi <- msleep %>%
+  select(vore, sleep_total) %>%
+  filter(vore %in% c("omni", "herbi")) %>%
+  arrange(vore) 
+
+msleep_omni_hervi %>%
+  ggplot(aes(x = sleep_total, fill = vore)) +
+  geom_histogram(col = "white")
+```
+  It looks that probably the omnivores sleep more on average that the hervivores. Let's check how the data looks in a boxplot graph.  
+```{r}
+msleep_omni_hervi %>%
+  ggplot(aes(y = sleep_total, x = vore)) +
+  geom_boxplot()
+```
+  
+  Actualy the boxplot shows that probably they sleep on average the same amount but the omnivores have some outliers to the right. The latter could change in some way the conclusion.  
+  
+  In this case because we have 2 different and independent samples we will use permute with only 5,000 repetitions.  
+```{r}
+null_omni_hervi_distribution <- msleep_omni_hervi %>%
+  specify(sleep_total ~ vore) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 5000, type = "permute") %>%
+  calculate(stat = "diff in means", order = c("omni", "herbi"))
+```
+  
+  Parameters from the original sample  
+```{r}
+herbi_omni_stat <- msleep_omni_hervi %>%
+  specify(sleep_total ~ vore) %>%
+  calculate(stat = "diff in means", order = c("omni", "herbi"))
+
+herbi_omni_stat
+```
+  
+  Graph of the null_distribution, with the shape of the P_value, in this case, because we are interested in finding out if the mean sleep hours of omnivores is greater than that of the herbivores, we will use right as direction. 
+```{r}
+null_omni_hervi_distribution %>%
+  visualise() +
+  shade_p_value(obs_stat = herbi_omni_stat$stat, direction = "right")
+```
+  
+  The p_value appears to be little to the right, but not that much, so probably alpha will be greater than 5 %.   
+```{r}
+p_herbi_omni <- null_omni_hervi_distribution %>%
+  get_p_value(obs_stat = herbi_omni_stat$stat, direction = "right")
+
+p_herbi_omni
+```
+p_value is 0.127, which is greate than 0.05 which was our alpha, therefore there isn't enough evidence to reject H0, so we fail to reject H0. In other words, there is no significant evidence that the omnivores sleep on average longer than the herbivores.  
+
+3. Perform an appropriate statistical test to determine whether the proportion of domesticated animal types in the population of animal types is greater than 5%  
+
+<center>
+H0: πprop_domesticated_animal = 0.05  
+
+Ha: πprop_domesticated_animal > 0.05  
+
+alpha = 0.05
+</center>
+In this case we have a categorical variable domestical animals vs no domestical animals, and we need to know if the proportion of them is greater than 5%, therefore we need a hypothesis test for proportions we only one variable.   
+But first we need to transform the column conservation in two levels column one for domesticated animals and other for no domesticated animals. In this case we will try the NA values in the column conservation as no_domesticated.   
+```{r}
+domesticated_animals <- msleep %>%
+  select(conservation) %>%
+  mutate(conservation = ifelse(conservation == "domesticated", "domesticated", "no_domesticated")) %>%
+  mutate(conservation = ifelse(is.na(conservation), "no_domesticated", conservation))
+```
+
+```{r}
+domesticated_animals %>%
+  ggplot(aes(x = conservation, fill = conservation)) +
+  geom_bar()
+```
+
+Now we will calculate the proportion of domesticated animals in our sample.  
+ 
+```{r}
+stat_domesticated <- domesticated_animals %>%
+  specify(response = conservation, success = "domesticated") %>%
+  calculate(stat = "prop")
+stat_domesticated
+```
+
+The proportion of domesticated animals in the sample,  even with the assumption that the NA values are no_domesticated, is greater than 5%, but for be sure about it we need to apply the test.  In this case we will use simulate with 2000 repetitions and our p will be 0.05 (it is what wi are testing).
+```{r}
+null_distribution_domesticated <- domesticated_animals %>%
+  specify(response = conservation, success = "domesticated") %>%
+  hypothesize(null = "point", p = 0.05) %>%
+  generate(reps = 2000, type = "simulate") %>%
+  calculate(stat = "prop")
+```
+
+Let us take a look to our simulate distribution. In this specify question because we want to know if it is greater than 5%, so we only need the right direction. 
+```{r}
+null_distribution_domesticated %>%
+  visualise() +
+  shade_p_value(obs_stat = stat_domesticated$stat, direction = "right")
+```
+
+The graph show that the normal proportion of domesticated animals, probably is greater than 5 %, but we can't to be sure because also part of the distribution is shape.  
+Therefore we need to calculate the p value for be sure about this.  
+```{r}
+p_value_domesticated <- null_distribution_domesticated %>%
+  get_p_value(obs_stat = stat_domesticated, direction = "right")
+
+p_value_domesticated
+```
+
+The p_value is 0.0095 this is lower to 0.05 that was our alpha, therefore we can rejected H0 and say that we have enough evidence for conclude that the proportions of domesticated animals isn't igual to 5%. 
+
+Let us to simulate the same without taking the NA values in the picture.  
+```{r}
+domesticated_no_na <- msleep %>%
+  select(conservation) %>%
+  mutate(conservation = ifelse(conservation == "domesticated", "domesticated", "no_domesticated")) %>%
+  filter(!is.na(conservation))
+
+domesticated_no_na
+```
+
+```{r}
+stat_domesticated_no_na <- domesticated_no_na%>%
+  specify(response = conservation, success = "domesticated") %>%
+  calculate(stat = "prop")
+
+stat_domesticated_no_na
+```
+
+The proportion of domesticated animals without na is even higher than the sample with na as no domesticated. We can be very sure that alpha will be 0. Let us take a look.   
+```{r}
+null_distribution_domesticated_no_na <- domesticated_no_na %>%
+  specify(response = conservation, success = "domesticated") %>%
+  hypothesize(null = "point", p = 0.05) %>%
+  generate(reps = 2000, type = "simulate") %>%
+  calculate(stat = "prop")
+```
+
+```{r}
+null_distribution_domesticated_no_na %>%
+  visualise() +
+  shade_p_value(obs_stat = stat_domesticated_no_na$stat, direction = "right")
+```
+
+```{r}
+p_value_domesticated_no_na <- null_distribution_domesticated_no_na %>%
+  get_p_value(obs_stat = stat_domesticated_no_na, direction = "right")
+
+p_value_domesticated_no_na
+```
+
+The p_value is 0 so even if we don't take the NA in the picture we have enough evidence for rejected H0, and said that the proportion of domesticated animals isn't egual to 0. 

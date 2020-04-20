@@ -1,0 +1,163 @@
+---
+title: "Extension"
+author: "Sandra Tobon"
+date: "18/04/2020"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+    df_print: paged
+    css: styles.css
+  pdf_document: default
+---
+
+# Extension  
+```{r include=FALSE}
+library(tidyverse)
+library(here)
+library(janitor)
+library(arules)
+library(arulesViz)
+library(tcltk)
+```
+
+Load Data 
+```{r}
+transactions <- read_csv(here("data/online_retail.csv"))
+
+transactions <- clean_names(transactions)
+
+glimpse(transactions)
+```  
+
+
+Support of A  
+<center>  
+sup(A)= P(A) = number of transactions involving A / total number of transactions  
+</center>  
+
+```{r}
+n_transactions_a <- transactions %>%
+  filter(stock_code == "22469") %>%
+  group_by(invoice_no) %>%
+  summarise(total_a_transaction = n())
+
+total_transantion <- nrow(transactions %>%
+  group_by(invoice_no) %>%
+  summarise(total_items = n()))
+
+support_a <- nrow(n_transactions_a)/ total_transantion
+
+support_a
+```
+
+Support of (A→B)  
+<center>
+sup(A→B) =number of transactions involving A and B / total number of transactions
+</center>
+
+```{r}
+n_transactions_b <- transactions %>%
+  filter(stock_code == "21110") %>%
+  group_by(invoice_no) %>%
+  summarise(total_b_transaction = n())
+
+a_and_b <- nrow(n_transactions_a %>%
+  inner_join(n_transactions_b, by = c("invoice_no")))
+
+support_a_b <- a_and_b / total_transantion
+
+support_a_b
+```
+
+Confidence of (A→B)  
+<center>
+conf(A→B)= P(A and B being purchased together) / P(A being purchased)
+</center>
+ 
+
+```{r}
+conf_a_b <- support_a_b / support_a
+
+conf_a_b 
+```
+
+Lift for (A→B)  
+
+<center>
+lift(A→B) = sup(A→B) / sup(A)×sup(B)  
+</center>
+ 
+```{r}
+support_b <- nrow(n_transactions_b) / total_transantion
+
+lift_a_b <- support_a_b / (support_a *support_b)
+
+lift_a_b
+```
+ <center>
+ lift(A→B) 3.85 > 1  items A and B are more likely to be bought together  
+ </center>
+ 
+# Arules and Arules Viz  
+
+```{r}
+transactions_reformat <- transactions %>%
+  select(invoice_no, description) %>%
+  na.omit()
+
+write_csv(transactions_reformat, here("data/transaction_reformat.csv"))
+
+apriori_format <- read.transactions("data/transaction_reformat.csv",
+                                    format = "single", 
+                                    sep = ",",
+                                    header = TRUE, 
+                                    cols = c("invoice_no", "description"))
+
+inspect(head(apriori_format))
+```
+
+Let us take a look to the data set
+```{r}
+apriori_format %>%
+  itemFrequencyPlot(topN = 20, type = "absolute")
+```
+
+```{r}
+rules <- apriori_format %>%
+  apriori(parameter = list(supp = 0.01, conf = 0.8))
+
+options(digits = 2)
+inspect(rules[1:5])
+```
+We have in total 166 rules with a support 0f 0.01, lower was very difficult for my computer to proccess it. 
+```{r}
+summary(rules)
+```
+Let's sort our rules by confidence in desc order.
+```{r}
+rules <- sort(rules, by = "confidence", decreasing = TRUE)
+
+options(digits = 2)
+inspect(rules[1:5])
+```
+Now we can check if the rules present some redundancies. The rules don't have redundancie so we can to continue working with the normalas rules.
+```{r}
+subset_matrix <- is.subset(rules, rules)
+
+subset_matrix[lower.tri(subset_matrix, diag=T)] <- NA
+
+redundant <- colSums(subset_matrix, na.rm=T) >= 1
+
+rule_pruned <- rules[!redundant]
+
+rules_1 <- rule_pruned
+
+summary(rules_1)
+```
+Visualization
+```{r}
+plot(rules, method = "graph", measure = "support", control = list(max = 20), engine = "graphviz")
+```
+

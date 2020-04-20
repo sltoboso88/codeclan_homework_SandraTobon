@@ -1,0 +1,87 @@
+---
+title: "Interpretation Questions"
+author: "Sandra Tobon"
+date: "18/04/2020"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+    df_print: paged
+    css: styles.css
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Defining the Hypothesis and Interpreting the results  
+
+1. You work for a independent coffee shop. You’ve performed a small survey in the local town and found that 40% of the people you randomly asked were aware of your shop in the town. You then conduct a marketing campaign by flyering local venues and targeting advertisements on social media. Finally you conduct a second small random survey in the town, asking if people are aware of your coffee shop. You want to test the hypothesis that the campaign has significantly increased awareness of the shop.
+
+<center>
+![](https://cdn-a.william-reed.com/var/wrbm_gb_food_pharma/storage/images/5/1/7/0/2350715-1-eng-GB/Sydney-overtaking-Melbourne-as-Australia-s-coffee-king-capital_wrbm_large.jpg)  
+</center>  
+
+
+  A. The only possible answers are yes and no, so this is categorical data, therefore we are looking for proportion in only one variable.  We should use **simulation** with two levels aware and no_aware.  
+ In this case we want to know if the publicity campaing works, for this reason we want to prove that in the new survey results more than 40% of the sample know the coffee shop. And because we don't need to be extremely precise we can use an alpha of 0.05 (5%). In other words our H0 is that in the new survey the proportion of people aware_of_coffee_shop is egual to 40% (0.4) and our Ha is that more than 40% (0.4) is aware_of_coffee_shop, because we are only interested in the greater scenario.    
+  
+  
+  <center>
+  H0: πaware_of_coffee_shop = 0.4  
+
+  Ha: πaware_of_coffee_shop > 0.4  
+  
+  alpha = 0.05
+  
+  RESULT:Significance level: 0.05, calculated p-value: 0.07:  
+  Since p is greater than α we fail to reject H0. There is not enough evidence to say that the proportion of people aware of the coffe shop is greater than 0.4. 
+
+  </center>
+  
+  2. You work for a website design company and have performed an A/B test on the position of a banner on a website page promoting a particular item.   
+  In the current test, the first group continues to be shown the banner at the right hand side of the webpage (its usual position) while the test group is shown it at the top of the page. The performance metric we will be testing is click through rate (CTR) on the banner, i.e. what proportion of users click on the banner.  
+  
+  <center>
+  ![](https://www.zoomtanzania.com/blog/wp-content/uploads/sites/2/2017/07/ZT_3.jpg)  
+  </center>
+
+  A. In this case we are compare 2 different samples and they are independent between them. The posible result is that the user give_click or not_give_click to the banner in each of the different version, so this is a categorical variable, therefore we need to study the difference between proportions.  
+  The test to determine difference between proportions is **permute**.  
+  The H0 is that the difference between proportions is egual to 0 and ha is that the difference between proportions is different to 0, we are interested in any difference so we don't need specify less or greater.  In this case because the precision isn't very important we can have an alpha of 0.05 (5%). 
+  
+  <center> 
+  H0: πclick_banner_right − πclick_banner_center = 0  
+  
+  H0: πclick_banner_right − πclick_banner_center ≠ 0  
+
+  alpha = 0.05  
+  
+  RESULT: Significance level: 0.01, p-value: 0.006  
+  Since p is smaller than α, so we reject H0 in favour of Ha so it is enough eveidence to say that the banner in the right hand side of the web page works different that the banner in the top center of the web page.   
+  </center>  
+  
+  3. You work as an analyst for a car manufacturing company - they have specific standards they must meet for standards and regulation purposes. You have been asked to check the quality control of the manufacture of a particular car part. The part must have a width of 145mm, with a small (given) level of tolerance. You have been given data on a sample of 1,000 parts produced over the period of a week.  
+  
+  <center>
+  ![](https://static.pakwheels.com/2015/06/car-makers.jpg)
+  </center>  
+  
+  A. In this case we are interested in the width of the part, this is a continouos variable and it is in only one sample, therefore the test that we will use is **bootstrap**.  
+  The H0 is that the width mean of the sample if equal to 145 mm and the H2 is that the mean of the sample is different (in any way, doesn't matter if it is smaller or greater). In this case because we really need a high level of precision we will use an alpha of 0.01 (1%).   
+  
+<center>
+  H0: μwidth_part = 145  
+
+  Ha: μwidth_part ≠ 145  
+
+  alpha = 0.01  
+
+  RESULT: Significance level: 0.05, p-value: 0.55.  
+  Since p is greater than α we fail to reject H0. There is not enough evidence to say that the width of the parts in averange is different than 145mm.
+</center>
+
+
+
