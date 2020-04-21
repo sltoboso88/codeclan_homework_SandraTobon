@@ -2835,8 +2835,8 @@ div.tocify {
 </div>
 
 
-<div id="defining-the-hypothesis" class="section level1">
-<h1><span class="header-section-number">1</span> Defining the Hypothesis</h1>
+<div id="defining-the-hypothesis-and-interpreting-the-results" class="section level1">
+<h1><span class="header-section-number">1</span> Defining the Hypothesis and Interpreting the results</h1>
 <ol style="list-style-type: decimal">
 <li>You work for a independent coffee shop. You’ve performed a small survey in the local town and found that 40% of the people you randomly asked were aware of your shop in the town. You then conduct a marketing campaign by flyering local venues and targeting advertisements on social media. Finally you conduct a second small random survey in the town, asking if people are aware of your coffee shop. You want to test the hypothesis that the campaign has significantly increased awareness of the shop.</li>
 </ol>
@@ -2845,12 +2845,12 @@ div.tocify {
 </center>
 <p>A. The only possible answers are yes and no, so this is categorical data, therefore we are looking for proportion in only one variable. We should use <strong>simulation</strong> with two levels aware and no_aware.<br />
 In this case we want to know if the publicity campaing works, for this reason we want to prove that in the new survey results more than 40% of the sample know the coffee shop. And because we don’t need to be extremely precise we can use an alpha of 0.05 (5%). In other words our H0 is that in the new survey the proportion of people aware_of_coffee_shop is egual to 40% (0.4) and our Ha is that more than 40% (0.4) is aware_of_coffee_shop, because we are only interested in the greater scenario.</p>
-The hypothesis is:<br />
-
 <center>
 <p>H0: πaware_of_coffee_shop = 0.4</p>
 <p>Ha: πaware_of_coffee_shop &gt; 0.4</p>
-alpha = 0.05
+<p>alpha = 0.05</p>
+<p>RESULT:Significance level: 0.05, calculated p-value: 0.07:<br />
+Since p is greater than α we fail to reject H0. There is not enough evidence to say that the proportion of people aware of the coffe shop is greater than 0.4.</p>
 </center>
 <ol start="2" style="list-style-type: decimal">
 <li>You work for a website design company and have performed an A/B test on the position of a banner on a website page promoting a particular item.<br />
@@ -2866,7 +2866,9 @@ The H0 is that the difference between proportions is egual to 0 and ha is that t
 <center>
 <p>H0: πclick_banner_right − πclick_banner_center = 0</p>
 <p>H0: πclick_banner_right − πclick_banner_center ≠ 0</p>
-alpha = 0.05<br />
+<p>alpha = 0.05</p>
+RESULT: Significance level: 0.01, p-value: 0.006<br />
+Since p is smaller than α, so we reject H0 in favour of Ha so it is enough eveidence to say that the banner in the right hand side of the web page works different that the banner in the top center of the web page.<br />
 
 </center>
 <ol start="3" style="list-style-type: decimal">
@@ -2880,7 +2882,9 @@ The H0 is that the width mean of the sample if equal to 145 mm and the H2 is tha
 <center>
 <p>H0: μwidth_part = 145</p>
 <p>Ha: μwidth_part ≠ 145</p>
-alpha = 0.01
+<p>alpha = 0.01</p>
+RESULT: Significance level: 0.05, p-value: 0.55.<br />
+Since p is greater than α we fail to reject H0. There is not enough evidence to say that the width of the parts in averange is different than 145mm.
 </center>
 </div>
 

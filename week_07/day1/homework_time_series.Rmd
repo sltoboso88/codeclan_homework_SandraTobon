@@ -1,0 +1,109 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(rlang)
+library(dplyr)
+library(lubridate)
+library(tsibble)
+library(tsibbledata)
+library(feasts)
+library(tidyverse)
+library(nycflights13)
+library(fable)
+```
+
+1. Start with the weather data from the nycflights13 package. Select all the variables related to temperature, humidity, and precipitation, and pick out the key and index variables. Have a look at your data, and write a small description of the time series you observe. 
+```{r}
+glimpse(weather)
+```
+The weather has a peak in July and Agust in the 3 places and this is logical because they are the summer months of the year.
+```{r}
+weather %>%
+  ggplot(aes(x = time_hour, y = temp)) +
+  geom_line(colour = "blue") +
+  facet_grid(rows = vars(origin))
+```
+The humidity looks very regular in each location.
+```{r}
+weather %>%
+  ggplot(aes(x = time_hour, y = humid)) +
+  geom_line(colour = "red") +
+  facet_grid(rows = vars(origin))
+```
+The level of precipitations are higher around June, Agust and October, those could be relative to the hurricane season in USA, 
+```{r}
+weather %>%
+  ggplot(aes(x = time_hour, y = precip)) +
+  geom_line(colour = "purple") +
+  facet_grid(rows = vars(origin))
+```
+
+Change the weather data into a tsibble. 
+```{r}
+
+weather <- weather %>%
+  select(origin, temp, humid, precip, time_hour) %>%
+  as_tsibble(
+    key = origin,
+    index = time_hour
+  )
+```
+
+Add a year and month column to your weather data, and create a basic line plot which shows the temperature data from each airport over time. Have a think back to what you learned in visualisation week, and think about whether plotting the whole time series in one go is adequate here? Write down your suggestions for what could be done to make a better and more informative plot. 
+```{r}
+weather %>%
+  drop_na(temp) %>%
+  mutate(year = year(time_hour)) %>%
+  mutate(month = month(time_hour)) %>%
+  group_by(month) %>%
+  mutate(mean_temp = mean(temp)) %>%
+  group_by(year) %>%
+  mutate(mean_year = mean(temp)) %>%
+  ggplot() +
+  geom_line(aes(x = time_hour, y = temp), color = "blue") +
+  geom_line(aes(x = time_hour, y = mean_temp), color = "red") +
+  geom_line(aes(x = time_hour, y = mean_year), color = "purple") +
+  facet_grid(rows = vars(origin))
+```
+
+Choose an appropriate rolling window and calculate a moving average for your weather temperature data for each airport origin. Create a useful plot which overlays the original time series data and the rolling average data. Make sure the graph is easy for others to understand (Hint: you might want to facet_wrap). Finally, write a summary of why you chose the time window you did, and describe any trends you see. 
+
+```{r}
+weather %>%
+  group_by(month) %>%
+  summarise(total_days = n()) %>%
+  summarise(mean_per_month = mean(total_days))
+
+#2177 data in average per month 545 per week  78 per day
+weather_graph <- weather %>%
+  mutate(temp_per_month = slide_dbl(temp, ~ mean(., na.rm = TRUE), .size = 2177)) %>%
+  mutate(temp_per_week = slide_dbl(temp, ~ mean(., na.rm = TRUE), .size = 545)) %>%
+  mutate(temp_per_day = slide_dbl(temp, ~ mean(., na.rm = TRUE), .size = 78))
+  
+weather_graph %>%
+  ggplot() +
+  geom_line(aes(x = time_hour, y = temp), color = "grey") +
+  geom_line(aes(x = time_hour, y = temp_per_month), color = "blue") +
+  geom_line(aes(x = time_hour, y = temp_per_week), color = "green") +
+  geom_line(aes(x = time_hour, y = temp_per_day), color = "red") +
+  facet_grid(rows = vars(origin))
+```
+Downsample your data so that you plot daily temperature data for each airport, instead of hourly data. 
+```{r}
+weather %>%
+  drop_na(temp) %>%
+  mutate(date = date(time_hour)) %>%
+  group_by(origin, date) %>%
+  summarise(mean_temp_day = mean(temp)) %>%
+  ggplot() +
+  aes(x = date, y = mean_temp_day) +
+  geom_line(color = "blue") +
+  facet_grid(rows = vars(origin))
+
+```
+
+
+
