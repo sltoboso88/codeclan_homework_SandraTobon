@@ -1,0 +1,203 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(lubridate)
+library(tsibble)
+library(tsibbledata)
+library(fable)
+library(urca)
+library(fabletools)
+library(leaflet)
+```
+1. Load in the nyc_bikes data from the tsibbledata package. Have an initial look at it to see what you’re working with. Create three new columns: one that stores only the year the bike was used, one that stores only the month the bike was used, and one that stores the date. Use the data stored in start_time to create these new columns.
+
+```{r}
+glimpse(nyc_bikes)
+class(nyc_bikes)
+#I use start_time for nyc for taking the year, month and date
+nyc_bikes <- nyc_bikes %>%
+  mutate(year = year(start_time)) %>%
+  mutate(month = month(start_time, label = TRUE, abbr = FALSE)) %>%
+  mutate(date = date(start_time))
+```
+2. Summarise the number of bike hire counts by month. Make a plot of this data. *Hint: remember that to group time series (tsibble) data, you need to use index_by instead of group_by before your summarise function. What does this plot tell you about the time series? Do you think this downsampled data would be adequate to build a forecast with?
+
+```{r}
+nyc_bikes %>%
+  index_by(month) %>%
+  summarise(total_bike_per_month = n()) %>%
+  ggplot() +
+  geom_col(aes(x = month, y = total_bike_per_month)) +
+  labs(
+    title = "Bikes in NYC 2018",
+    y = "Total bikes rents per month",
+    x = "Months"
+  )
+```
+R. In July and August the amount of public bikes that were renting is higher, these make sense because those are the summer months and a lot people are in holiday there. The amount of public bike rented in the winter months are lower, because those are colder moths.  
+
+3. Now Summarise the number of bike hire counts by date. Make a plot of this new aggregated data. What does this plot tell you about the time series? Would this data be preferrable for time series forecasting compared to the monthly data? 
+```{r}
+nyc_bikes_dates <- nyc_bikes %>%
+  index_by(date) %>%
+  summarise(total_bike_per_date = n()) 
+
+nyc_bikes_dates %>%
+  ggplot() +
+  geom_line(aes(x = date, y = total_bike_per_date)) +
+  labs(
+    title = "Bikes in NYC 2018",
+    y = "Total bikes rents per day",
+    x = "Dates"
+  )
+```
+The dates provide more points for plotting the line and show more specific information. Between July and August we can see a peak of the rent of bikes in NY, same that the monthly graph. Yes this data is more according to the time series that the month graph. 
+
+4. Let’s begin to build a model.
+```{r}
+nyc_bikes_dates_model <- nyc_bikes_dates %>%
+  mutate(date = as.Date(date)) %>%
+  complete(date = seq.Date(min(date), max(date), by="day"))
+
+nyc_bikes_dates_model <- nyc_bikes_dates_model %>%
+  mutate(month = month(date)) %>%
+  group_by(month) %>%
+  mutate(median_bike_month = as.integer(median(total_bike_per_date, na.rm = TRUE))) %>%
+  mutate(total_bike_per_date = ifelse(is.na(total_bike_per_date), median_bike_month,
+                                      total_bike_per_date))
+
+nyc_bikes_dates_model <- nyc_bikes_dates_model %>%
+  ungroup() %>%
+  select(date, total_bike_per_date)
+
+nyc_bikes_dates_model <- as_tsibble(nyc_bikes_dates_model)
+
+class(nyc_bikes_dates_model)
+
+fit <- nyc_bikes_dates_model %>%
+  model(
+    naive_bike = NAIVE(total_bike_per_date),
+    mean_bike =  MEAN(total_bike_per_date),
+    snaive_bike = SNAIVE(total_bike_per_date)
+  )
+```
+
+I decide to fill my NA values with the median of the rent bike per month, because this is more aquare to the data, also we could said that on those days weren't any bike rent, and probably in some ways that is true, but lets fill this with the median per month, because could be that the real history is different. 
+
+5. Now we have our model fit, build a forecast to predict bike use over the next four months. Plot your models alongside your data.
+```{r}
+forecast_bikes <- fit %>%
+  fabletools::forecast(h = 120)
+
+forecast_bikes
+```
+```{r}
+forecast_bikes %>%
+  autoplot(nyc_bikes_dates_model, level = NULL) +
+  ggtitle("Forecast for NYC bikes rents") +
+  xlab("Dates") +
+  guides(colour = guide_legend(title = "Forecast"))
+```
+6. Test your model accuracy : choose a training data set from your main dataset, build a forecast on the training set, and then plot the training set forecast against the real data. Calculate model accuracy.
+With the amount of data that I have, I can build a traing model for the next 73 days because it is the data maximun amount of data that I have for testing. (292)
+```{r}
+#292 365 "2018-01-01" "2018-10-19"
+train_bikes <- nyc_bikes_dates_model %>%
+  filter_index("2018-01-01" ~ "2018-10-19")
+
+fit_test_bikes <- train_bikes %>%
+  model(
+    naive_bike = NAIVE(total_bike_per_date),
+    mean_bike =  MEAN(total_bike_per_date),
+    snaive_bike = SNAIVE(total_bike_per_date)
+  )
+
+forecast_test_bike <- fit_test_bikes %>%
+  fabletools::forecast(h = 73)
+
+forecast_test_bike %>%
+  autoplot(train_bikes, level = NULL) +
+  autolayer(filter_index(nyc_bikes_dates_model, "2018-10-20" ~.), color = "black") +
+  ggtitle("Forecast for NYC bikes rents") +
+  xlab("Dates") +
+  guides(colour = guide_legend(title = "Forecast"))
+
+accuaricy_model_bikes <- forecast_test_bike %>%
+  accuracy(nyc_bikes_dates_model)
+
+accuaricy_model_bikes %>%
+  arrange(RMSE)
+```
+7. Look at your forecast plots and accuracy values. Describe your results. Are your models a good fit for the data? If not, why not? What would you suggest doing with the data if you were expected to present these back to a client? For example, would you ask for more data? Would you test a different model?
+R. The model with best accuaricy is mean, probably because the forescast only have data for few months and would be affected by the peak that the bike rent have in summer. Any of the models have a very good fit for the data, special because we don't have enough data for creating a model with better fit. In my case I would prefer to have more data, if it is possible at least 2 years or more could be great, because in that way we can considering the season component that de data present. 
+
+8. Make a simple ggplot (geom_point) which plots the start longitude and latitudes of each bike. Create a separate facet for each bike_id. Colour the dots in by month of use. What does this tell you about what month each bike was used most in? Do the same for the end longitude and latitudes.
+
+R. Some bikes have been used more between January and May (31681, 31735), other more between Jult to November, and some more in December. So probably they bought more bycicles for summer season. 
+```{r}
+nyc_bikes %>%
+  ggplot() +
+  aes(x = start_lat, y = start_long, color = month) +
+  geom_point() +
+  theme_bw()  +
+  facet_grid(rows = vars(bike_id))
+```
+
+```{r}
+nyc_bikes %>%
+  ggplot() +
+  aes(x = end_lat, y = end_long, color = month) +
+  geom_point() +
+  theme_bw()  +
+  facet_grid(rows = vars(bike_id))
+```
+
+9. Create an interactive leaflet plot which plots the start points of the city bikes. Ensure it has at least markers to denote start points (taken from the nyc_bikes_spatial data). Feel free to add any additional features you wish.
+
+```{r}
+nyc_bikes %>%
+  leaflet() %>%
+  addTiles() %>%
+  addCircleMarkers(lng = ~start_long, ~start_lat, 
+             clusterOptions = markerClusterOptions())
+```
+
+```{r}
+id <- rownames(nyc_bikes)
+
+nyc_bikes <- cbind(id = id, nyc_bikes)
+
+nyc_bikes_lat <- nyc_bikes %>%
+  select(id, start_lat, end_lat) %>%
+  pivot_longer(
+    cols = c("start_lat", "end_lat"), 
+    names_to = "s_e_l",
+    values_to = "lat"
+  )
+
+nyc_bikes_long <- nyc_bikes %>%
+  select(id, start_long, end_long) %>%
+  pivot_longer(
+    cols = c("start_long", "end_long"), 
+    names_to = "s_e_lg",
+    values_to = "long"
+  )
+
+nyc_bikes_point <- nyc_bikes_lat %>%
+  inner_join(nyc_bikes_long, by = c("id"))
+
+nyc_bikes_point <- nyc_bikes_point %>%
+  filter((s_e_l == "start_lat" & s_e_lg == "start_long") |
+          (s_e_l == "end_lat" & s_e_lg == "end_long"))
+
+nyc_bikes_point %>%
+  leaflet() %>%
+  addTiles() %>%
+  addPolylines(lng = ~ long, lat = ~ lat, group = id)
+  
+```
+
