@@ -1,0 +1,120 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(here)
+library(readr)
+library(modelr)
+library(ggfortify)
+library(broom)
+library(janitor)
+```
+estimated_length = independent X actual_length = dependent Y
+```{r}
+project <- read_csv(here("data/project_management.csv"))
+
+project <- project %>%
+  select(-X1)
+
+project %>%
+  ggplot(aes(x = estimated_length, y = actual_length)) +
+  geom_point()
+```
+```{r}
+project %>%
+  ggplot(aes(x = estimated_length, y = actual_length)) +
+  geom_point() +
+  geom_text(aes(label = 1:nrow(project)), col = "red")
+#  28, 18, 5 influential 5
+```
+
+```{r}
+model_project <- lm( formula = actual_length ~ estimated_length, data = project)
+
+class(model_project)
+
+par(mfrow = c(2,2))
+plot(model_project)
+#5 and 18
+
+
+```
+
+```{r}
+autoplot(model_project)
+```
+
+```{r}
+autoplot(model_project, which = 4)
+```
+
+```{r}
+tidy_out <- clean_names(tidy(model_project))
+
+glance_out <- clean_names(glance(model_project))
+
+
+```
+
+```{r}
+project_18 <- project[-18,]
+```
+
+```{r}
+model_project_18 <- lm( formula = actual_length ~ estimated_length, data = project_18)
+#intercept 1.591 
+tidy_18 <- clean_names(tidy(model_project_18))
+tidy_out$estimate[1]  
+tidy_18$estimate[1]
+# the diference in the intercept is 0.17 
+
+glance_18 <- clean_names(glance(model_project_18))
+
+glance_out$r_squared
+glance_18$r_squared
+#only 68% of the of the variation actual_length in  in the sample data can be explained by variation in estimated_length, only increase by 4% points the r_squared 
+```
+
+```{r}
+
+
+project_18 %>%
+  add_predictions(model_project_18) %>%
+  add_predictions(model_project, var = "pred_1") %>%
+  ggplot(aes(x = estimated_length)) +
+  geom_point(aes(y = actual_length)) +
+  geom_line(aes(y = pred), col = "red") +
+  geom_line(aes(y = pred_1), col = "blue")
+```
+```{r}
+project_5 <- project[-5,]
+model_project_5 <- lm( formula = actual_length ~ estimated_length, data = project_5)
+#intercept 1.591 
+tidy_5 <- clean_names(tidy(model_project_5))
+tidy_out$estimate[1]
+tidy_5$estimate[1]
+# the diference in the intercept is 2.96
+
+glance_5 <- clean_names(glance(model_project_5))
+
+glance_out$r_squared
+glance_5$r_squared
+#the variation actual_length in the sample data is quite the same without the influence poin of 5
+```
+
+```{r}
+project_5 %>%
+  add_predictions(model_project_5) %>%
+  add_predictions(model_project, var = "pred_1") %>%
+  ggplot(aes(x = estimated_length)) +
+  geom_point(aes(y = actual_length)) +
+  geom_line(aes(y = pred), col = "red") +
+  geom_line(aes(y = pred_1), col = "blue")
+
+#the blue line with all the points trend to increas more. 
+```
+
+Residual vs Fitted = the points look independent, The points follow the normal distribution expect for the point 18 and 5 and the scale location doesn't only go up or down, so in that sense the 3 patrons follow the line regresion. 
