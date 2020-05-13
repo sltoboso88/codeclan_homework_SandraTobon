@@ -1,0 +1,168 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+library(tidyverse)
+library(GGally)
+library(mosaicData)
+library(ggiraphExtra)
+library(readr)
+library(fastDummies)
+library(modelr)
+library(janitor)
+library(broom)
+```
+
+```{r}
+diamonds <- read_csv("data/diamonds.csv")
+
+diamonds <- diamonds %>%
+  select(-X1)
+
+View(diamonds)
+
+glimpse(diamonds)
+
+summary(diamonds)
+#It isn't any NA in diamonds data set
+
+diamonds %>%
+  select(carat, x, y, z) %>%
+  ggpairs()
+```
+The correlation between x to carat is 0.975, y to carat 0.952 and z to carat is 0.953. So it is a high correlation between the four variables. 
+```{r}
+diamonds_1 <- diamonds %>%
+  select(-c(x, y, z))
+
+diamonds_1 %>%
+  ggpairs()
+```
+```{r}
+diamonds_1 %>%
+  ggplot(aes(x = carat, y = price)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+It is a very strong correlation between carat and price and a very small correlation (0.127) between proce and table.
+```{r}
+unique(diamonds_1$cut) #4 variables
+unique(diamonds_1$color) # 6 variables
+unique(diamonds_1$clarity) # 7 variables
+```
+
+```{r}
+diamonds_1 <- diamonds_1 %>%
+  dummy_cols(select_columns = c("cut", "color", "clarity"),
+             remove_first_dummy = TRUE,
+             remove_selected_columns = TRUE)
+```
+
+```{r}
+model_1 <- lm(formula = price ~ carat, data = diamonds_1)
+
+par(mfrow = c(2,2))
+plot(model_1)
+```
+
+The Residual vs Fitted the the data don't look very independent, after 20000 all of the points are locate under the line. The data doesn't look very normal and in the scale location plote the line trend to go up after 10000, the cook line doesn't show any particual oulier that could be important. 
+
+```{r}
+summary(model_1)
+
+```
+The p values of carat is less that 0.05 that is razonable, (r squared = 0.8493) the 84.93% of the variation in price in the sample data can be explained by variation in carat. But I am not particulary convice that this is a linear regresion. 
+
+```{r}
+diamonds_1 %>%
+  add_residuals(model_1, var = "residual") %>%
+  ggplot(aes(x = carat)) +
+  geom_point(aes(y = price)) +
+  geom_smooth(aes(y = residual), method = "loess", col = "red", se = FALSE)
+```
+```{r}
+model_log_x <- lm(formula = price ~ log(carat), data = diamonds_1)
+
+summary(model_log_x)
+```
+with log x r^2 decrease
+
+```{r}
+model_log_y <- lm(formula = log(price) ~ carat, data = diamonds_1)
+
+summary(model_log_y)
+```
+
+with log(y) r^2 is lower but only for few decimals
+```{r}
+model_logx_logy <- lm(formula = log(price) ~ log(carat), data = diamonds_1)
+
+summary(model_logx_logy)
+```
+with log x and y r^square increase, let's check the graph
+
+```{r}
+par(mfrow = c(2, 2))
+plot(model_log_x)
+```
+Special the normal plot is very afected for the change in x
+```{r}
+par(mfrow = c(2, 2))
+plot(model_log_y)
+```
+
+
+```{r}
+par(mfrow = c(2, 2))
+plot(model_logx_logy)
+```
+
+The scale location improve, don't show any particular trend, the residual fitted improve but few points continue to be under after 10, and the data is more normal
+```{r}
+diamonds_1 <- clean_names(diamonds_1)
+model_log_cut <- lm(formula = log(price) ~ log(carat) + cut_good +
+                     cut_ideal + cut_premium + cut_very_good, 
+                    data = diamonds_1 )
+
+summary(model_log_cut)
+```
+
+only improve the log distribution by 0.4% point in RSquare and the standar error is lower
+
+```{r}
+model_log_color <- lm(formula = log(price) ~ log(carat) + color_e +
+                     color_f + color_g + color_h + color_i + color_j, 
+                    data = diamonds_1 )
+
+summary(model_log_color)
+```
+The r square is higher that with cut and the standar error is lower
+```{r}
+model_log_clarity <- lm(formula = log(price) ~ log(carat) + clarity_if +
+                     clarity_si1 + clarity_si2 + clarity_vs1 + clarity_vs2 + 
+                      clarity_vvs1 + clarity_vvs2, data = diamonds_1 )
+
+summary(model_log_clarity)
+```
+The Standar error is lower and the R^2 is higher by roughly 2%
+
+With clarity, the reference level is clarity_if and it probably will show the grates different in price.  I belive the fitted function could bw something like y = a * x^b + cf1 + cf2 + cf3 ...
+```{r}
+model_log_clarity_i <- lm(formula = log(price) ~ log(carat) * clarity_if *
+                     clarity_si1 * clarity_si2 * clarity_vs1 * clarity_vs2 * 
+                      clarity_vvs1 * clarity_vvs2, data = diamonds_1 )
+
+summary(model_log_clarity_i)
+```
+I don't believe the interaction add any value the standar error and r quare are quite the same. 
+For the graph I will only use the variable that I believe will influence more the change that is clarity_if
+```{r}
+model_log_clarity_if <- lm(formula = log(price) ~ log(carat) * clarity_if, 
+                           data = diamonds_1 )
+
+summary(model_log_clarity_if)
+ggPredict(model_log_clarity_if, interactive = TRUE)
+```
+
