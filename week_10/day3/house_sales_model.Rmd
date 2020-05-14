@@ -1,0 +1,285 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+library(readr)
+library(tidyverse)
+library(here)
+library(modelr)
+library(ggiraphExtra)
+library(GGally)
+library(relaimpo)
+```
+
+```{r}
+house_price <- read_csv(here("data/kc_house_data.csv"))
+
+glimpse(house_price)
+```
+
+```{r}
+house_price <- house_price %>%
+  select(-c(date, id, sqft_living15, sqft_lot15, zipcode))
+```
+
+```{r}
+summary(house_price)
+
+unique(house_price$waterfront)
+```
+
+We should convert the waterfront to a logical vector and try it as a categorical variable.
+
+```{r}
+house_price <- house_price %>%
+  mutate_at("waterfront", as.logical)
+```
+
+```{r}
+house_price <- house_price %>%
+  mutate(renovated = ifelse(yr_renovated == 0, FALSE, TRUE)) %>%
+  select(-yr_renovated)
+```
+
+```{r}
+unique(house_price$condition)
+unique(house_price$grade)
+```
+
+Grade is a clasification of the house acording to the material that they use for building the house, so when the building has a greater grade the cost per unit measure is higher. In this sense we can consider this as categorical ordinal because they imply a order but it isn't a numerical interval order. We can say the same about condition. 
+```{r}
+house_price <- house_price%>%
+  mutate_at("condition", as.factor) %>%
+  mutate_at("grade", as.factor)
+
+```
+
+```{r}
+
+mod_pre <- lm(price ~ ., data = house_price)
+
+alias(mod_pre)
+```
+Nonzero entries in the "complete" matrix show that those terms are linearly dependent on UseMonthly. This means they're highly correlated, but terms can be highly correlated without being linearly dependent.
+
+So I will drop sqft_basement, sqft_living, sqft_above because the suppose to have a linearly dependent, if I interpreted in good way the mean.
+
+```{r}
+house_price <- house_price %>%
+  select(-c(sqft_basement, sqft_living, sqft_above))
+```
+
+
+```{r}
+house_price_numeric <- house_price %>%
+  select_if(is.numeric)
+
+house_price_no_numetic <- house_price %>%
+  select_if(function(x) !is.numeric(x))
+
+house_price_no_numetic$price <- house_price$price
+
+```
+
+```{r}
+house_price_numeric %>%
+  ggpairs()
+```
+
+```{r}
+house_price_no_numetic %>%
+  ggpairs()
+
+```
+
+```{r}
+model_price_bath <- lm(price ~ bathrooms, data = house_price)
+
+summary(model_price_bath)
+```
+The bathroom only explain the price in a 27.57 %
+```{r}
+par(mfrow = c(2,2))
+plot(model_price_bath)
+```
+
+The scale location plot follow a trend to go up and the normal plot  the residuals aren't normal at the end
+
+```{r}
+house_price %>%
+  add_residuals(model_price_bath) %>%
+  select_if(function(x) is.numeric(x)) %>%
+  select(-c(price, bathrooms)) %>%
+  ggpairs()
+```
+The view is high correlative with the residual let's check it in combination with bathroom 
+
+```{r}
+model_price_bath_view <- lm(price ~ bathrooms + view, data = house_price) 
+
+summary(model_price_bath_view)
+```
+The combination of the bathrooms and view could explain in a 36% the price   
+```{r}
+par(mfrow = c(2,2))
+plot(model_price_bath_view)
+```
+The residual continue to have a trend and they aren't normal at the end. 
+
+Now let's try to find a feature inside our categorical data
+
+```{r}
+house_price %>%
+  add_residuals(model_price_bath_view) %>%
+  select(waterfront, condition, grade, renovated, resid) %>%
+  ggpairs()
+  
+```
+
+The condition looks quite interesting special around 3
+
+```{r}
+model_bath_view_condition <- lm(price ~ bathrooms + view + condition,
+                                data = house_price)
+
+summary(model_bath_view_condition)
+```
+To be honest the increase is only in 1 %. Let's check the anova
+```{r}
+anova(model_price_bath_view, model_bath_view_condition)
+```
+The model include condition is better because the p values is lower than 0.005 but we can add other more no categorical variable and see wath hapen before add condition
+```{r}
+house_price %>%
+  add_residuals(model_price_bath_view) %>%
+  select_if(function(x) is.numeric(x)) %>%
+  select(-c(price, bathrooms, view)) %>%
+  ggpairs()
+```
+Lat continue to be high correlative with resid so lets include it
+```{r}
+model_bath_view_lat <- lm(price ~ bathrooms + view + lat, 
+                          data = house_price)
+
+summary(model_bath_view_lat)
+```
+
+With lat the r^2 going up more than 10. Let's check the graphs 
+```{r}
+par(mfrow = c(2,2))
+plot(model_bath_view_lat)
+```
+
+The result continue to be quite the same 
+```{r}
+model_bath_view_lat_1 <- lm(log(price) ~ bathrooms + view + lat, 
+                          data = house_price)
+
+summary(model_bath_view_lat_1)
+```
+
+```{r}
+par(mfrow = c(2,2))
+plot(model_bath_view_lat_1)
+```
+Even with a log in price the residual continu to follow a trend, nut the data looks more normal
+Let's add a categorical variable to end
+```{r}
+house_price %>%
+  add_residuals(model_bath_view_lat_1) %>%
+  select(waterfront, condition, grade, renovated, resid) %>%
+  ggpairs()
+```
+Actually grade looks a great option let's take it
+```{r}
+model_bath_view_lat_grade <- lm(log(price) ~ bathrooms + view + lat + grade, 
+                          data = house_price)
+
+summary(model_bath_view_lat_grade)
+```
+Grade is a very good choose the problem is that the p error is more that 0.05 in grade 3,4,5. Let's check anova
+
+```{r}
+anova(model_bath_view_lat_1, model_bath_view_lat_grade)
+```
+For sure the model with grade is much better so we should include it, even with the high P error in the 3 variables, because the p error in anova is lower than 0.05 and the r^2 improve a lot with it so let's check the residuals plots
+```{r}
+par(mfrow = c(2,2))
+plot(model_bath_view_lat_grade)
+```
+It is't significally better the trend of the residual is less and they look a litle more normal, but no 100% better.
+ 0.6864 
+```{r}
+
+model_final_1 <- lm(log(price) ~ bathrooms + view + lat + grade + bathrooms:view, 
+                          data = house_price)
+
+summary(model_final_1)
+```
+
+```{r}
+model_final_2 <- lm(log(price) ~ bathrooms + view + lat + grade + bathrooms:lat, 
+                          data = house_price)
+
+summary(model_final_2)
+```
+```{r}
+model_final_3 <- lm(log(price) ~ bathrooms + view + lat + grade + bathrooms:grade, 
+                          data = house_price)
+
+summary(model_final_3)
+```
+Iteration between bathrooms and view and with lat only increase R by  0.2% more 
+```{r}
+model_final_4 <- lm(log(price) ~ bathrooms + view + lat + grade + view:lat, 
+                          data = house_price)
+
+summary(model_final_4)
+```
+
+```{r}
+model_final_5 <- lm(log(price) ~ bathrooms + view + lat + grade + view:grade, 
+                          data = house_price)
+
+summary(model_final_5)
+```
+```{r}
+model_final_6 <- lm(log(price) ~ bathrooms + view + lat + grade + lat:grade, 
+                          data = house_price)
+
+summary(model_final_6)
+```
+
+0.6864
+f1 =  0.6868 
+p error < 0.05
+f2 = 0.6867
+p error < 0.05
+f3 = 0.6877 rr
+P error > 0.05 most of the time
+f4 = 0.6864
+p error > 0.05
+f5 = 0.6876 
+p error > 0.05 in 6 cases
+f6 =  0.6869 
+p error > 0.05 in 7 cases
+
+I choose the interaction bathrooms:lat because has the lower p error and  add a little more model_final_2
+```{r}
+house_resid <- house_price %>%
+  add_residuals(model_final_2) %>%
+  select(-price)
+```
+```{r}
+coplot(resid ~ lat | bathrooms, data = house_resid)
+
+```
+
+```{r}
+calc.relimp(model_bath_view_lat_grade, type = "lmg", rela = TRUE)
+```
+The most important is grade by 43% them bathrooms lat by 24 % bathroom by 21% and view by 9%
+
