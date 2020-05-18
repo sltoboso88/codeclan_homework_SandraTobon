@@ -1,0 +1,43 @@
+1. Over fitting, postcode and family income could be correlative and add the
+noise.
+2. The one with 33,559 because is the lowest.
+3. The second one with the r^2 of 0.43, because the r^2 you should take the
+higher value of R^2 even if r is lower, this is for prevent over fitting
+4. Yes because the RMSE on the training data should be lower that the RMSE
+in the test data
+5. This divide the data in n-folds and use (n-folds - 1) as training data and
+1 fold as test data, its run n times with the same n-folds by change the test
+data fold each time, in that way you are using all your data for choose your
+model, so it will help you a lot when you don't have too much data.
+6. The validation set is a part of your original data that you will not use
+during the process of creating your model, you only use after you have your
+model for checking if the model is accurate.
+7. You start with all the variables and drop the variables until you find that
+the variables that you have are the ones that explain most of the changes in
+your model, without add noise.
+8. The model search all possible combinations of predictors and in this way
+trying to find the best model.
+9. Does the model make intuitive sense?
+Are there any disallowed variables?
+Explainability of model variables
+Will it still work on the production data?
+Is it valid for all situations?
+Can I implement it in production?
+Have I got enough documentation?
+10.  Population Stability Index (PSI)
+11. Population Stability Index (PSI) compares the distribution of a scoring
+variable (predicted probability) in scoring data set to a training data set
+that was used to develop the model.
+12. 0.1
+13. Don't check the model:
+When we don't check the performance we could end with a model that isn't
+accurate to the situation.
+14. To be honest this isn't very logical that happen because normally the
+accuracy take the test of validation data set and the discrimination take real
+data that we have in production. But if the accuracy deteriorated we should
+start to consider to recalibrate the model
+15. For identified the model in Database of model inventory
+16. because most of the time we will not be the only ones that have relation
+with the model, so we need that everyone that could have relations with the
+model could be able to understand the model and also our memory is limited so is
+important for us to remember what was the steps and the reasons of the model.

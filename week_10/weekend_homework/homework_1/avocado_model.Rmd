@@ -1,0 +1,73 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(here)
+library(janitor)
+library(lubridate)
+library(leaps)
+```
+
+
+```{r}
+avocado_data <- read_csv(here("data/avocado.csv"))
+avocado_data <- clean_names(avocado_data)
+```
+I will include the regions but I will group by them by the economic division region in USA
+```{r}
+avocado_data <- avocado_data %>%
+  mutate(region = case_when(
+    region %in% c("California", "LasVegas", "LosAngeles", "Portland", "Sacramento", "SanDiego", "SanFrancisco", "Seattle", "Spokane", "West") ~ "FarWest",
+    region %in% c("Chicago", "CincinnatiDayton", "Columbus", "Detroit", "GrandRapids", "GreatLakes", "Indianapolis") ~ "GreatLakes",
+    region %in% c("Albany", "BaltimoreWashington", "BuffaloRochester", "HarrisburgScranton", "NewYork", "Northeast", "Philadelphia", "Pittsburgh", "Syracuse") ~ "Mideast",
+    region %in% c("Boston", "HartfordSpringfield", "NorthernNewEngland") ~ "NewEngland",
+    region %in% c("Plains", "StLouis") ~ "Plains",
+    region %in% c("Boise", "Denver") ~ "Rocky Mountain",
+    region %in% c("Atlanta", "Charlotte", "Jacksonville", "Louisville", "MiamiFtLauderdale", "Midsouth", "Nashville", "NewOrleansMobile", "Orlando", "RaleighGreensboro", "RichmondNorfolk", "Roanoke", "SouthCarolina", "Southeast", "Tampa") ~ "Southeast",
+    region %in% c("DallasFtWorth", "Houston", "PhoenixTucson", "SouthCentral", "WestTexNewMexico") ~ "Southwest",
+    TRUE ~ region
+  ))
+```
+
+```{r}
+avocado_data %>%
+  group_by(date) %>%
+  summarise(a_p = mean(average_price)) %>%
+  ggplot(aes(x = date, y = a_p)) +
+  geom_line()
+```
+
+The average price has a seasonal component so we shouldn't exclude the date at least that we transform the date in a categorical variable that give us the season. We will keep the year as categorical data because the average price has increased with the time in each season.
+
+```{r}
+avocado_data <- avocado_data %>%
+    mutate_at("year", as.factor) %>%
+    mutate(month = month(date)) %>%
+    mutate(season = case_when(month >= 3 & month < 6 ~ "Spring",
+                              month >= 6 & month < 9 ~ "Summer",
+                              month >= 9 & month < 12 ~ "Fall",
+                              TRUE ~ "Winter"
+                              )) %>%
+    select(- c(month, date, x1))
+```
+The total bags is a derivate variable from small_bags, large_bags, x_large_bags and even when alias doesn't give me any correlation.
+```{r}
+alias(average_price ~., data = avocado_data)
+
+avocado_data <- avocado_data %>%
+  select(- total_bags)
+```
+Now I believe that my data is in a good shape, so I will try to see wath happen with leap 
+```{r}
+regsubsets_avocado <- regsubsets(average_price ~., data = avocado_data, 
+                                 nvmax = 13, method = "forward")
+```
+
+```{r}
+sum_regsubsets_forward<- summary(regsubsets_avocado)
+plot(regsubsets_avocado, scale = "adjr2")
+```
+
