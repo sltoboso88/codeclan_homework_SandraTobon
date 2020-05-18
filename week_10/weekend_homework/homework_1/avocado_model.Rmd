@@ -62,12 +62,25 @@ avocado_data <- avocado_data %>%
 ```
 Now I believe that my data is in a good shape, so I will try to see wath happen with leap 
 ```{r}
-regsubsets_avocado <- regsubsets(average_price ~., data = avocado_data, 
+regsubsets_forward <- regsubsets(average_price ~., data = avocado_data, 
                                  nvmax = 13, method = "forward")
 ```
 
 ```{r}
-sum_regsubsets_forward<- summary(regsubsets_avocado)
-plot(regsubsets_avocado, scale = "adjr2")
+sum_regsubsets_forward<- summary(regsubsets_forward)
+plot(regsubsets_forward, scale = "bic")
+sum_regsubsets_forward$which
+plot(sum_regsubsets_forward$rsq, type = "b")
+```
+Here we can see the region, season, year and type are very strong correlative with the average price, so we will try to see the model deep.
+```{r}
+model_avocado <- lm(average_price ~ season + year + region + type, data = avocado_data)
+
+summary(model_avocado)
+```
+The residuals aren't really normal at the end and have a trend to go up at the in the scater plot
+```{r}
+par(mfrow = c(2,2))
+plot(model_avocado)
 ```
 
