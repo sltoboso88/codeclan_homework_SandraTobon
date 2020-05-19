@@ -1,0 +1,136 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(rpart)
+library(rpart.plot)
+library(tidyverse)
+library(here)
+library(GGally)
+library(modelr)
+library(janitor)
+library(yardstick)
+```
+
+
+```{r}
+titanic_set <- read_csv(here("data/titanic_decision_tree_data.csv"))
+head(titanic_set)
+summary(titanic_set)
+```
+
+We have 418 NA in survived and 263 in age also 1 in fare
+```{r}
+titanic_set <- titanic_set %>%
+  drop_na(survived)
+```
+```{r}
+titanic_set <- titanic_set %>%
+  mutate_at("sex", as.factor) %>%
+  mutate(survived = factor(survived, levels = c(0, 1), labels = c("No", "Yes")),
+         age_status = as.factor(ifelse(age >= 16, "adult", "child")),
+         pclass = factor(pclass, levels = c(1, 2, 3),
+                        labels = c("Upper Class","Middle Class", "Lower Class")),
+         embarked = factor(embarked, levels = c("S", "C", "Q"), 
+                           labels = c("Cherbourg", "Queenstown", "Southampton")))
+
+titanic_set <- titanic_set %>%
+  select(-c(X1, passenger_id, name, age, ticket, fare, cabin)) %>%
+  drop_na()
+```
+
+```{r}
+  ggpairs(titanic_set)
+```
+Probably survived is related with age status, because more adults died in proportion with the childs, for sure sex is high correlated and also pclass look a litle related. Let's see what happen
+
+```{r}
+dim(titanic_set)
+```
+We have 712 rows, I will only use the 10 % of my data for testing.
+```{r}
+n_data <- nrow(titanic_set)
+
+text_index <- sample(1:n_data, size = n_data * 0.1)
+
+titanic_test <- slice(titanic_set, text_index)
+
+titanic_train <- slice(titanic_set, - text_index)
+```
+
+```{r}
+titanic_test %>%
+  tabyl(survived)
+```
+```{r}
+titanic_train %>%
+  tabyl(survived)
+```
+This division look very good so we go with them
+```{r}
+titanic_fit <- rpart(survived ~.,
+                     data = titanic_train,
+                     method = "class")
+rpart.plot(titanic_fit, yesno = 2)
+
+summary(titanic_fit)
+```
+The sex, class are the more important follow by age and embarked and in the botom number or siblings aboard.
+This Say probability or survived = no 0.4, if he is male and if he is in middle or lower class and he is an adult his probability of died is 11%
+if he is male and if he is in middle or lower class and he is a child and he has 3 or more siblings aboard the Titanic his probability of died is 7% 
+if he is male and if he is in middle or lower class and he is a child and he doesn't has 3 or more siblings aboard the Titanic his probability of survived is 89% 
+if he is male and if he isn't middle or lower class his probability of died is 42%
+if she is a woman ans she is lower class and she embarked in Cherbourg or Southampton her probability of died is 39%
+if she is a woman ans she is lower class and she doesn't embark in Cherbourg or Southampton her probability of survived is 73%
+if she is a woman ans she isn't lower class her probability of survived is 96%
+```{r}
+titanic_predic <- titanic_test %>%
+  add_predictions(titanic_fit, type = "class")
+
+titanic_predic %>%
+  select(survived, pred)
+
+titanic_predic %>%
+  conf_mat(truth = survived,
+           estimate = pred)
+
+titanic_predic %>%
+  accuracy(truth = survived,
+           estimate = pred)
+```
+True positive 21 (no survived)
+True negative 37 (yes survived)
+False positive 4 (no survived) 
+False negative 9 (yes survived)
+
+81.69% accuracy
+```{r}
+titanic_fit_1 <- rpart(survived ~.,
+                     data = titanic_train,
+                     method = "class", control=rpart.control(minsplit = 40))
+#30 observation before split and decrease in the overall factor at least by 0.001
+rpart.plot(titanic_fit_1, yesno = 2)
+
+summary(titanic_fit_1)
+ 
+```
+
+```{r}
+titanic_predic_1 <- titanic_test %>%
+  add_predictions(titanic_fit_1, type = "class")
+
+titanic_predic_1 %>%
+  select(survived, pred)
+
+titanic_predic_1 %>%
+  conf_mat(truth = survived,
+           estimate = pred)
+
+titanic_predic_1 %>%
+  accuracy(truth = survived,
+           estimate = pred)
+```
+
+With 40 split the accuracy is a little lower but the prevention of overfitting is more and the priciples factors are sex, clas and embarked. 
