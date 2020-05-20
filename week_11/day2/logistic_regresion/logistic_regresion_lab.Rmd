@@ -1,0 +1,338 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+library(tidyverse)
+library(readxl)
+library(here)
+library(janitor)
+library(GGally)
+library(modelr)
+library(pROC)
+library(broom)
+library(caret)
+```
+```{r}
+telecomms <- read_excel("data/telecomms_churn.xlsx")
+telecomms <- clean_names(telecomms)
+dim(telecomms)
+summary(telecomms)
+telecomms <- telecomms %>%
+  drop_na()
+```
+
+7032 rows and 12 columns
+And we have only 11 NA in total_charges
+I don't need customer id
+```{r}
+telecomms <- telecomms %>%
+  select(-customer_id) %>%
+  mutate_at("senior_citizen", is.logical) %>%
+  mutate(churn = as.numeric(ifelse(churn == "No", 0, 1)))
+
+telecomms %>%
+  select(churn, tenure, monthly_charges, total_charges) %>%
+  ggpairs()
+```
+
+Tenure is the continuos varibale more corelated with churn.
+```{r}
+telecomms %>%
+  select(-c(tenure, monthly_charges, total_charges)) %>%
+  ggpairs()
+```
+One of the type of contract looks correlated, also the internet service, the telephone service are correlated. Dependents and partners looks correlated but they looks also correlated between them.
+
+```{r}
+telecomms <- telecomms %>%
+  mutate_if(is.character, as.factor)
+```
+The tenure looks very related so let's do our first model with it
+```{r}
+model_tenure <- glm(churn ~ tenure, data = telecomms, family = binomial(link = "logit"))
+model_tenure
+```
+```{r}
+tidy(model_tenure)
+glance(model_tenure)
+```
+The p value of tenure is < 0.05 so we should cosidering work with tenure
+```{r}
+max <- max(telecomms$tenure)
+min <- min(telecomms$tenure)
+
+predict_log <- tibble(tenure = seq(min, max, 1)) %>%
+              add_predictions(model_tenure, type = 'response') # argument type = 'response' is used in glm models 
+ggplot(telecomms) +
+  geom_jitter(aes(x = tenure, y = as.integer(churn)), shape = 1, 
+              position = position_jitter(h = 0.03))  +
+   geom_line(data = predict_log, aes(x = tenure , y = pred), col = 'red')
+```
+contract will be our categorical variable
+```{r}
+model_contract <- glm(churn ~ contract, data = telecomms, family = binomial(link = "logit"))
+model_contract
+```
+
+```{r}
+tidy(model_contract)
+glance(model_contract)
+```
+Also the p values of the 3 different types of contract are lower than 0.05, and the AIC and BIC look better than in the model with tenure.
+```{r}
+model_all <- glm(churn ~ ., data = telecomms, family = binomial(link = "logit"))
+model_all
+```
+
+```{r}
+tidy(model_all)
+glance(model_all)
+```
+senior_citizen, gender, partner and monthly_charges have a p value > 0.05 so we will not take them
+
+```{r}
+model_all_1 <- glm(churn ~ dependents + tenure + phone_service + internet_service 
+                   + contract + total_charges, data = telecomms, family = binomial(link = "logit"))
+model_all_1
+```
+
+```{r}
+tidy(model_all_1)
+glance(model_all_1)
+```
+The model has a better result with the extraction of the variables that have a p value > 0.05
+```{r}
+telecomms_tenure <- telecomms %>%
+  add_predictions(model_tenure, type = "response")
+
+telecomms_contract <- telecomms %>%
+  add_predictions(model_contract, type = "response")
+
+telecomms_all_1 <- telecomms %>%
+  add_predictions(model_all_1, type = "response")
+
+roc_tenure <- telecomms_tenure %>%
+  roc(response = churn, predictor = pred)
+
+roc_contract <- telecomms_contract %>%
+  roc(response = churn, predictor = pred)
+
+roc_all_1 <- telecomms_all_1 %>%
+  roc(response = churn, predictor = pred)
+
+ggroc(list(roc_tenure, roc_contract, roc_all_1), legacy.axes = TRUE) +
+  coord_fixed()
+
+```
+
+```{r}
+auc(roc_tenure)
+auc(roc_contract)
+auc(roc_all_1)
+```
+The best model continue to be the last one with 6 predictors
+```{r}
+train_control <- trainControl(method = "repeatedcv", 
+                              number = 5,
+                              repeats = 100,
+                              savePredictions = TRUE, 
+                              classProbs = TRUE, 
+                              summaryFunction = twoClassSummary)
+```
+
+```{r}
+telecomms <- telecomms %>%
+  mutate(churn = as.factor(ifelse(churn == 1, "Yes", "No")))
+
+```
+
+```{r}
+model_cv_tenure <- train(churn  ~ tenure,
+               data = telecomms,
+               trControl = train_control,
+               method = "glm",
+               family = binomial(link = 'logit'))
+
+summary(model_cv_tenure)
+
+```
+```{r}
+model_cv_contract <- train(churn  ~ contract,
+               data = telecomms,
+               trControl = train_control,
+               method = "glm",
+               family = binomial(link = 'logit'))
+
+summary(model_cv_contract)
+```
+
+```{r}
+model_cv_all_1 <- train(churn ~ dependents + tenure + phone_service + internet_service 
+                   + contract + total_charges, data = telecomms,
+                   trControl = train_control,
+                   method = "glm",
+                   family = binomial(link = "logit"))
+
+summary(model_cv_all_1)
+```
+```{r}
+model_cv_tenure$results
+model_cv_contract$results
+model_cv_all_1$results
+```
+So in conclusion the model with the 6 predictors works better have the higher auc also in cv
+We will take a theshold of 0.5 that is the one that the cv use.
+```{r}
+
+threshold <- 0.5
+telecomms_pred <- telecomms %>%
+  add_predictions(model_all_1) %>%
+  mutate(pred_thresh_0.5 = pred >= threshold)
+
+
+```
+```{r}
+telecomms_pred %>%
+  tabyl(churn, pred_thresh_0.5)
+```
+
+The accuracy is:
+```{r}
+(4935 + 602) /(4935 + 602 + 228 + 1267)
+```
+The accuracy is 78.74% it isn't terrible bad but probably for a company could be horrible, let's check the balance in the dataset
+
+```{r}
+telecomms %>%
+  filter(churn == 1) %>%
+  count()
+telecomms %>%
+  filter(churn == 0) %>%
+  count()
+```
+The data is very unbalanced so the accurancy isn't a great parameter, we have 1869 churn and  5163	that continue with the contract
+```{r}
+NTP <- 4935 
+NTN <- 602
+NFP <- 228
+NFN <- 1267
+
+TPR <- NTP / (NTP + NFN)
+TPR
+
+TNR <- NTN / (NTN + NFP)
+TNR
+
+FPR <- NFP / (NFP + NTN)
+FPR
+
+FNR <- NFN / (NFN + NTP)
+FNR
+```
+The TPR and TNR are high but we don't know it they are high enough 
+
+EXTENSION
+```{r}
+telecomms <- telecomms %>%
+  mutate(churn = as.factor(ifelse(churn == 1, "Yes", "No")))
+model_cv_all <- train(churn ~ ., data = telecomms,
+                   trControl = train_control,
+                   method = "glm",
+                   family = binomial(link = "logit"))
+
+summary(model_cv_all)
+model_cv_all$results
+```
+0.8374539	our model with 6 predictors has a lower auc but only for 0.05082%, so I continue to believe that is better choice the model with 6 predictors, and in some ways we are avoid the overffiting 
+
+```{r}
+(0.8374539	- 0.8369457) * 100
+```
+```{r}
+telecomms_all <- telecomms %>%
+  add_predictions(model_all, type = "response")
+
+roc_all <- telecomms_all %>%
+  roc(response = churn, predictor = pred)
+
+classifier_data <- tibble(
+  threshold = roc_all$thresholds,
+  tpr = roc_all$sensitivities,
+  tnr = roc_all$specificities
+)
+
+classifier_data <- classifier_data %>%
+  mutate(
+    fpr = 1 - tnr,
+    fnr = 1 - tpr
+  )
+
+```
+
+```{r}
+prob_pos = (telecomms %>%
+  filter(churn == 1) %>%
+  count())/nrow(telecomms)
+prob_neg = (telecomms %>%
+  filter(churn == 0) %>%
+  count())/nrow(telecomms)
+```
+
+```{r}
+tpp <-(telecomms %>%
+  filter(churn == 0) %>%
+  summarise(mean = mean(total_charges)))-100 
+tnp <- 0
+fpp <- -100
+fnp <- 0
+```
+
+```{r}
+classifier_data <- classifier_data %>%
+  mutate(profit = prob_pos$n * (tpr * tpp$mean + fnr * fnp) + prob_neg$n * (tnr * tnp + fpr * fpp))
+
+classifier_data %>%
+  ggplot(aes(x = threshold, y = profit)) +
+  geom_line()
+
+```
+
+```{r}
+classifier_data %>%
+  filter(profit == max(profit))
+```
+The max profit with with a threshold of 0.03986681
+
+```{r}
+threshold <- 0.03986681
+telecomms_pred_1 <- telecomms %>%
+  add_predictions(model_all) %>%
+  mutate(pred_thresh = pred >= threshold)
+
+telecomms_pred_1 %>%
+  tabyl(churn, pred_thresh)
+```
+```{r}
+(4620 + 975) / (4620 + 975 + 894 + 543)
+```
+The accuracy is 0.7956485
+```{r}
+NTP <- 4620 
+NTN <- 975
+NFP <- 543
+NFN <- 894
+
+TPR <- NTP / (NTP + NFN)
+TPR
+
+TNR <- NTN / (NTN + NFP)
+TNR
+
+FPR <- NFP / (NFP + NTN)
+FPR
+
+FNR <- NFN / (NFN + NTP)
+FNR
+```
+
