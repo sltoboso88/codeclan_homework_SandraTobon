@@ -1,0 +1,153 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(here)
+library(janitor)
+library(lubridate)
+library(leaps)
+library(GGally)
+library(modelr)
+library(rpart)
+library(rpart.plot)
+library(yardstick)
+```
+
+```{r}
+avocado <- clean_names(read_csv(here("data/avocado.csv")))
+```
+```{r}
+avocado <- avocado %>%
+  mutate(region = case_when(
+    region %in% c("California", "LasVegas", "LosAngeles", "Portland", "Sacramento", "SanDiego", "SanFrancisco", "Seattle", "Spokane", "West") ~ "FarWest",
+    region %in% c("Chicago", "CincinnatiDayton", "Columbus", "Detroit", "GrandRapids", "GreatLakes", "Indianapolis") ~ "GreatLakes",
+    region %in% c("Albany", "BaltimoreWashington", "BuffaloRochester", "HarrisburgScranton", "NewYork", "Northeast", "Philadelphia", "Pittsburgh", "Syracuse") ~ "Mideast",
+    region %in% c("Boston", "HartfordSpringfield", "NorthernNewEngland") ~ "NewEngland",
+    region %in% c("Plains", "StLouis") ~ "Plains",
+    region %in% c("Boise", "Denver") ~ "Rocky Mountain",
+    region %in% c("Atlanta", "Charlotte", "Jacksonville", "Louisville", "MiamiFtLauderdale", "Midsouth", "Nashville", "NewOrleansMobile", "Orlando", "RaleighGreensboro", "RichmondNorfolk", "Roanoke", "SouthCarolina", "Southeast", "Tampa") ~ "Southeast",
+    region %in% c("DallasFtWorth", "Houston", "PhoenixTucson", "SouthCentral", "WestTexNewMexico") ~ "Southwest",
+    TRUE ~ region
+  ))
+
+avocado <- avocado %>%
+    mutate_at("year", as.factor) %>%
+    mutate(month = month(date)) %>%
+    mutate(season = case_when(month >= 3 & month < 6 ~ "Spring",
+                              month >= 6 & month < 9 ~ "Summer",
+                              month >= 9 & month < 12 ~ "Fall",
+                              TRUE ~ "Winter"
+                              )) %>%
+    select(- c(month, date, x1))
+```
+
+```{r}
+avocado <- avocado %>%
+  mutate(organic = as.factor(ifelse(type == "organic", "Yes", "No"))) %>%
+  mutate_if(is.character, as.factor) %>%
+  select(-type)
+dim(avocado)
+```
+We have quite a lot data so we can have a test set of 20% of the data
+```{r}
+avocado %>%
+  select(region, season, organic, year) %>%
+  ggpairs()
+```
+Region is the only varaible that look correlated with organic year somehow could be correlated but only because we don't have a lot information about 2018.
+```{r}
+avocado %>%
+  select(-c(region, season, year)) %>%
+  ggpairs()
+```
+Average price in the one that look more correlated
+```{r}
+
+n_data <- nrow(avocado)
+
+text_index <- sample(1:n_data, size = n_data * 0.2)
+
+avocado_train <- slice(avocado, -text_index)
+
+avocado_test <- slice(avocado, text_index)
+```
+
+```{r}
+avocado_test %>%
+  tabyl(organic)
+avocado_train %>%
+  tabyl(organic)
+```
+
+```{r}
+organic_fit <- rpart(organic ~ ., 
+                     data = avocado_train,
+                     method = "class")
+
+rpart.plot(organic_fit, yesno = 2)
+```
+if Total volume >= 69000, if the avocado x477 >=13 (volume) and the average price < 1.5 the probability of no organic is 0.03
+if Total volume >= 69000, if the avocado x477 >=13 (volume) and the average price >= 1.5 and the large bag >= 0.56 the probability of no organic is 0.07
+if Total volume >= 69000, if the avocado x477 >=13 (volume) and the average price >= 1.5 and the large bag < 0.56 the probability of organic is 0.64
+if Total volume >= 69000, if the avocado x477 < 13 (volume) the probability of organic is 0.93
+if Total volume < 69000 the probability of organic is 0.97
+```{r}
+summary(organic_fit)
+```
+
+```{r}
+organic_predic <- avocado_test %>%
+  add_predictions(organic_fit, type = "class")
+```
+
+```{r}
+organic_predic %>%
+  select(organic, pred)
+```
+
+```{r}
+organic_predic %>%
+  conf_mat(truth = organic,
+           estimate = pred)
+```
+
+```{r}
+organic_predic %>%
+  accuracy(truth = organic,
+           estimate = pred)
+```
+
+The accuracy is 0.95 it doesn't look too bad and also the the false negative a positive aren't too much.
+total_volume    total_bags         x4225    small_bags         x4770         x4046 average_price 
+           19            17            16            16            16            14             1 
+ x_large_bags 
+```{r}
+organic_fit_1 <- rpart(organic ~ total_volume + total_bags + x4225 + x4770 + x4046 + average_price, 
+                     data = avocado_train,
+                     method = "class")
+
+rpart.plot(organic_fit_1, yesno = 2)
+```
+ 
+```{r}
+organic_predic_1<- avocado_test %>%
+  add_predictions(organic_fit_1, type = "class")
+
+```
+ 
+```{r}
+organic_predic_1 %>%
+  conf_mat(truth = organic,
+           estimate = pred)
+```
+```{r}
+organic_predic_1 %>%
+  accuracy(truth = organic,
+           estimate = pred)
+
+```
+ This one is with less predictors (those that have more importance in the first model), probably this will prevent the overffitng and continue to have quite a good fit
+ 

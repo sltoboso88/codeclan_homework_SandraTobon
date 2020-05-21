@@ -1,0 +1,90 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+library(tidyverse)
+library(here)
+library(factoextra)
+library(broom)
+```
+
+
+```{r}
+computer <- read_csv(here("data/computers.csv"))
+
+computer <- computer %>%
+  unite(price, c(price, X1), sep = ":") 
+```
+
+```{r}
+computer_scale <- computer %>%
+  select(hd, ram, price) %>%
+  mutate_if(is.numeric, scale) %>%
+  column_to_rownames("price")
+
+computer_scale %>%
+  ggplot(aes(x = hd, y = ram)) +
+  geom_point() 
+```
+Some points are very concentrate special in the ram lower to 0, so probably it will work but some cluster we will have more points that others
+
+```{r}
+fviz_nbclust(computer_scale, kmeans, method = "wss", nstart = 25)
+```
+With Elbow method K means of 3 or 4 look acceptable
+```{r}
+fviz_nbclust(computer_scale, kmeans, method = "silhouette", nstart = 25)
+```
+ Silhouette coefficient proupose k means of 10
+```{r}
+fviz_nbclust(computer_scale, kmeans, method = "gap_stat", nstart = 25, k.max = 12)
+```
+We will choose 7 it is in the middle and look also good in the Silhouette method 
+
+```{r}
+cluster_computer <- kmeans(computer_scale, centers = 7, nstart = 25)
+cluster_computer
+```
+```{r}
+tidy(cluster_computer,
+     col.names = colnames(computer_scale))
+```
+
+```{r}
+glance(cluster_computer)
+```
+
+```{r}
+augment(cluster_computer, computer_scale)
+```
+```{r}
+max_k <- 10
+
+k_clusters <- tibble(k = 1:max_k) %>%
+  mutate(
+    kclust = map(k, ~ kmeans(computer_scale, .x, nstart = 25)), 
+    tidied = map(kclust, tidy),
+    glanced = map(kclust, glance),
+    augmented = map(kclust, augment, computer)
+  )
+
+k_clusters
+```
+
+```{r}
+clusterings <- k_clusters %>%
+  unnest(glanced)
+
+clusterings
+```
+```{r}
+clusterings %>% 
+  unnest(cols = c(augmented)) %>%
+  filter(k <= 10) %>%
+ ggplot(aes(x = hd, y = ram)) +
+  geom_point(aes(color = .cluster)) + 
+  facet_wrap(~ k)
+```
+
+With 7 the clusters look ok with 10 we have clusters with only 2 points, with 2 the partition doesn't look to logical special for the point that have a ram of 15. 
